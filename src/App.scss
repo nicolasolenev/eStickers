@@ -1,9 +1,11 @@
-.modules {
+.devices {
   display: flex;
   flex-wrap: wrap;
   max-width: 287mm;
   margin: 0 auto;
   outline: 1px solid red;
+  margin-top: 30px;
+  padding: 30px 0;
 
   &__add {
     align-self: center;
@@ -22,8 +24,7 @@
 
 .single-module {
   width: 18mm;
-  border: 1px solid #000;
-  border-left: none;
+  border: 0.5px solid #000;
   margin: 5mm 0;
   display: flex;
   flex-direction: column;
@@ -32,28 +33,69 @@
   &:hover {
     background-color: #eae9e985;
   }
-  &:first-child {
-    border-left: 1px solid #000;
-  }
 
   &__where,
   &__point,
   &__designation,
   &__caption,
-  &__phase,
   &__id {
     margin: 5px 3px;
     text-align: center;
   }
 
-  &__phase {
-    color: gray;
+  &__designation,
+  &__where {
+    &-input {
+      width: 100%;
+      background-color: transparent;
+      border: transparent;
+      text-align: center;
+    }
+  }
+
+  &__phases {
     order: 1;
+    width: 100%;
+    text-align: center;
+    margin: 5px 0;
+    display: flex;
+  }
+
+  &__phase {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &-select {
+      background-color: transparent;
+      border: transparent;
+      width: 40px;
+      text-align: center;
+      color: gray;
+      margin: 5px 3px;
+      appearance: none;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      &::-ms-expand {
+        display: none;
+      }
+    }
   }
 
   &__id {
     color: gray;
-    font-size: 12px;
+    font-size: 7pt;
+    display: none;
+  }
+
+  &__caption {
+    flex-grow: 1;
+    &-input {
+      width: 100%;
+      background-color: transparent;
+      border: transparent;
+      text-align: center;
+      resize: none;
+    }
   }
 }
 
@@ -69,15 +111,24 @@
   }
 }
 
-.captions {
+.description {
   .single-module__where {
     order: 1;
   }
-  .single-module__phase {
+  .single-module__phases {
     order: -1;
   }
+  .single-module__phase-select {
+    order: 1;
+  }
   .single-module__id {
-    order: -2;
+    order: 0;
+  }
+}
+
+.numeration {
+  .single-module__id {
+    display: block;
   }
 }
 
@@ -86,66 +137,39 @@
   text-align: center;
 }
 
-.edit-menu {
-  border: 2px solid red;
-  border-radius: 10px;
-  width: 350px;
-  display: flex;
-  flex-direction: column;
-  padding: 15px 0 15px 10px;
+.rulers {
   position: absolute;
-  // top: calc(100% + 10px);
-  background-color: #fff;
-  display: none;
-  z-index: 10;
-  &::before {
+  left: 0px;
+  bottom: -22px;
+  width: 101%;
+  display: flex;
+}
+
+.ruler {
+  position: relative;
+  border: none;
+  border-bottom: 1px solid #000;
+  text-align: center;
+  color: gray;
+  &:before {
     content: '';
     position: absolute;
-    left: 50%;
-    top: -20px;
-    margin-left: -9px;
-    border: 9px solid transparent;
-    border-bottom: 9px solid red;
-  }
-  &-visible {
-    display: block;
+    left: 0px;
+    bottom: -6px;
+    background: #000;
+    width: 1px;
+    height: 10px;
   }
 
-  textarea {
-    resize: none;
+  &__input {
+    border: none;
+    text-align: center;
+    color: gray;
+    width: 100%;
+    padding-left: 9px;
   }
+}
 
-  textarea,
-  input {
-    width: 220px;
-    padding: 5px;
-  }
-
-  label {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0 0 10px 0;
-    width: 320px;
-  }
-
-  label[for='width'] {
-    width: 160px;
-  }
-
-  #width {
-    width: 60px;
-  }
-
-  &-buttons {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    button:first-child {
-      margin-right: 40px;
-    }
-    button {
-      padding: 3px;
-    }
-  }
+.test {
+  background-color: #eae9e985;
 }
