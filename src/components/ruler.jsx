@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+
 import { setModuleWidth } from '../store/devicesSlice';
 
 export default function Ruler(props) {
@@ -11,8 +12,7 @@ export default function Ruler(props) {
   const dispatch = useDispatch();
 
   function onChangeHandler(e) {
-    const value = Number(e.target.value);
-    const width = value < 8 ? 8 : value;
+    const width = e.target.value;
     dispatch(setModuleWidth({ width, deviceId, moduleId }));
   }
 
@@ -20,12 +20,13 @@ export default function Ruler(props) {
     <div
       className="ruler"
       style={{
-        width: `${moduleWidth}mm`,
+        width: `${moduleWidth < 8 ? 8 : moduleWidth}mm`,
       }}
     >
       <input
         className="ruler__input"
-        defaultValue={moduleWidth}
+        value={moduleWidth}
+        placeholder="8"
         type="number"
         min={8}
         max={287}

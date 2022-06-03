@@ -1,14 +1,14 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
 import Device from './device';
 import { classes } from '../functions';
-import { useSelector, useDispatch } from 'react-redux';
 import { addDevice } from '../store/devicesSlice';
 
-export default function Devices(props) {
+export default function Devices() {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
   const devices = useSelector((state) => state.devices);
-
   let count = 1;
 
   return (
@@ -21,14 +21,7 @@ export default function Devices(props) {
       {Object.values(devices).map((device) => {
         const id = count;
         count = count + device.modules.length;
-        return (
-          <Device
-            key={device.id}
-            deviceId={device.id}
-            id={id}
-            device={device}
-          />
-        );
+        return <Device key={device.id} id={id} device={device} />;
       })}
 
       <div className="devices__add">

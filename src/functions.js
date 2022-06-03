@@ -9,27 +9,25 @@ export function classes(defaultClass, obj) {
   return resultClass;
 }
 
-export function getDevicesWithChangedModuleWidth(
-  devices,
-  deviceId,
-  moduleId,
-  width
-) {
-  const devicesCopy = [...devices];
+export function createSingleDevice() {
+  const id = Number(new Date());
 
-  return devicesCopy.map((device) => {
-    if (device.id === deviceId) {
-      device.modules = [...device.modules].map((module) => {
-        if (module.id === moduleId) {
-          module.width = Number(width);
-        }
-        return module;
-      });
-    }
-    return device;
-  });
+  return {
+    id: id,
+    group: '',
+    normallyOn: true,
+    switch: '',
+    description: '',
+    modules: [{ moduleName: '', width: 18, id: id }],
+    warning: '',
+    selected: false,
+  };
 }
 
 export function getDeviceTotalWidth(device) {
-  return device.modules.reduce((total, module) => total + module.width, 0);
+  const width = device.modules.reduce(
+    (total, module) => total + (module.width < 8 ? 8 : Number(module.width)),
+    0
+  );
+  return width < 8 ? 8 : width;
 }

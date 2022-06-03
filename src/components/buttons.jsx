@@ -6,11 +6,9 @@ import {
   clearSelected,
 } from '../store/settingsSlice';
 import { combineDevices } from '../store/devicesSlice';
-import { getDevicesWithCombinedDevice } from '../functions';
 
 export default function Buttons() {
   const settings = useSelector((state) => state.settings);
-  const devices = useSelector((state) => state.devices);
   const dispatch = useDispatch();
 
   return (

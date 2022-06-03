@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { updateSelected } from '../store/settingsSlice';
+
 import Module from './module';
 import Ruler from './ruler';
 import { getDeviceTotalWidth } from '../functions';
-import { useSelector, useDispatch } from 'react-redux';
-import { updateSelected } from '../store/settingsSlice';
 import {
   toggleDeviceNormallyOn,
   selectDevice,
@@ -12,19 +13,20 @@ import {
 
 export default function Device(props) {
   const { device, id } = props;
+  const deviceId = device.id;
   const dispatch = useDispatch();
 
   function singleDeviceClickHandler(e) {
-    dispatch(updateSelected({ deviceId: device.id }));
     if (e.shiftKey) {
-      dispatch(selectDevice({ id: device.id }));
+      dispatch(selectDevice({ deviceId }));
+      dispatch(updateSelected({ deviceId }));
     }
   }
 
   function deviceInputHandler(e, key) {
     dispatch(
       updateDeviceText({
-        id: device.id,
+        deviceId,
         text: e.target.value,
         key: key,
       })
@@ -33,21 +35,22 @@ export default function Device(props) {
 
   return (
     <div
-      className={device.selected ? 'single-module test' : 'single-module'}
+      className={device.selected ? 'device selected' : 'device'}
       style={{ width: `${getDeviceTotalWidth(device)}mm` }}
       onClick={singleDeviceClickHandler}
     >
-      <div className="single-module__where">
+      <div className="device__group">
         <input
-          className="single-module__where-input"
-          placeholder={device.group}
+          className="device__group-input"
+          placeholder="Где?"
+          value={device.group}
           onChange={(e) => deviceInputHandler(e, 'group')}
         ></input>
       </div>
 
-      <div className="single-module__point">
+      <div className="device__point">
         <span
-          onClick={() => dispatch(toggleDeviceNormallyOn({ id: device.id }))}
+          onClick={() => dispatch(toggleDeviceNormallyOn({ deviceId }))}
           className={
             !device.normallyOn
               ? 'point-circle'
@@ -56,37 +59,39 @@ export default function Device(props) {
         ></span>
       </div>
 
-      <div className="single-module__designation">
+      <div className="device__switch">
         <input
-          className="single-module__designation-input"
-          placeholder={device.switch}
+          className="device__switch-input"
+          placeholder="QF1"
+          value={device.switch}
           onChange={(e) => deviceInputHandler(e, 'switch')}
         ></input>
       </div>
 
-      <div className="single-module__caption">
+      <div className="device__description">
         <textarea
           rows={3}
-          className="single-module__caption-input"
-          placeholder={device.description}
+          className="device__description-input"
+          placeholder="Надпись, название линии"
+          value={device.description}
           onChange={(e) => deviceInputHandler(e, 'description')}
         ></textarea>
       </div>
 
-      <div className="single-module__phases">
+      <div className="device__modules">
         {device.modules.map((module, index) => (
           <Module
             key={module.id}
             id={id + index}
             module={module}
-            deviceId={device.id}
+            deviceId={deviceId}
           />
         ))}
       </div>
 
       <div className="rulers">
         {device.modules.map((module) => (
-          <Ruler key={module.id} deviceId={device.id} moduleId={module.id} />
+          <Ruler key={module.id} deviceId={deviceId} moduleId={module.id} />
         ))}
       </div>
     </div>

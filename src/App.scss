@@ -22,7 +22,7 @@
   }
 }
 
-.single-module {
+.device {
   width: 18mm;
   border: 0.5px solid #000;
   margin: 5mm 0;
@@ -34,17 +34,17 @@
     background-color: #eae9e985;
   }
 
-  &__where,
+  &__group,
   &__point,
-  &__designation,
-  &__caption,
+  &__switch,
+  &__description,
   &__id {
     margin: 5px 3px;
     text-align: center;
   }
 
-  &__designation,
-  &__where {
+  &__switch,
+  &__group {
     &-input {
       width: 100%;
       background-color: transparent;
@@ -53,7 +53,7 @@
     }
   }
 
-  &__phases {
+  &__modules {
     order: 1;
     width: 100%;
     text-align: center;
@@ -61,11 +61,11 @@
     display: flex;
   }
 
-  &__phase {
+  &__module {
     display: flex;
     flex-direction: column;
     align-items: center;
-    &-select {
+    &-input {
       background-color: transparent;
       border: transparent;
       width: 40px;
@@ -87,7 +87,7 @@
     display: none;
   }
 
-  &__caption {
+  &__description {
     flex-grow: 1;
     &-input {
       width: 100%;
@@ -112,22 +112,22 @@
 }
 
 .description {
-  .single-module__where {
+  .device__group {
     order: 1;
   }
-  .single-module__phases {
+  .device__modules {
     order: -1;
   }
-  .single-module__phase-select {
+  .device__module-input {
     order: 1;
   }
-  .single-module__id {
+  .device__id {
     order: 0;
   }
 }
 
 .numeration {
-  .single-module__id {
+  .device__id {
     display: block;
   }
 }
@@ -170,6 +170,6 @@
   }
 }
 
-.test {
+.selected {
   background-color: #eae9e985;
 }

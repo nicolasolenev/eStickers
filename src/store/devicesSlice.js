@@ -1,18 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createSingleDevice, SingleDevice } from '../vars';
+import { createSingleDevice } from '../functions';
 
 const initialDevice = createSingleDevice();
-
-const example = {
-  id: 0,
-  group: 'Где?',
-  normallyOn: true,
-  switch: 'QF1',
-  description: 'Надпись, название линии',
-  modules: [{ moduleName: 'L1', width: 18, id: 0 }],
-  warning: '',
-  selected: false,
-};
 
 export const devicesSlice = createSlice({
   name: 'devices',
@@ -20,26 +9,6 @@ export const devicesSlice = createSlice({
     [initialDevice.id]: initialDevice,
   },
   reducers: {
-    setModuleName: (state, action) => {
-      const { name, deviceId, moduleId } = action.payload;
-      const device = state[deviceId];
-      const moduleIndex = device.modules.findIndex(
-        (module) => module.id === moduleId
-      );
-
-      device.modules[moduleIndex].moduleName = name;
-    },
-
-    setModuleWidth: (state, action) => {
-      const { width, deviceId, moduleId } = action.payload;
-      const device = state[deviceId];
-      const moduleIndex = device.modules.findIndex(
-        (module) => module.id === moduleId
-      );
-
-      device.modules[moduleIndex].width = width;
-    },
-
     addDevice: (state) => {
       const newDevice = createSingleDevice();
       state[newDevice.id] = newDevice;
@@ -59,20 +28,40 @@ export const devicesSlice = createSlice({
     },
 
     toggleDeviceNormallyOn: (state, action) => {
-      const id = action.payload.id;
+      const id = action.payload.deviceId;
       state[id].normallyOn = !state[id].normallyOn;
     },
 
     selectDevice: (state, action) => {
-      const id = action.payload.id;
+      const id = action.payload.deviceId;
       state[id].selected = !state[id].selected;
     },
 
     updateDeviceText: (state, action) => {
-      const device = state[action.payload.id];
+      const device = state[action.payload.deviceId];
       const text = action.payload.text;
 
       device[action.payload.key] = text;
+    },
+
+    setModuleName: (state, action) => {
+      const { name, deviceId, moduleId } = action.payload;
+      const device = state[deviceId];
+      const moduleIndex = device.modules.findIndex(
+        (module) => module.id === moduleId
+      );
+
+      device.modules[moduleIndex].moduleName = name;
+    },
+
+    setModuleWidth: (state, action) => {
+      const { width, deviceId, moduleId } = action.payload;
+      const device = state[deviceId];
+      const moduleIndex = device.modules.findIndex(
+        (module) => module.id === moduleId
+      );
+
+      device.modules[moduleIndex].width = width;
     },
   },
 });
