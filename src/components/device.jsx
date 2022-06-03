@@ -4,6 +4,11 @@ import Ruler from './ruler';
 import { getDeviceTotalWidth } from '../functions';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateSelected } from '../store/settingsSlice';
+import {
+  updateDevice,
+  selectDevice,
+  setNormallyOn,
+} from '../store/devicesSlice';
 
 export default function Device(props) {
   const { device, devices, setDevices, id, deviceId } = props;
@@ -12,13 +17,13 @@ export default function Device(props) {
   function singleDeviceClickHandler(e) {
     dispatch(updateSelected({ deviceId }));
     if (e.shiftKey) {
-      e.target.closest('.single-module').classList.toggle('test');
+      dispatch(selectDevice({ id: deviceId }));
     }
   }
 
   return (
     <div
-      className="single-module"
+      className={device.selected ? 'single-module test' : 'single-module'}
       style={{ width: `${getDeviceTotalWidth(device)}mm` }}
       onClick={singleDeviceClickHandler}
     >
@@ -31,16 +36,7 @@ export default function Device(props) {
 
       <div className="single-module__point">
         <span
-          onClick={() =>
-            setDevices(
-              [...devices].map((device) => {
-                if (deviceId === device.id) {
-                  device.normallyOn = !device.normallyOn;
-                }
-                return device;
-              })
-            )
-          }
+          onClick={() => dispatch(updateDevice({ id: deviceId }))}
           className={
             !device.normallyOn
               ? 'point-circle'

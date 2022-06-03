@@ -10,7 +10,9 @@ export function classes(defaultClass, obj) {
 }
 
 export function getDevicesWithCombinedDevice(devices, selected) {
-  devices = devices.map((device) => Object.assign({}, device));
+  devices = devices.map((device) =>
+    Object.assign({}, device, { selected: false })
+  );
 
   const devicesToCombine = selected.map((id) =>
     devices.find((device) => device.id === id)
