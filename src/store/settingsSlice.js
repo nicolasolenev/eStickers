@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { SingleDevice } from '../vars';
 
 export const settingsSlice = createSlice({
   name: 'devices',

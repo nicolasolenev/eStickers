@@ -5,20 +5,30 @@ import { getDeviceTotalWidth } from '../functions';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateSelected } from '../store/settingsSlice';
 import {
-  updateDevice,
+  toggleDeviceNormallyOn,
   selectDevice,
-  setNormallyOn,
+  updateDeviceText,
 } from '../store/devicesSlice';
 
 export default function Device(props) {
-  const { device, devices, setDevices, id, deviceId } = props;
+  const { device, id } = props;
   const dispatch = useDispatch();
 
   function singleDeviceClickHandler(e) {
-    dispatch(updateSelected({ deviceId }));
+    dispatch(updateSelected({ deviceId: device.id }));
     if (e.shiftKey) {
-      dispatch(selectDevice({ id: deviceId }));
+      dispatch(selectDevice({ id: device.id }));
     }
+  }
+
+  function deviceInputHandler(e, key) {
+    dispatch(
+      updateDeviceText({
+        id: device.id,
+        text: e.target.value,
+        key: key,
+      })
+    );
   }
 
   return (
@@ -31,12 +41,13 @@ export default function Device(props) {
         <input
           className="single-module__where-input"
           placeholder={device.group}
+          onChange={(e) => deviceInputHandler(e, 'group')}
         ></input>
       </div>
 
       <div className="single-module__point">
         <span
-          onClick={() => dispatch(updateDevice({ id: deviceId }))}
+          onClick={() => dispatch(toggleDeviceNormallyOn({ id: device.id }))}
           className={
             !device.normallyOn
               ? 'point-circle'
@@ -49,6 +60,7 @@ export default function Device(props) {
         <input
           className="single-module__designation-input"
           placeholder={device.switch}
+          onChange={(e) => deviceInputHandler(e, 'switch')}
         ></input>
       </div>
 
@@ -57,25 +69,24 @@ export default function Device(props) {
           rows={3}
           className="single-module__caption-input"
           placeholder={device.description}
+          onChange={(e) => deviceInputHandler(e, 'description')}
         ></textarea>
       </div>
 
       <div className="single-module__phases">
         {device.modules.map((module, index) => (
-          <Module module={module} id={id + index} key={module.id} />
+          <Module
+            key={module.id}
+            id={id + index}
+            module={module}
+            deviceId={device.id}
+          />
         ))}
       </div>
 
       <div className="rulers">
         {device.modules.map((module) => (
-          <Ruler
-            key={module.id}
-            moduleId={module.id}
-            width={module.width}
-            setWidth={setDevices}
-            devices={devices}
-            deviceId={deviceId}
-          />
+          <Ruler key={module.id} deviceId={device.id} moduleId={module.id} />
         ))}
       </div>
     </div>

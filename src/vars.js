@@ -15,13 +15,15 @@ export class SingleDevice {
 }
 
 export function createSingleDevice() {
+  const id = Number(new Date());
+
   return {
-    id: Number(new Date()),
+    id: id,
     group: 'Где?',
     normallyOn: true,
     switch: 'QF1',
     description: 'Надпись, название линии',
-    modules: [{ moduleName: 'L1', width: 18, id: Number(new Date()) }],
+    modules: [{ moduleName: 'L1', width: 18, id: id }],
     warning: '',
     selected: false,
   };

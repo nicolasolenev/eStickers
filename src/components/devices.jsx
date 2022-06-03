@@ -18,7 +18,7 @@ export default function Devices(props) {
         numeration: settings.numeration,
       })}
     >
-      {devices.devices.map((device, index) => {
+      {Object.values(devices).map((device) => {
         const id = count;
         count = count + device.modules.length;
         return (

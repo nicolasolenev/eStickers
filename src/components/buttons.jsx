@@ -31,16 +31,7 @@ export default function Buttons() {
           if (!settings.selected.length) {
             return;
           }
-
-          console.log(devices.devices);
-          const newDevices = getDevicesWithCombinedDevice(
-            devices.devices,
-            settings.selected
-          );
-
-          console.log(newDevices);
-
-          dispatch(combineDevices({ newDevices }));
+          dispatch(combineDevices({ selected: settings.selected }));
           dispatch(clearSelected());
         }}
       >

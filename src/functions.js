@@ -9,34 +9,6 @@ export function classes(defaultClass, obj) {
   return resultClass;
 }
 
-export function getDevicesWithCombinedDevice(devices, selected) {
-  devices = devices.map((device) =>
-    Object.assign({}, device, { selected: false })
-  );
-
-  const devicesToCombine = selected.map((id) =>
-    devices.find((device) => device.id === id)
-  );
-
-  let newDevice = devicesToCombine.shift();
-
-  newDevice.modules = [...newDevice.modules].concat(
-    ...devicesToCombine.map((device) => device.modules)
-  );
-
-  const lastSelected = [...selected];
-  lastSelected.shift();
-
-  const newDeviceIndex = devices.findIndex(
-    (device) => device.id === newDevice.id
-  );
-
-  const newDevices = [...devices];
-  newDevices.splice(newDeviceIndex, 1, newDevice);
-
-  return newDevices.filter((device) => !lastSelected.includes(device.id));
-}
-
 export function getDevicesWithChangedModuleWidth(
   devices,
   deviceId,
