@@ -14,13 +14,26 @@ export function createSingleDevice() {
 
   return {
     id: id,
-    group: '',
+    group: {
+      text: '',
+    },
     normallyOn: true,
-    switch: '',
-    description: '',
+    switch: {
+      text: '',
+      textColor: '#000',
+      backgroundColor: 'transparent',
+    },
+    description: {
+      text: '',
+    },
     modules: [{ moduleName: '', width: 18, id: id }],
-    warning: '',
+    warning: {
+      text: '',
+      color: '#eb8044',
+      backgroundColor: 'transparent',
+    },
     selected: false,
+    background: '#f2f2f2',
   };
 }
 

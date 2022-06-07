@@ -9,6 +9,28 @@ export const devicesSlice = createSlice({
     [initialDevice.id]: initialDevice,
   },
   reducers: {
+    changeColor: (state, action) => {
+      const { selected, color, type, fields } = action.payload;
+
+      selected.forEach((deviceId) => {
+        for (let key in fields) {
+          if (fields[key]) {
+            if (type === 'backgroundColor') {
+              state[deviceId].background = color;
+            } else {
+              state[deviceId][key][type] = color;
+            }
+          }
+        }
+      });
+    },
+
+    clearAllSelected: (state) => {
+      for (let deviceId in state) {
+        state[deviceId].selected = false;
+      }
+    },
+
     addDevice: (state) => {
       const newDevice = createSingleDevice();
       state[newDevice.id] = newDevice;
@@ -41,7 +63,7 @@ export const devicesSlice = createSlice({
       const device = state[action.payload.deviceId];
       const text = action.payload.text;
 
-      device[action.payload.key] = text;
+      device[action.payload.key].text = text;
     },
 
     setModuleName: (state, action) => {
@@ -55,13 +77,26 @@ export const devicesSlice = createSlice({
     },
 
     setModuleWidth: (state, action) => {
-      const { width, deviceId, moduleId } = action.payload;
+      const { width, deviceId, moduleId, selected } = action.payload;
       const device = state[deviceId];
       const moduleIndex = device.modules.findIndex(
         (module) => module.id === moduleId
       );
 
-      device.modules[moduleIndex].width = width;
+      if (selected.length) {
+        selected.forEach((deviceId) => {
+          state[deviceId].modules.forEach((module) => {
+            module.width = width;
+          });
+        });
+      } else {
+        device.modules[moduleIndex].width = width;
+      }
+    },
+
+    deleteDevice: (state, action) => {
+      const id = action.payload.deviceId;
+      delete state[id];
     },
   },
 });
@@ -74,6 +109,9 @@ export const {
   updateDeviceText,
   setModuleWidth,
   setModuleName,
+  deleteDevice,
+  changeColor,
+  clearAllSelected,
 } = devicesSlice.actions;
 
 export default devicesSlice.reducer;

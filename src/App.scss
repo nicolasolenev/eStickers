@@ -1,14 +1,49 @@
+.print {
+  width: 287mm;
+  height: 200mm;
+  margin: 0 auto;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  &:hover {
+    .button {
+      display: block;
+    }
+  }
+}
+
+.palette {
+  display: flex;
+  &__settings {
+    outline: 1px solid red;
+    width: 300px;
+    padding: 5px;
+  }
+}
+
 .devices {
+  flex-grow: 1;
   display: flex;
   flex-wrap: wrap;
   max-width: 287mm;
-  margin: 0 auto;
-  outline: 1px solid red;
-  margin-top: 30px;
+  // margin: 0 auto;
+  // outline: 1px solid red;
+  // margin-top: 30px;
   padding: 30px 0;
+  &:hover {
+    .rulers {
+      display: flex;
+    }
+    .devices__add {
+      display: flex;
+    }
+  }
 
   &__add {
     align-self: center;
+    display: none;
     &-btn {
       width: 30px;
       height: 30px;
@@ -24,14 +59,17 @@
 
 .device {
   width: 18mm;
-  border: 0.5px solid #000;
-  margin: 5mm 0;
+  border: 0.5px solid #fff;
+  margin: 10mm 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
+  background: #f2f2f2;
   &:hover {
-    background-color: #eae9e985;
+    .device__delete-btn {
+      display: block;
+    }
   }
 
   &__group,
@@ -43,6 +81,12 @@
     text-align: center;
   }
 
+  &__group {
+    &-input {
+      display: none;
+    }
+  }
+
   &__switch,
   &__group {
     &-input {
@@ -50,6 +94,7 @@
       background-color: transparent;
       border: transparent;
       text-align: center;
+      font-weight: 700;
     }
   }
 
@@ -57,7 +102,7 @@
     order: 1;
     width: 100%;
     text-align: center;
-    margin: 5px 0;
+    // margin: 5px 0 0 0;
     display: flex;
   }
 
@@ -65,7 +110,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    border-right: 1.5px solid #fff;
     &-input {
+      display: none;
       background-color: transparent;
       border: transparent;
       width: 40px;
@@ -79,6 +126,9 @@
         display: none;
       }
     }
+    &:last-child {
+      border: none;
+    }
   }
 
   &__id {
@@ -89,12 +139,50 @@
 
   &__description {
     flex-grow: 1;
+    width: 100%;
     &-input {
       width: 100%;
       background-color: transparent;
       border: transparent;
       text-align: center;
       resize: none;
+    }
+  }
+
+  &__delete {
+    display: flex;
+    position: absolute;
+    top: -19px;
+    padding: 0 0 3px 0;
+    width: 100%;
+    justify-content: center;
+    // z-index: 10;
+    &-btn {
+      width: 60px;
+      display: none;
+      cursor: pointer;
+    }
+  }
+
+  &__warning {
+    // position: absolute;
+    width: 100%;
+    background: #f2f2f2;
+    text-align: center;
+    padding: 5px;
+    font-weight: 700;
+    color: #eb8044;
+    border-radius: 5px 5px 0 0;
+    &-text {
+      width: 100%;
+      background-color: transparent;
+      // border: transparent;
+      text-align: center;
+      resize: none;
+      &::placeholder {
+        /* Most modern browsers support this now. */
+        color: #909;
+      }
     }
   }
 }
@@ -132,9 +220,32 @@
   }
 }
 
+.modulesName {
+  .device__module-input {
+    display: block;
+  }
+}
+
+.groups {
+  .device__group-input {
+    display: block;
+  }
+}
+
 .buttons {
-  margin: 0 auto;
+  // margin: 0 auto;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 70px;
+  margin-right: 15px;
+  width: 120px;
+  .button {
+    width: 120px;
+    padding: 5px;
+    margin-bottom: 5px;
+    display: none;
+  }
 }
 
 .rulers {
@@ -143,6 +254,7 @@
   bottom: -22px;
   width: 101%;
   display: flex;
+  display: none;
 }
 
 .ruler {
@@ -171,5 +283,5 @@
 }
 
 .selected {
-  background-color: #eae9e985;
+  border-bottom: 1px solid red;
 }

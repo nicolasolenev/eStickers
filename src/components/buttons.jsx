@@ -1,9 +1,12 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import {
   changeSequence,
   setNumeration,
   clearSelected,
+  modulesNameVisability,
+  groupsVisability,
 } from '../store/settingsSlice';
 import { combineDevices } from '../store/devicesSlice';
 
@@ -13,18 +16,27 @@ export default function Buttons() {
 
   return (
     <div className="buttons">
-      <button
-        className="sequence-btn"
-        onClick={() => dispatch(changeSequence())}
-      >
+      <button className="button" onClick={() => dispatch(changeSequence())}>
         {settings.sequence ? 'Надписи' : 'Подписи'}
       </button>
 
-      <button onClick={() => dispatch(setNumeration())}>
+      <button className="button" onClick={() => dispatch(setNumeration())}>
         {settings.numeration ? 'Скрыть нумерацию' : 'Показать нумерацию'}
       </button>
 
       <button
+        className="button"
+        onClick={() => dispatch(modulesNameVisability())}
+      >
+        {settings.modulesName ? 'Скрыть модули' : 'Показать модули'}
+      </button>
+
+      <button className="button" onClick={() => dispatch(groupsVisability())}>
+        {settings.groups ? 'Скрыть группы' : 'Показать группы'}
+      </button>
+
+      <button
+        className="button"
         onClick={() => {
           if (!settings.selected.length) {
             return;
@@ -35,6 +47,9 @@ export default function Buttons() {
       >
         Объединить ячейки
       </button>
+      <Link to="/print">
+        <button className="button">Сохранить pdf</button>
+      </Link>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { setModuleWidth } from '../store/devicesSlice';
 export default function Ruler(props) {
   const { deviceId, moduleId } = props;
   const device = useSelector((state) => state.devices)[deviceId];
+  const settings = useSelector((state) => state.settings);
   const moduleWidth = device.modules.find(
     (module) => module.id === moduleId
   ).width;
@@ -13,7 +14,9 @@ export default function Ruler(props) {
 
   function onChangeHandler(e) {
     const width = e.target.value;
-    dispatch(setModuleWidth({ width, deviceId, moduleId }));
+    dispatch(
+      setModuleWidth({ width, deviceId, moduleId, selected: settings.selected })
+    );
   }
 
   return (

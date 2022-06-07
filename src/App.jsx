@@ -1,13 +1,18 @@
 import './App.scss';
 import React from 'react';
+
 import Devices from './components/devices';
 import Buttons from './components/buttons';
+import Palette from './components/palette';
 
 function App() {
   return (
     <>
-      <Devices />
-      <Buttons />
+      <div className="wrapper">
+        <Buttons />
+        <Devices />
+      </div>
+      <Palette />
     </>
   );
 }

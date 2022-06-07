@@ -1,20 +1,30 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateSelected } from '../store/settingsSlice';
+import { MultilineInput } from 'react-input-multiline';
 
 import Module from './module';
 import Ruler from './ruler';
+import { updateSelected } from '../store/settingsSlice';
 import { getDeviceTotalWidth } from '../functions';
 import {
   toggleDeviceNormallyOn,
   selectDevice,
   updateDeviceText,
+  deleteDevice,
 } from '../store/devicesSlice';
+
+function getHeight(el) {
+  return el.current.clientHeight;
+}
 
 export default function Device(props) {
   const { device, id } = props;
   const deviceId = device.id;
+  const [warning, setWarning] = useState(false);
+  const [inputValue, setInputValue] = useState('');
   const dispatch = useDispatch();
+
+  const deviceRef = useRef();
 
   function singleDeviceClickHandler(e) {
     if (e.shiftKey) {
@@ -36,14 +46,50 @@ export default function Device(props) {
   return (
     <div
       className={device.selected ? 'device selected' : 'device'}
-      style={{ width: `${getDeviceTotalWidth(device)}mm` }}
+      style={{
+        width: `${getDeviceTotalWidth(device)}mm`,
+        background: `${device.background}`,
+      }}
       onClick={singleDeviceClickHandler}
+      ref={deviceRef}
     >
+      <div className="device__delete">
+        {/* <button
+          className="device__delete-btn"
+          onClick={() => dispatch(deleteDevice({ deviceId }))}
+        >
+          x
+        </button> */}
+
+        <button className="device__delete-btn" onClick={() => setWarning(true)}>
+          add warn
+        </button>
+      </div>
+
+      {(device.warning.text || warning) && (
+        <div
+          className="device__warning"
+          style={{
+            bottom: `calc(${getHeight(deviceRef)}px + 1px)`,
+          }}
+        >
+          <MultilineInput
+            value={device.warning.text}
+            onChange={(e) => {
+              // setInputValue(e.target.value);
+              deviceInputHandler(e, 'warning');
+            }}
+            additionalClasses={['device__warning-text']}
+            placeholder="Warning"
+          />
+        </div>
+      )}
+
       <div className="device__group">
         <input
           className="device__group-input"
           placeholder="Где?"
-          value={device.group}
+          value={device.group.text}
           onChange={(e) => deviceInputHandler(e, 'group')}
         ></input>
       </div>
@@ -63,7 +109,10 @@ export default function Device(props) {
         <input
           className="device__switch-input"
           placeholder="QF1"
-          value={device.switch}
+          value={device.switch.text}
+          style={{
+            color: `${device.switch.textColor}`,
+          }}
           onChange={(e) => deviceInputHandler(e, 'switch')}
         ></input>
       </div>
@@ -73,7 +122,7 @@ export default function Device(props) {
           rows={3}
           className="device__description-input"
           placeholder="Надпись, название линии"
-          value={device.description}
+          value={device.description.text}
           onChange={(e) => deviceInputHandler(e, 'description')}
         ></textarea>
       </div>
