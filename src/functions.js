@@ -1,9 +1,9 @@
 import THEME from './theme';
 
-export function classes(defaultClass, obj) {
+export function getClasses(defaultClass, classes) {
   let resultClass = defaultClass;
-  for (const key in obj) {
-    if (obj[key]) {
+  for (const key in classes) {
+    if (classes[key]) {
       resultClass += ' ' + key;
     }
   }
@@ -23,7 +23,6 @@ export function createSingleDevice(theme) {
 
   return {
     id: id,
-    selected: false,
     group: {
       text: '',
       backgroundColor: backgroundColor,
@@ -62,4 +61,19 @@ export function getDeviceTotalWidth(device) {
     0
   );
   return width < 8 ? 8 : width;
+}
+
+export function getAllDevicesTotalWidth(devices) {
+  let allModules = [];
+
+  for (let device in devices) {
+    allModules = allModules.concat(devices[device].modules.value);
+  }
+
+  const totalWidth = allModules.reduce(
+    (sum, module) => sum + Number(module.width),
+    0
+  );
+
+  return Math.round(totalWidth * 10) / 10;
 }

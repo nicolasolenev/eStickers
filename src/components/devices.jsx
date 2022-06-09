@@ -3,24 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { deleteDevice } from '../store/devicesSlice';
 
 import Device from './device';
-import { classes } from '../functions';
-import { addDevice, clearAllSelected } from '../store/devicesSlice';
+import { getClasses, getAllDevicesTotalWidth } from '../functions';
+import { addDevice } from '../store/devicesSlice';
 import { clearSelected } from '../store/settingsSlice';
-
-function getDevicesTotalWidth(devices) {
-  let allModules = [];
-
-  for (let device in devices) {
-    allModules = allModules.concat(devices[device].modules.value);
-  }
-
-  const totalWidth = allModules.reduce(
-    (sum, module) => sum + Number(module.width),
-    0
-  );
-
-  return Math.round(totalWidth * 10) / 10;
-}
 
 export default function Devices() {
   const dispatch = useDispatch();
@@ -37,7 +22,6 @@ export default function Devices() {
     }
     if (e.key === 'Escape') {
       dispatch(clearSelected());
-      dispatch(clearAllSelected());
     }
   }
 
@@ -49,7 +33,7 @@ export default function Devices() {
   return (
     <>
       <div
-        className={classes('devices', {
+        className={getClasses('devices', {
           description: settings.sequence,
           numeration: settings.numeration,
           modulesName: settings.modulesName,
@@ -61,9 +45,9 @@ export default function Devices() {
       >
         <div
           className="devices__ruler"
-          style={{ width: `${getDevicesTotalWidth(devices)}mm` }}
+          style={{ width: `${getAllDevicesTotalWidth(devices)}mm` }}
         >
-          {getDevicesTotalWidth(devices)} mm
+          {getAllDevicesTotalWidth(devices)} mm
         </div>
         {Object.values(devices).map((device) => {
           const id = count;
@@ -74,7 +58,13 @@ export default function Devices() {
         <div className="devices__add">
           <button
             className="devices__add-btn"
-            onClick={() => dispatch(addDevice(settings.palette.theme))}
+            onClick={() => {
+              if (getAllDevicesTotalWidth(devices) + 18 > 287) {
+                alert('Больше не поместится, сори, бро');
+              } else {
+                dispatch(addDevice(settings.palette.theme));
+              }
+            }}
           >
             +
           </button>

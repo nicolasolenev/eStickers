@@ -58,27 +58,11 @@ export const settingsSlice = createSlice({
       state[fields] = !state[fields];
     },
 
-    changeSequence: (state) => {
-      state.sequence = !state.sequence;
-    },
-
-    setNumeration: (state) => {
-      state.numeration = !state.numeration;
-    },
-
-    modulesNameVisability: (state) => {
-      state.modulesName = !state.modulesName;
-    },
-
-    groupsVisability: (state) => {
-      state.groups = !state.groups;
-    },
-
     updateSelected: (state, action) => {
       const deviceId = action.payload.deviceId;
 
       if (state.selected.includes(deviceId)) {
-        state.selected.filter((item) => item !== deviceId);
+        state.selected = state.selected.filter((item) => item !== deviceId);
       } else {
         state.selected.push(deviceId);
       }
@@ -91,10 +75,7 @@ export const settingsSlice = createSlice({
 });
 
 export const {
-  changeSequence,
   setNumeration,
-  modulesNameVisability,
-  groupsVisability,
   updateSelected,
   clearSelected,
   paletteType,

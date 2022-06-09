@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Ruler from './deviceComponents/ruler';
 import DeviceHoverBtns from './deviceComponents/deviceHoverBtns';
@@ -9,39 +9,39 @@ import DeviceField from './deviceComponents/deviceField';
 import DeviceWarning from './deviceComponents/deviceWarning';
 import Modules from './deviceComponents/modules';
 import { updateSelected } from '../store/settingsSlice';
-import {
-  selectDevice,
-  updateDeviceText,
-  toggleWarning,
-} from '../store/devicesSlice';
+import { updateDeviceText } from '../store/devicesSlice';
 import { getDeviceTotalWidth } from '../functions';
 
-export default function Device(props) {
-  const { device, id } = props;
+export default function Device({ device, id }) {
   const deviceId = device.id;
-  // const [warning, setWarning] = useState(false);
   const dispatch = useDispatch();
+  const settings = useSelector((state) => state.settings);
 
   function singleDeviceClickHandler(e) {
     if (e.altKey) {
-      dispatch(selectDevice({ deviceId }));
       dispatch(updateSelected({ deviceId }));
     }
   }
 
   function deviceInputHandler(e, key) {
+    let text = e.target.value;
+    if (key === 'switch') {
+      text = text.toUpperCase();
+    }
     dispatch(
       updateDeviceText({
         deviceId,
-        text: e.target.value,
-        key: key,
+        text,
+        key,
       })
     );
   }
 
   return (
     <div
-      className={device.selected ? 'device selected' : 'device'}
+      className={
+        settings.selected.includes(deviceId) ? 'device selected' : 'device'
+      }
       style={{
         width: `${getDeviceTotalWidth(device)}mm`,
       }}

@@ -1,8 +1,7 @@
 import React, { Fragment, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { classes, getDeviceTotalWidth } from '../functions';
-import { clearAllSelected } from '../store/devicesSlice';
+import { getClasses, getDeviceTotalWidth } from '../functions';
 import { clearSelected } from '../store/settingsSlice';
 
 function getHeight(el) {
@@ -19,14 +18,13 @@ export default function Print() {
 
   useEffect(() => {
     // window.print();
-    dispatch(clearAllSelected());
     dispatch(clearSelected());
   }, []);
 
   return (
     <div className="print">
       <div
-        className={classes('devices', {
+        className={getClasses('devices', {
           description: settings.sequence,
           numeration: settings.numeration,
           modulesName: settings.modulesName,

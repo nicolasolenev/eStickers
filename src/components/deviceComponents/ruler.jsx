@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { setModuleWidth } from '../../store/devicesSlice';
+import { getDevicesTotalWidth } from '../../functions';
 
 export default function Ruler(props) {
   const { deviceId, moduleId } = props;
   const [width, setWidth] = useState();
-  const device = useSelector((state) => state.devices)[deviceId];
+  const devices = useSelector((state) => state.devices);
+  const device = devices[deviceId];
   const settings = useSelector((state) => state.settings);
   const moduleWidth = Number(
     device.modules.value.find((module) => module.id === moduleId).width
@@ -14,7 +16,10 @@ export default function Ruler(props) {
   const dispatch = useDispatch();
 
   function saveWidth(e) {
-    const width = e.target.value < 8 ? 8.0 : Number(e.target.value).toFixed(1);
+    const width = Number(e.target.value).toFixed(1);
+    // if (getDevicesTotalWidth(devices) + Number(width) > 287) {
+    //   alert('Сори, бро, аппарат такой ширины не поместится на этой строчке');
+    // } else {
     dispatch(
       setModuleWidth({
         width,
@@ -24,13 +29,14 @@ export default function Ruler(props) {
       })
     );
     setWidth(null);
+    // }
   }
 
   return (
     <div
       className="ruler"
       style={{
-        width: `${moduleWidth < 8 ? 8 : moduleWidth}mm`,
+        width: `${moduleWidth}mm`,
       }}
     >
       <input

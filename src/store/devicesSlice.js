@@ -23,7 +23,7 @@ export const devicesSlice = createSlice({
       } else {
         for (let device in state) {
           for (let key in state[device]) {
-            if (key !== 'id' && key !== 'selected') {
+            if (key !== 'id') {
               state[device][key].backgroundColor =
                 THEME[themeName].deviceBackground;
             }
@@ -44,12 +44,6 @@ export const devicesSlice = createSlice({
       });
     },
 
-    clearAllSelected: (state) => {
-      for (let deviceId in state) {
-        state[deviceId].selected = false;
-      }
-    },
-
     addDevice: (state, action) => {
       const newDevice = createSingleDevice(action.payload);
       state[newDevice.id] = newDevice;
@@ -64,18 +58,11 @@ export const devicesSlice = createSlice({
         combinedDeviceModules.push(...state[id].modules.value);
         delete state[id];
       });
-
-      state[combinedDeviceId].selected = false;
     },
 
     toggleDeviceNormallyOn: (state, action) => {
       const id = action.payload.deviceId;
       state[id].normallyOn.value = !state[id].normallyOn.value;
-    },
-
-    selectDevice: (state, action) => {
-      const id = action.payload.deviceId;
-      state[id].selected = !state[id].selected;
     },
 
     updateDeviceText: (state, action) => {
@@ -97,6 +84,7 @@ export const devicesSlice = createSlice({
 
     setModuleWidth: (state, action) => {
       const { width, deviceId, moduleId, selected } = action.payload;
+      const ModeratedWidth = width < 8 ? 8 : width;
       const device = state[deviceId];
       const moduleIndex = device.modules.value.findIndex(
         (module) => module.id === moduleId
@@ -105,11 +93,11 @@ export const devicesSlice = createSlice({
       if (selected.length && selected.includes(deviceId)) {
         selected.forEach((deviceId) => {
           state[deviceId].modules.value.forEach((module) => {
-            module.width = width;
+            module.width = ModeratedWidth;
           });
         });
       } else {
-        device.modules.value[moduleIndex].width = width;
+        device.modules.value[moduleIndex].width = ModeratedWidth;
       }
     },
 
@@ -124,13 +112,11 @@ export const {
   addDevice,
   combineDevices,
   toggleDeviceNormallyOn,
-  selectDevice,
   updateDeviceText,
   setModuleWidth,
   setModuleName,
   deleteDevice,
   changeColor,
-  clearAllSelected,
   applyTheme,
   toggleWarning,
 } = devicesSlice.actions;

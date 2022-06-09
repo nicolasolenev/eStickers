@@ -1,5 +1,5 @@
 .app-helpers {
-  margin: 5px 0 0 5px;
+  margin: 20px 0 0 50px;
 }
 
 .print {
@@ -10,6 +10,7 @@
 
 .wrapper {
   display: flex;
+  align-items: flex-end;
   justify-content: center;
   &:hover {
     .button {
@@ -21,10 +22,14 @@
 .palette {
   display: flex;
   justify-content: center;
+  margin-top: 20px;
   &__settings {
     // outline: 1px solid red;
     width: 270px;
     padding: 5px;
+    &_first-col {
+      padding-left: 56px;
+    }
   }
 
   &__radiobuttons {
@@ -43,6 +48,7 @@
 
   &__checkbox {
     margin-bottom: 5px;
+    text-align: left;
     &-input {
       margin-right: 4px;
     }
@@ -52,13 +58,13 @@
 .devices {
   flex-grow: 1;
   display: flex;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
   max-width: 287mm;
   position: relative;
   // margin: 0 auto;
   // outline: 1px solid red;
   // margin-top: 30px;
-  padding: 30px 0;
+  padding: 0 0 30px 0;
   &:hover {
     .rulers {
       display: flex;
@@ -66,6 +72,14 @@
     .devices__add {
       display: flex;
     }
+  }
+  &:after {
+    content: 'A4';
+    position: absolute;
+    top: -16px;
+    right: 0;
+    height: 241px;
+    border-right: 1px solid red;
   }
 
   &__add {
@@ -97,7 +111,7 @@
 
 .device {
   width: 18mm;
-  border: 0.5px solid #fff;
+  border: 0.01mm solid #fff;
   margin: 10mm 0;
   display: flex;
   flex-direction: column;
@@ -331,8 +345,8 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  margin-top: 70px;
-  margin-right: 15px;
+  align-self: flex-start;
+  margin: 53px 15px 9px;
   width: 120px;
   .button {
     width: 120px;
@@ -391,7 +405,7 @@
 }
 
 .selected {
-  border-bottom: 1px solid red;
+  border-bottom: 0.01mm solid red;
 }
 
 .theme-gray {

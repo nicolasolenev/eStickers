@@ -9,10 +9,7 @@ export default function Module(props) {
   const dispatch = useDispatch();
 
   return (
-    <div
-      className="device__module"
-      style={{ width: `${module.width < 8 ? 8 : module.width}mm` }}
-    >
+    <div className="device__module" style={{ width: `${module.width}mm` }}>
       <input
         className="device__module-input"
         placeholder="L1"
