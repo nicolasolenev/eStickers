@@ -1,10 +1,11 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { setModuleName } from '../store/devicesSlice';
+import { setModuleName } from '../../store/devicesSlice';
 
 export default function Module(props) {
   const { id, module, deviceId } = props;
+  const settings = useSelector((state) => state.settings);
   const dispatch = useDispatch();
 
   return (
@@ -27,7 +28,7 @@ export default function Module(props) {
         }
       />
 
-      <div className="device__id">{id}</div>
+      <div className="device__id theme-gray">{id}</div>
     </div>
   );
 }

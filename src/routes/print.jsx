@@ -1,7 +1,9 @@
 import React, { Fragment, useRef, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { classes, getDeviceTotalWidth } from '../functions';
+import { clearAllSelected } from '../store/devicesSlice';
+import { clearSelected } from '../store/settingsSlice';
 
 function getHeight(el) {
   console.log(el);
@@ -12,11 +14,13 @@ export default function Print() {
   const settings = useSelector((state) => state.settings);
   const devices = useSelector((state) => state.devices);
   let count = 1;
+  const dispatch = useDispatch();
   const devRef = useRef();
 
   useEffect(() => {
     // window.print();
-    console.log(devRef);
+    dispatch(clearAllSelected());
+    dispatch(clearSelected());
   }, []);
 
   return (
@@ -31,7 +35,7 @@ export default function Print() {
       >
         {Object.values(devices).map((device) => {
           const id = count;
-          count = count + device.modules.length;
+          count = count + device.modules.value.length;
           const deviceId = device.id;
           return (
             <Fragment key={id}>
@@ -40,43 +44,61 @@ export default function Print() {
                 className={device.selected ? 'device selected' : 'device'}
                 style={{
                   width: `${getDeviceTotalWidth(device)}mm`,
-                  background: `${device.background}`,
                 }}
               >
                 {device.warning.text && (
                   <div
                     className="device__warning"
-                    style={
-                      {
-                        // bottom: `calc(${getHeight(devRef)}px + 1px)`,
-                      }
-                    }
+                    style={{ background: `${device.warning.backgroundColor}` }}
                   >
                     {device.warning.text}
                     {/* additionalClasses={['device__warning-text']} */}
                   </div>
                 )}
 
-                <div className="device__group">{device.group.text}</div>
+                <div
+                  className="device__group"
+                  style={{ background: `${device.group.backgroundColor}` }}
+                >
+                  <div className="device__group-input">{device.group.text}</div>
+                </div>
 
-                <div className="device__point">
+                <div
+                  className="device__point"
+                  style={{ background: `${device.normallyOn.backgroundColor}` }}
+                >
                   <span
                     className={
-                      !device.normallyOn
+                      !device.normallyOn.value
                         ? 'point-circle'
                         : 'point-circle point-circle_active'
                     }
                   ></span>
                 </div>
 
-                <div className="device__switch">{device.switch.text}</div>
+                <div
+                  className="device__switch"
+                  style={{ background: `${device.switch.backgroundColor}` }}
+                >
+                  <div className="device__switch-input">
+                    {device.switch.text}
+                  </div>
+                </div>
 
-                <div className="device__description">
+                <div
+                  className="device__description"
+                  style={{
+                    background: `${device.description.backgroundColor}`,
+                  }}
+                >
                   {device.description.text}
                 </div>
 
-                <div className="device__modules">
-                  {device.modules.map((module, index) => (
+                <div
+                  className="device__modules"
+                  style={{ background: `${device.modules.backgroundColor}` }}
+                >
+                  {device.modules.value.map((module, index) => (
                     /* <Module
                       key={module.id}
                       id={id + index}
@@ -90,7 +112,9 @@ export default function Print() {
                           width: `${module.width < 8 ? 8 : module.width}mm`,
                         }}
                       >
-                        {module.moduleName}
+                        <div className="device__module-input">
+                          {module.moduleName}
+                        </div>
                         <div className="device__id">{id}</div>
                       </div>
                     </Fragment>

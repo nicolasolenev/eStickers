@@ -1,33 +1,29 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { MultilineInput } from 'react-input-multiline';
 
-import Module from './module';
-import Ruler from './ruler';
+import Ruler from './deviceComponents/ruler';
+import DeviceHoverBtns from './deviceComponents/deviceHoverBtns';
+import DevicePoint from './deviceComponents/devicePoint';
+import DeviceDescription from './deviceComponents/deviceDescription';
+import DeviceField from './deviceComponents/deviceField';
+import DeviceWarning from './deviceComponents/deviceWarning';
+import Modules from './deviceComponents/modules';
 import { updateSelected } from '../store/settingsSlice';
-import { getDeviceTotalWidth } from '../functions';
 import {
-  toggleDeviceNormallyOn,
   selectDevice,
   updateDeviceText,
-  deleteDevice,
+  toggleWarning,
 } from '../store/devicesSlice';
-
-function getHeight(el) {
-  return el.current.clientHeight;
-}
+import { getDeviceTotalWidth } from '../functions';
 
 export default function Device(props) {
   const { device, id } = props;
   const deviceId = device.id;
-  const [warning, setWarning] = useState(false);
-  const [inputValue, setInputValue] = useState('');
+  // const [warning, setWarning] = useState(false);
   const dispatch = useDispatch();
 
-  const deviceRef = useRef();
-
   function singleDeviceClickHandler(e) {
-    if (e.shiftKey) {
+    if (e.altKey) {
       dispatch(selectDevice({ deviceId }));
       dispatch(updateSelected({ deviceId }));
     }
@@ -48,98 +44,37 @@ export default function Device(props) {
       className={device.selected ? 'device selected' : 'device'}
       style={{
         width: `${getDeviceTotalWidth(device)}mm`,
-        background: `${device.background}`,
       }}
       onClick={singleDeviceClickHandler}
-      ref={deviceRef}
     >
-      <div className="device__delete">
-        {/* <button
-          className="device__delete-btn"
-          onClick={() => dispatch(deleteDevice({ deviceId }))}
-        >
-          x
-        </button> */}
+      <DeviceHoverBtns device={device} />
 
-        <button className="device__delete-btn" onClick={() => setWarning(true)}>
-          add warn
-        </button>
-      </div>
-
-      {(device.warning.text || warning) && (
-        <div
-          className="device__warning"
-          style={{
-            bottom: `calc(${getHeight(deviceRef)}px + 1px)`,
-          }}
-        >
-          <MultilineInput
-            value={device.warning.text}
-            onChange={(e) => {
-              // setInputValue(e.target.value);
-              deviceInputHandler(e, 'warning');
-            }}
-            additionalClasses={['device__warning-text']}
-            placeholder="Warning"
-          />
-        </div>
+      {device.warning.isActive && (
+        <DeviceWarning device={device} handler={deviceInputHandler} />
       )}
 
-      <div className="device__group">
-        <input
-          className="device__group-input"
-          placeholder="Где?"
-          value={device.group.text}
-          onChange={(e) => deviceInputHandler(e, 'group')}
-        ></input>
-      </div>
+      <DeviceField
+        name="group"
+        placeholder="Где?"
+        device={device}
+        handler={deviceInputHandler}
+      />
 
-      <div className="device__point">
-        <span
-          onClick={() => dispatch(toggleDeviceNormallyOn({ deviceId }))}
-          className={
-            !device.normallyOn
-              ? 'point-circle'
-              : 'point-circle point-circle_active'
-          }
-        ></span>
-      </div>
+      <DevicePoint device={device} dispatch={dispatch} deviceId={deviceId} />
 
-      <div className="device__switch">
-        <input
-          className="device__switch-input"
-          placeholder="QF1"
-          value={device.switch.text}
-          style={{
-            color: `${device.switch.textColor}`,
-          }}
-          onChange={(e) => deviceInputHandler(e, 'switch')}
-        ></input>
-      </div>
+      <DeviceField
+        name="switch"
+        placeholder="QF1"
+        device={device}
+        handler={deviceInputHandler}
+      />
 
-      <div className="device__description">
-        <textarea
-          rows={3}
-          className="device__description-input"
-          placeholder="Надпись, название линии"
-          value={device.description.text}
-          onChange={(e) => deviceInputHandler(e, 'description')}
-        ></textarea>
-      </div>
+      <DeviceDescription device={device} handler={deviceInputHandler} />
 
-      <div className="device__modules">
-        {device.modules.map((module, index) => (
-          <Module
-            key={module.id}
-            id={id + index}
-            module={module}
-            deviceId={deviceId}
-          />
-        ))}
-      </div>
+      <Modules device={device} deviceId={deviceId} id={id} />
 
       <div className="rulers">
-        {device.modules.map((module) => (
+        {device.modules.value.map((module) => (
           <Ruler key={module.id} deviceId={deviceId} moduleId={module.id} />
         ))}
       </div>

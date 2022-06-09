@@ -7,20 +7,40 @@ export const settingsSlice = createSlice({
     numeration: true,
     modulesName: true,
     groups: true,
+    switches: true,
+    descriptions: true,
+    points: true,
     selected: [],
     palette: {
       theme: '',
-      type: 'backgroundColor',
+      type: '',
       checked: {
         warning: false,
         group: true,
+        normallyOn: true,
         switch: true,
+        description: true,
+        modules: true,
       },
     },
   },
   reducers: {
     changeTheme: (state, action) => {
+      const theme = action.payload;
       state.palette.theme = action.payload;
+      if (theme === '8') {
+        state.groups = false;
+        state.points = false;
+        state.modulesName = false;
+      } else if (theme === '10') {
+        state.groups = true;
+        state.points = false;
+        state.modulesName = false;
+      } else {
+        state.groups = true;
+        state.points = true;
+        state.modulesName = true;
+      }
     },
 
     paletteType: (state, action) => {
@@ -30,6 +50,12 @@ export const settingsSlice = createSlice({
     paletteChecked: (state, action) => {
       state.palette.checked[action.payload] =
         !state.palette.checked[action.payload];
+    },
+
+    toggleVisability: (state, action) => {
+      const fields = action.payload;
+
+      state[fields] = !state[fields];
     },
 
     changeSequence: (state) => {
@@ -74,6 +100,7 @@ export const {
   paletteType,
   paletteChecked,
   changeTheme,
+  toggleVisability,
 } = settingsSlice.actions;
 
 export default settingsSlice.reducer;

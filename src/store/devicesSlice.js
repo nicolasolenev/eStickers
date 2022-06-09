@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createSingleDevice } from '../functions';
+import THEME from '../theme';
 
 const initialDevice = createSingleDevice();
 
@@ -9,17 +10,35 @@ export const devicesSlice = createSlice({
     [initialDevice.id]: initialDevice,
   },
   reducers: {
+    toggleWarning: (state, action) => {
+      const deviceId = action.payload;
+
+      state[deviceId].warning.isActive = !state[deviceId].warning.isActive;
+    },
+
+    applyTheme: (state, action) => {
+      const { themeName } = action.payload;
+
+      if (themeName === '10') {
+      } else {
+        for (let device in state) {
+          for (let key in state[device]) {
+            if (key !== 'id' && key !== 'selected') {
+              state[device][key].backgroundColor =
+                THEME[themeName].deviceBackground;
+            }
+          }
+        }
+      }
+    },
+
     changeColor: (state, action) => {
       const { selected, color, type, fields } = action.payload;
 
       selected.forEach((deviceId) => {
         for (let key in fields) {
           if (fields[key]) {
-            if (type === 'backgroundColor') {
-              state[deviceId].background = color;
-            } else {
-              state[deviceId][key][type] = color;
-            }
+            state[deviceId][key][type] = color;
           }
         }
       });
@@ -31,18 +50,18 @@ export const devicesSlice = createSlice({
       }
     },
 
-    addDevice: (state) => {
-      const newDevice = createSingleDevice();
+    addDevice: (state, action) => {
+      const newDevice = createSingleDevice(action.payload);
       state[newDevice.id] = newDevice;
     },
 
     combineDevices: (state, action) => {
       const selected = [...action.payload.selected];
       const combinedDeviceId = selected.shift();
-      const combinedDeviceModules = state[combinedDeviceId].modules;
+      const combinedDeviceModules = state[combinedDeviceId].modules.value;
 
       selected.forEach((id) => {
-        combinedDeviceModules.push(...state[id].modules);
+        combinedDeviceModules.push(...state[id].modules.value);
         delete state[id];
       });
 
@@ -51,7 +70,7 @@ export const devicesSlice = createSlice({
 
     toggleDeviceNormallyOn: (state, action) => {
       const id = action.payload.deviceId;
-      state[id].normallyOn = !state[id].normallyOn;
+      state[id].normallyOn.value = !state[id].normallyOn.value;
     },
 
     selectDevice: (state, action) => {
@@ -69,28 +88,28 @@ export const devicesSlice = createSlice({
     setModuleName: (state, action) => {
       const { name, deviceId, moduleId } = action.payload;
       const device = state[deviceId];
-      const moduleIndex = device.modules.findIndex(
+      const moduleIndex = device.modules.value.findIndex(
         (module) => module.id === moduleId
       );
 
-      device.modules[moduleIndex].moduleName = name;
+      device.modules.value[moduleIndex].moduleName = name;
     },
 
     setModuleWidth: (state, action) => {
       const { width, deviceId, moduleId, selected } = action.payload;
       const device = state[deviceId];
-      const moduleIndex = device.modules.findIndex(
+      const moduleIndex = device.modules.value.findIndex(
         (module) => module.id === moduleId
       );
 
-      if (selected.length) {
+      if (selected.length && selected.includes(deviceId)) {
         selected.forEach((deviceId) => {
-          state[deviceId].modules.forEach((module) => {
+          state[deviceId].modules.value.forEach((module) => {
             module.width = width;
           });
         });
       } else {
-        device.modules[moduleIndex].width = width;
+        device.modules.value[moduleIndex].width = width;
       }
     },
 
@@ -112,6 +131,8 @@ export const {
   deleteDevice,
   changeColor,
   clearAllSelected,
+  applyTheme,
+  toggleWarning,
 } = devicesSlice.actions;
 
 export default devicesSlice.reducer;

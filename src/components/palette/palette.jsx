@@ -8,36 +8,38 @@ import {
   paletteType,
   paletteChecked,
   changeTheme,
-} from '../store/settingsSlice';
-import { changeColor } from '../store/devicesSlice';
+} from '../../store/settingsSlice';
+import { changeColor, applyTheme } from '../../store/devicesSlice';
+import { PaletteCheckboxes } from './paletteCheckboxes';
 
 const options = [
   { value: 'gray', label: 'Gray' },
-  { value: 'negray', label: 'Negray' },
+  { value: '8', label: 'Без групп, серая заливка' },
+  // { value: '10', label: 'Цветная' },
 ];
 
 export default function Palette() {
-  const [color, setColor] = useColor('hex', '#f2f2f2');
+  const [color, setColor] = useColor('hex', '#b6d4c184');
   const settings = useSelector((state) => state.settings);
   const selectedOption = settings.palette.theme;
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
-    dispatch(
-      changeColor({
-        selected: settings.selected,
-        color: color.hex,
-        type: settings.palette.type,
-        fields: settings.palette.checked,
-      })
-    );
-  }, [
-    color.hex,
-    dispatch,
-    settings.palette.checked,
-    settings.palette.type,
-    settings.selected,
-  ]);
+  // React.useEffect(() => {
+  //   dispatch(
+  //     changeColor({
+  //       selected: settings.selected,
+  //       color: color.hex,
+  //       type: settings.palette.type,
+  //       fields: settings.palette.checked,
+  //     })
+  //   );
+  // }, [
+  //   color.hex,
+  //   dispatch,
+  //   settings.palette.checked,
+  //   settings.palette.type,
+  //   settings.selected,
+  // ]);
 
   function onTypeChanged(e) {
     dispatch(paletteType(e.currentTarget.value));
@@ -46,8 +48,9 @@ export default function Palette() {
   return (
     <div className="palette">
       <div className="palette__settings">
-        <div>
-          <label htmlFor="text">
+        <div style={{ margin: '5px' }}>Изменение цвета выделенных модулей</div>
+        <div className="palette__radiobuttons">
+          <label className="palette__radiobutton" htmlFor="text">
             <input
               type="radio"
               id="text"
@@ -58,7 +61,7 @@ export default function Palette() {
             />
             Text
           </label>
-          <label htmlFor="background">
+          <label className="palette__radiobutton" htmlFor="background">
             <input
               type="radio"
               id="background"
@@ -70,30 +73,7 @@ export default function Palette() {
             Background
           </label>
         </div>
-
-        <div>
-          <label htmlFor="warning">
-            <input
-              type="checkbox"
-              id="warning"
-              name="warning"
-              defaultChecked={settings.palette.checked.warning}
-              onChange={() => dispatch(paletteChecked('warning'))}
-            />
-            Warning
-          </label>
-
-          <label htmlFor="switch">
-            <input
-              type="checkbox"
-              id="switch"
-              name="switch"
-              defaultChecked={settings.palette.checked.switch}
-              onChange={() => dispatch(paletteChecked('switch'))}
-            />
-            Switch
-          </label>
-        </div>
+        <PaletteCheckboxes />
       </div>
 
       <div className="palette__settings">
@@ -103,7 +83,17 @@ export default function Palette() {
           color={color}
           alpha={true}
           hideRGB={true}
-          onChange={setColor}
+          onChange={(col) => {
+            setColor(col);
+            dispatch(
+              changeColor({
+                selected: settings.selected,
+                color: color.hex,
+                type: settings.palette.type,
+                fields: settings.palette.checked,
+              })
+            );
+          }}
           hideHSV
           dark
         />
@@ -112,14 +102,13 @@ export default function Palette() {
       <div className="palette__settings">
         <div className="theme">
           Theme:
-          {/* <select name="theme-select" id="theme-select">
-            <option value="gray">gray</option>
-            <option value="gray">negray</option>
-          </select> */}
           <Select
             // value={selectedOption}
             options={options}
-            onChange={(theme) => dispatch(changeTheme(theme.value))}
+            onChange={(theme) => {
+              dispatch(changeTheme(theme.value));
+              dispatch(applyTheme({ themeName: theme.value }));
+            }}
             isSearchable={false}
           />
         </div>
