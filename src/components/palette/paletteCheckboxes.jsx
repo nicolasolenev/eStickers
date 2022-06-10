@@ -5,17 +5,17 @@ import { paletteChecked } from '../../store/settingsSlice';
 export function PaletteCheckboxes(props) {
   return (
     <div className="palette__checkboxes">
-      <PaletteCheckbox name="warning" />
-      <PaletteCheckbox name="group" />
-      <PaletteCheckbox name="normallyOn" />
-      <PaletteCheckbox name="switch" />
-      <PaletteCheckbox name="description" />
-      <PaletteCheckbox name="modules" />
+      <PaletteCheckbox name="warning" text="Примечание" />
+      <PaletteCheckbox name="group" text="Группа" />
+      <PaletteCheckbox name="normallyOn" text="Норм. положение" />
+      <PaletteCheckbox name="switch" text="Обознач. на схеме" />
+      <PaletteCheckbox name="description" text="Название" />
+      <PaletteCheckbox name="modules" text="Полюса" />
     </div>
   );
 }
 
-function PaletteCheckbox({ name }) {
+function PaletteCheckbox({ name, text }) {
   const settings = useSelector((state) => state.settings);
   const dispatch = useDispatch();
 
@@ -29,10 +29,7 @@ function PaletteCheckbox({ name }) {
         defaultChecked={settings.palette.checked[name]}
         onChange={() => dispatch(paletteChecked(name))}
       />
-      {name
-        .split('')
-        .map((l, i) => (i === 0 ? l.toUpperCase() : l))
-        .join('')}
+      {text}
     </label>
   );
 }

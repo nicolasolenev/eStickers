@@ -1,5 +1,31 @@
-.app-helpers {
-  margin: 20px 0 0 50px;
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.paper-format {
+  margin: 0 10px 0 0;
+
+  &__field {
+    margin: 0 0 5px 0;
+  }
+
+  &__button {
+    margin: 5px;
+    padding: 0 5px;
+    cursor: pointer;
+  }
+
+  &__input {
+    width: 50px;
+    margin: 0 0 0 5px;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
 }
 
 .print {
@@ -10,8 +36,9 @@
 
 .wrapper {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
+  margin-top: 20px;
   &:hover {
     .button {
       display: block;
@@ -19,52 +46,15 @@
   }
 }
 
-.palette {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-  &__settings {
-    // outline: 1px solid red;
-    width: 270px;
-    padding: 5px;
-    &_first-col {
-      padding-left: 56px;
-    }
-  }
-
-  &__radiobuttons {
-    margin-bottom: 15px;
-  }
-
-  &__radiobutton {
-    margin-right: 15px;
-  }
-
-  &__checkboxes {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  &__checkbox {
-    margin-bottom: 5px;
-    text-align: left;
-    &-input {
-      margin-right: 4px;
-    }
-  }
-}
-
 .devices {
   flex-grow: 1;
   display: flex;
-  // flex-wrap: wrap;
-  max-width: 287mm;
+  flex-wrap: wrap;
+  // max-width: 297mm;
   position: relative;
-  // margin: 0 auto;
-  // outline: 1px solid red;
-  // margin-top: 30px;
-  padding: 0 0 30px 0;
+  padding: 0 5mm 30px 5mm;
+  background: #fff;
+  overflow: scroll;
   &:hover {
     .rulers {
       display: flex;
@@ -73,18 +63,9 @@
       display: flex;
     }
   }
-  &:after {
-    content: 'A4';
-    position: absolute;
-    top: -16px;
-    right: 0;
-    height: 241px;
-    border-right: 1px solid red;
-  }
 
   &__add {
     align-self: center;
-    // display: none;
     &-btn {
       width: 30px;
       height: 30px;
@@ -98,27 +79,37 @@
   }
 
   &__ruler {
-    border-bottom: 1px solid gray;
-    border-left: 1px solid gray;
-    border-right: 1px solid gray;
+    border-bottom: 0.1mm solid gray;
+    border-left: 0.1mm solid gray;
+    border-right: 0.1mm solid gray;
     text-align: center;
     position: absolute;
     bottom: 22px;
-    left: 0;
+    left: 5mm;
     color: gray;
+  }
+
+  .ruler:last-child:after {
+    content: '';
+    position: absolute;
+    right: 0mm;
+    bottom: -6px;
+    background: gray;
+    width: 0.1mm;
+    height: 10px;
   }
 }
 
 .device {
   width: 18mm;
-  border: 0.01mm solid #fff;
+  border: 0.1mm solid #fff;
+  border-left: none;
   margin: 10mm 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   position: relative;
-  // background: #f2f2f2;
   &:hover {
     .device__hover-btns-btn {
       display: block;
@@ -128,11 +119,11 @@
   &__group,
   &__point,
   &__switch,
-  &__description,
-  &__id {
+  &__description {
     padding: 7px 3px;
     text-align: center;
     width: 100%;
+    word-break: break-all;
   }
 
   &__point {
@@ -143,7 +134,13 @@
   &__group {
     height: 25px;
     display: none;
-    &-input {
+    textarea {
+      width: 100%;
+      background-color: transparent;
+      border: transparent;
+      text-align: center;
+      font-weight: 700;
+      resize: none;
     }
   }
 
@@ -152,8 +149,7 @@
     display: none;
   }
 
-  &__switch,
-  &__group {
+  &__switch {
     &-input {
       width: 100%;
       background-color: transparent;
@@ -167,7 +163,6 @@
     order: 1;
     width: 100%;
     text-align: center;
-    // margin: 5px 0 0 0;
     display: flex;
   }
 
@@ -175,9 +170,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-right: 1.5px solid #fff;
-    // height: 44px;
+    border-right: 0.1mm solid #fff;
     justify-content: flex-end;
+
     &-input {
       display: none;
       background-color: transparent;
@@ -194,23 +189,33 @@
         display: none;
       }
     }
+
     &:last-child {
       border: none;
     }
   }
 
   &__id {
+    width: 100%;
+    padding: 3px;
     color: gray;
     font-size: 7pt;
     display: none;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 
   &__description {
-    // flex-grow: 1;
     width: 100%;
-    flex-basis: 60px;
+    // flex-basis: 60px;
     display: none;
-    &-input {
+
+    textarea {
       width: 100%;
       background-color: transparent;
       border: transparent;
@@ -226,7 +231,6 @@
     padding: 0 0 3px 0;
     width: 100%;
     justify-content: center;
-    // z-index: 10;
     &-btn {
       width: 60px;
       display: none;
@@ -235,7 +239,6 @@
   }
 
   &__warning {
-    // position: absolute;
     width: 100%;
     background: #f2f2f2;
     text-align: center;
@@ -243,25 +246,24 @@
     font-weight: 700;
     color: #eb8044;
     border-radius: 5px 5px 0 0;
-    border-bottom: 1px solid #fff;
+    border-bottom: 0.1mm solid #fff;
+    word-break: break-all;
     order: -2;
-    &-text {
+
+    textarea {
       width: 100%;
       background-color: transparent;
-      // border: transparent;
       text-align: center;
       resize: none;
-      &::placeholder {
-        /* Most modern browsers support this now. */
-        color: #909;
-      }
+      border: transparent;
+      color: inherit;
     }
   }
 }
 
 .point-circle {
   display: inline-block;
-  border: 1px solid #000;
+  border: 0.1mm solid #000;
   border-radius: 50%;
   width: 10px;
   height: 10px;
@@ -285,11 +287,13 @@
   }
   .device__id {
     order: 0;
+    border: none;
+    border-bottom: 0.1mm solid #fff;
   }
   .device__warning {
     order: 10;
     border-radius: 0 0 5px 5px;
-    border-top: 1px solid #fff;
+    border-top: 0.1mm solid #fff;
   }
   .device__hover-btns {
     top: auto;
@@ -341,18 +345,22 @@
 }
 
 .buttons {
-  // margin: 0 auto;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-self: flex-start;
-  margin: 53px 15px 9px;
+  margin: 5px 15px 9px;
   width: 120px;
+
   .button {
     width: 120px;
     padding: 5px;
-    margin-bottom: 5px;
-    // display: none;
+    margin: 5px 0;
+  }
+
+  &__title {
+    border-bottom: 1px solid gray;
+    margin: 10px 0 5px 0;
   }
 }
 
@@ -362,31 +370,30 @@
   bottom: -22px;
   width: 101%;
   display: flex;
-  // display: none;
 }
 
 .ruler {
   position: relative;
   border: none;
-  border-bottom: 1px solid gray;
+  border-bottom: 0.1mm solid gray;
   text-align: center;
   color: gray;
   &:before {
     content: '';
     position: absolute;
-    left: 0px;
+    left: -0.1mm;
     bottom: -6px;
     background: gray;
-    width: 1px;
+    width: 0.2mm;
     height: 10px;
   }
   &:after {
-    content: '';
+    // content: '';
     position: absolute;
-    right: -1px;
+    right: -0.1mm;
     bottom: -6px;
     background: gray;
-    width: 1px;
+    width: 0.1mm;
     height: 10px;
   }
 
@@ -395,7 +402,6 @@
     text-align: center;
     color: gray;
     width: 100%;
-    // padding-left: 9px;
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
       -webkit-appearance: none;
@@ -404,41 +410,80 @@
   }
 }
 
+.palette {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  &__settings {
+    width: 270px;
+    padding: 5px;
+    &_first-col {
+      padding-left: 56px;
+    }
+  }
+
+  &__radiobuttons {
+    margin-bottom: 15px;
+  }
+
+  &__radiobutton {
+    margin-right: 15px;
+  }
+
+  &__checkboxes {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  &__checkbox {
+    margin-bottom: 5px;
+    text-align: left;
+    &-input {
+      margin-right: 4px;
+    }
+  }
+}
+
 .selected {
-  border-bottom: 0.01mm solid red;
+  .device__id {
+    // border: 0.01mm solid red;
+    color: red;
+    font-weight: 700;
+  }
 }
 
 .theme-gray {
   color: #adb1ad;
   background: #f2f2f2;
-  border-top: 1px solid #fff;
+  border-top: 0.1mm solid #fff;
 }
 
-input::-webkit-input-placeholder {
-  /* WebKit, Blink, Edge */
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
   color: #0000002e;
 }
-input:-moz-placeholder {
-  /* Mozilla Firefox 4 to 18 */
+input:-moz-placeholder,
+textarea:-moz-placeholder {
   color: #0000002e;
   opacity: 1;
 }
-input::-moz-placeholder {
-  /* Mozilla Firefox 19+ */
+input::-moz-placeholder,
+textarea::-moz-placeholder {
   color: #0000002e;
   opacity: 1;
 }
-input:-ms-input-placeholder {
-  /* Internet Explorer 10-11 */
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
   color: #0000002e;
 }
-input::-ms-input-placeholder {
-  /* Microsoft Edge */
+input::-ms-input-placeholder,
+textarea::-ms-input-placeholder {
   color: #0000002e;
 }
 
-input::placeholder {
-  /* Most modern browsers support this now. */
+input::placeholder,
+textarea::placeholder {
   color: #0000002e;
 }
 
@@ -485,4 +530,81 @@ input:focus:-ms-input-placeholder,
 textarea:focus:-ms-input-placeholder {
   opacity: 0;
   transition: opacity 0.3s ease;
+}
+
+textarea:focus-visible,
+input:focus-visible {
+  outline: none;
+}
+
+.switch-button {
+  background: #f2f2f2;
+  border-radius: 3px;
+  border: 1px solid gray;
+  overflow: hidden;
+  // width: 110px;
+  width: 65px;
+  height: 40px;
+
+  text-align: center;
+  font-size: 8pt;
+  color: #000;
+  position: relative;
+  margin-bottom: 10px;
+  align-self: center;
+
+  &:before {
+    content: 'Подписи';
+    position: absolute;
+    bottom: 3px;
+    right: 0;
+    width: 63px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  &-checkbox {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 2;
+
+    &:checked + .switch-button-label:before {
+      transform: translateY(20px);
+      transition: transform 200ms linear;
+    }
+
+    & + .switch-button-label {
+      position: relative;
+      padding: 3px 0;
+      display: block;
+      user-select: none;
+      pointer-events: none;
+
+      &:before {
+        content: '';
+        background: #fbedcb;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        border-radius: 3px;
+        transform: translateY(0);
+        transition: transform 300ms;
+      }
+
+      .switch-button-label-span {
+        position: relative;
+      }
+    }
+  }
 }

@@ -4,24 +4,23 @@ import React from 'react';
 import Devices from './components/devices';
 import Buttons from './components/buttons';
 import Palette from './components/palette/palette';
+import Header from './components/header';
 
-function App() {
+export default function App() {
   return (
     <>
-      <div className="app-helpers">
-        <p>Управление/горячие клавиши:</p>
-        <ul>
-          <li>Выделить модуль: Alt + ЛКМ по модулю</li>
-          <li>Удалить выделенные модули: Alt + Delete</li>
-        </ul>
-      </div>
-      <div className="wrapper">
-        <Buttons />
-        <Devices />
-      </div>
+      <Header />
+      <DevicesRow />
       <Palette />
     </>
   );
 }
 
-export default App;
+function DevicesRow(props) {
+  return (
+    <div className="wrapper">
+      <Buttons />
+      <Devices />
+    </div>
+  );
+}

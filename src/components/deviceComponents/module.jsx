@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { setModuleName } from '../../store/devicesSlice';
+import { updateSelected } from '../../store/settingsSlice';
 
 export default function Module(props) {
   const { id, module, deviceId } = props;
@@ -25,7 +26,12 @@ export default function Module(props) {
         }
       />
 
-      <div className="device__id theme-gray">{id}</div>
+      <div
+        className="device__id theme-gray"
+        onClick={() => dispatch(updateSelected({ deviceId }))}
+      >
+        {id}
+      </div>
     </div>
   );
 }

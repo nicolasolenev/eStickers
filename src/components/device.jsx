@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Ruler from './deviceComponents/ruler';
 import DeviceHoverBtns from './deviceComponents/deviceHoverBtns';
 import DevicePoint from './deviceComponents/devicePoint';
-import DeviceDescription from './deviceComponents/deviceDescription';
+import DeviceMultilineInput from './deviceComponents/deviceMultilineInput';
 import DeviceField from './deviceComponents/deviceField';
 import DeviceWarning from './deviceComponents/deviceWarning';
 import Modules from './deviceComponents/modules';
-import { updateSelected } from '../store/settingsSlice';
 import { updateDeviceText } from '../store/devicesSlice';
 import { getDeviceTotalWidth } from '../functions';
 
@@ -16,26 +15,20 @@ export default function Device({ device, id }) {
   const deviceId = device.id;
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
+  const deviceWidth = useMemo(() => getDeviceTotalWidth(device), [device]);
 
-  function singleDeviceClickHandler(e) {
-    if (e.altKey) {
-      dispatch(updateSelected({ deviceId }));
-    }
-  }
-
-  function deviceInputHandler(e, key) {
-    let text = e.target.value;
-    if (key === 'switch') {
-      text = text.toUpperCase();
-    }
-    dispatch(
-      updateDeviceText({
-        deviceId,
-        text,
-        key,
-      })
-    );
-  }
+  const deviceInputHandler = useCallback(
+    function (e, key) {
+      dispatch(
+        updateDeviceText({
+          deviceId,
+          text: e.target.value,
+          key,
+        })
+      );
+    },
+    [deviceId, dispatch]
+  );
 
   return (
     <div
@@ -43,9 +36,8 @@ export default function Device({ device, id }) {
         settings.selected.includes(deviceId) ? 'device selected' : 'device'
       }
       style={{
-        width: `${getDeviceTotalWidth(device)}mm`,
+        width: `${deviceWidth}mm`,
       }}
-      onClick={singleDeviceClickHandler}
     >
       <DeviceHoverBtns device={device} />
 
@@ -53,11 +45,17 @@ export default function Device({ device, id }) {
         <DeviceWarning device={device} handler={deviceInputHandler} />
       )}
 
-      <DeviceField
+      {/* <DeviceField
         name="group"
-        placeholder="Где?"
+        placeholder="Группа"
         device={device}
         handler={deviceInputHandler}
+      /> */}
+      <DeviceMultilineInput
+        type="group"
+        device={device}
+        handler={deviceInputHandler}
+        placeholder="Группа"
       />
 
       <DevicePoint device={device} dispatch={dispatch} deviceId={deviceId} />
@@ -69,7 +67,12 @@ export default function Device({ device, id }) {
         handler={deviceInputHandler}
       />
 
-      <DeviceDescription device={device} handler={deviceInputHandler} />
+      <DeviceMultilineInput
+        type="description"
+        device={device}
+        handler={deviceInputHandler}
+        placeholder="Название"
+      />
 
       <Modules device={device} deviceId={deviceId} id={id} />
 

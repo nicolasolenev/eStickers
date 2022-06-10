@@ -1,5 +1,5 @@
 import React from 'react';
-import { MultilineInput } from 'react-input-multiline';
+import TextareaAutosize from 'react-autosize-textarea';
 
 export default function DeviceWarning({ device, handler }) {
   return (
@@ -10,13 +10,19 @@ export default function DeviceWarning({ device, handler }) {
         color: `${device.warning.textColor}`,
       }}
     >
-      <MultilineInput
+      {/* <MultilineInput
         value={device.warning.text}
         onChange={(e) => {
           handler(e, 'warning');
         }}
         additionalClasses={['device__warning-text']}
         placeholder="Warning"
+      /> */}
+      <TextareaAutosize
+        placeholder="Примеч."
+        onChange={(e) => {
+          handler(e, 'warning');
+        }}
       />
     </div>
   );

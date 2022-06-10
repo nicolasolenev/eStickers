@@ -10,6 +10,7 @@ export const settingsSlice = createSlice({
     switches: true,
     descriptions: true,
     points: true,
+    paperWidth: 297,
     selected: [],
     palette: {
       theme: '',
@@ -25,6 +26,10 @@ export const settingsSlice = createSlice({
     },
   },
   reducers: {
+    setPaperWidth: (state, action) => {
+      state.paperWidth = action.payload;
+    },
+
     changeTheme: (state, action) => {
       const theme = action.payload;
       state.palette.theme = action.payload;
@@ -82,6 +87,7 @@ export const {
   paletteChecked,
   changeTheme,
   toggleVisability,
+  setPaperWidth,
 } = settingsSlice.actions;
 
 export default settingsSlice.reducer;

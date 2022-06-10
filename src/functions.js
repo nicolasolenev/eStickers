@@ -26,6 +26,7 @@ export function createSingleDevice(theme) {
     group: {
       text: '',
       backgroundColor: backgroundColor,
+      height: '29px',
     },
     normallyOn: {
       value: true,
@@ -40,6 +41,7 @@ export function createSingleDevice(theme) {
       text: '',
       textColor: textColor,
       backgroundColor: backgroundColor,
+      height: '29px',
     },
     modules: {
       value: [{ moduleName: '', width: 18, id: id }],
@@ -57,10 +59,11 @@ export function createSingleDevice(theme) {
 
 export function getDeviceTotalWidth(device) {
   const width = device.modules.value.reduce(
-    (total, module) => total + (module.width < 8 ? 8 : Number(module.width)),
+    (total, module) => total + Number(module.width),
     0
   );
-  return width < 8 ? 8 : width;
+
+  return width;
 }
 
 export function getAllDevicesTotalWidth(devices) {
@@ -76,4 +79,30 @@ export function getAllDevicesTotalWidth(devices) {
   );
 
   return Math.round(totalWidth * 10) / 10;
+}
+
+export function getMaxDescriptionHeight(devices) {
+  let maxHeight = 12;
+
+  for (let deviceId in devices) {
+    const height = devices[deviceId].description.height;
+    if (height > maxHeight) {
+      maxHeight = height;
+    }
+  }
+
+  return maxHeight;
+}
+
+export function getMaxInputHeight(devices, type) {
+  let maxHeight = 12;
+
+  for (let deviceId in devices) {
+    const height = devices[deviceId][type].height;
+    if (height > maxHeight) {
+      maxHeight = height;
+    }
+  }
+
+  return maxHeight;
 }

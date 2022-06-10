@@ -1,7 +1,11 @@
 import React, { Fragment, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { getClasses, getDeviceTotalWidth } from '../functions';
+import {
+  getClasses,
+  getDeviceTotalWidth,
+  getMaxDescriptionHeight,
+} from '../functions';
 import { clearSelected } from '../store/settingsSlice';
 
 function getHeight(el) {
@@ -29,6 +33,9 @@ export default function Print() {
           numeration: settings.numeration,
           modulesName: settings.modulesName,
           groups: settings.groups,
+          switches: settings.switches,
+          descriptions: settings.descriptions,
+          points: settings.points,
         })}
       >
         {Object.values(devices).map((device) => {
@@ -87,6 +94,7 @@ export default function Print() {
                   className="device__description"
                   style={{
                     background: `${device.description.backgroundColor}`,
+                    height: `${getMaxDescriptionHeight(devices) + 17}px`,
                   }}
                 >
                   {device.description.text}

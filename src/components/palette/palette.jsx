@@ -19,7 +19,7 @@ const options = [
 ];
 
 export default function Palette() {
-  const [color, setColor] = useColor('hex', '#b6d4c184');
+  const [color, setColor] = useColor('hex', '#000000ff');
   const settings = useSelector((state) => state.settings);
   const selectedOption = settings.palette.theme;
   const dispatch = useDispatch();
@@ -59,7 +59,7 @@ export default function Palette() {
               checked={settings.palette.type === 'textColor'}
               onChange={onTypeChanged}
             />
-            Text
+            Текст
           </label>
           <label className="palette__radiobutton" htmlFor="background">
             <input
@@ -70,7 +70,7 @@ export default function Palette() {
               checked={settings.palette.type === 'backgroundColor'}
               onChange={onTypeChanged}
             />
-            Background
+            Фон
           </label>
         </div>
         <PaletteCheckboxes />
@@ -101,7 +101,7 @@ export default function Palette() {
 
       <div className="palette__settings">
         <div className="theme">
-          Theme:
+          Тема:
           <Select
             // value={selectedOption}
             options={options}

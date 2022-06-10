@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createSingleDevice } from '../functions';
+import { createSingleDevice, getMaxDescriptionHeight } from '../functions';
 import THEME from '../theme';
 
 const initialDevice = createSingleDevice();
@@ -10,6 +10,12 @@ export const devicesSlice = createSlice({
     [initialDevice.id]: initialDevice,
   },
   reducers: {
+    setHeight: (state, action) => {
+      const { currentHeight, deviceId, type } = action.payload;
+
+      state[deviceId][type].height = currentHeight;
+    },
+
     toggleWarning: (state, action) => {
       const deviceId = action.payload;
 
@@ -46,6 +52,9 @@ export const devicesSlice = createSlice({
 
     addDevice: (state, action) => {
       const newDevice = createSingleDevice(action.payload);
+      // const height = getMaxDescriptionHeight(state);
+
+      // newDevice.description.height = height;
       state[newDevice.id] = newDevice;
     },
 
@@ -119,6 +128,7 @@ export const {
   changeColor,
   applyTheme,
   toggleWarning,
+  setHeight,
 } = devicesSlice.actions;
 
 export default devicesSlice.reducer;
