@@ -11,6 +11,20 @@ export function getClasses(defaultClass, classes) {
   return resultClass;
 }
 
+export function createGroup() {
+  const initialDevice = createSingleDevice();
+
+  return {
+    id: Number(new Date()),
+    text: '',
+    backgroundColor: '#f2f2f2',
+    height: '29px',
+    devices: {
+      [initialDevice.id]: initialDevice,
+    },
+  };
+}
+
 export function createSingleDevice(theme) {
   const id = Number(new Date());
   let backgroundColor = '#f2f2f2';
@@ -23,6 +37,7 @@ export function createSingleDevice(theme) {
 
   return {
     id: id,
+    groupId: 1234,
     group: {
       text: '',
       backgroundColor: backgroundColor,
@@ -79,19 +94,6 @@ export function getAllDevicesTotalWidth(devices) {
   );
 
   return Math.round(totalWidth * 10) / 10;
-}
-
-export function getMaxDescriptionHeight(devices) {
-  let maxHeight = 12;
-
-  for (let deviceId in devices) {
-    const height = devices[deviceId].description.height;
-    if (height > maxHeight) {
-      maxHeight = height;
-    }
-  }
-
-  return maxHeight;
 }
 
 export function getMaxInputHeight(devices, type) {

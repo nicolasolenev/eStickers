@@ -50,11 +50,9 @@
   flex-grow: 1;
   display: flex;
   flex-wrap: wrap;
-  // max-width: 297mm;
   position: relative;
   padding: 0 5mm 30px 5mm;
   background: #fff;
-  overflow: scroll;
   &:hover {
     .rulers {
       display: flex;
@@ -87,6 +85,15 @@
     bottom: 22px;
     left: 5mm;
     color: gray;
+    &-height {
+      position: absolute;
+      border-bottom: 0.1mm solid gray;
+      bottom: 72px;
+      left: 0;
+      width: 20px;
+      transform: rotate(-90deg);
+      color: gray;
+    }
   }
 
   .ruler:last-child:after {
@@ -356,6 +363,7 @@
     width: 120px;
     padding: 5px;
     margin: 5px 0;
+    cursor: pointer;
   }
 
   &__title {

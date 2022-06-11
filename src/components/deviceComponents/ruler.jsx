@@ -50,6 +50,10 @@ export default function Ruler(props) {
           if (e.code === 'Enter' || e.code === 'NumpadEnder') {
             saveWidth(e);
           }
+
+          if (e.code === 'KeyE') {
+            e.preventDefault();
+          }
         }}
         onBlur={saveWidth}
       />

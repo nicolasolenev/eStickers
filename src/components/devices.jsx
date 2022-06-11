@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Device from './device';
@@ -11,6 +11,7 @@ export default function Devices() {
   const devices = useSelector((state) => state.devices);
   const rowWidth = getAllDevicesTotalWidth(devices);
   const dispatch = useDispatch();
+  const devicesRef = useRef();
   let count = 1;
 
   function windowListener(e) {
@@ -44,10 +45,14 @@ export default function Devices() {
             points: settings.points,
           })}
           style={{ width: `${settings.paperWidth}mm` }}
+          ref={devicesRef}
         >
           <div className="devices__ruler" style={{ width: `${rowWidth}mm` }}>
             {rowWidth} мм
           </div>
+
+          <div className="devices__ruler-height">{`мм`}</div>
+
           {Object.values(devices).map((device) => {
             const id = count;
             count = count + device.modules.value.length;

@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import TextareaAutosize from 'react-autosize-textarea';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { getMaxDescriptionHeight, getMaxInputHeight } from '../../functions';
+import { getMaxInputHeight } from '../../functions';
 import { setHeight } from '../../store/devicesSlice';
 
 export default function DeviceMultilineInput({

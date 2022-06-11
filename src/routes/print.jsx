@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   getClasses,
   getDeviceTotalWidth,
-  getMaxDescriptionHeight,
+  getMaxInputHeight,
 } from '../functions';
 import { clearSelected } from '../store/settingsSlice';
 
@@ -94,7 +94,9 @@ export default function Print() {
                   className="device__description"
                   style={{
                     background: `${device.description.backgroundColor}`,
-                    height: `${getMaxDescriptionHeight(devices) + 17}px`,
+                    height: `${
+                      getMaxInputHeight(devices, 'description') + 17
+                    }px`,
                   }}
                 >
                   {device.description.text}
