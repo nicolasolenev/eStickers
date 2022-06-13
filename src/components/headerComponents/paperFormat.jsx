@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setPaperWidth } from '../../store/settingsSlice';
 import { PaperFormatButotns } from './paperFormatButtons';
 
-export function PaperFormat() {
+export default function PaperFormat() {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
   const [width, setWidth] = useState(settings.paperWidth);

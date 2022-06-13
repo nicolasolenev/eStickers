@@ -4,14 +4,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setModuleWidth } from '../../store/devicesSlice';
 
 export default function Ruler(props) {
-  const { deviceId, moduleId } = props;
+  // const { deviceId, moduleId } = props;
+  const { device } = props;
   const [width, setWidth] = useState();
   const devices = useSelector((state) => state.devices);
-  const device = devices[deviceId];
+  // const device = devices[deviceId];
   const settings = useSelector((state) => state.settings);
-  const moduleWidth = Number(
-    device.modules.value.find((module) => module.id === moduleId).width
-  ).toFixed(1);
+  // const moduleWidth = Number(
+  //   device.modules.value.find((module) => module.id === moduleId).width
+  // ).toFixed(1);
   const dispatch = useDispatch();
 
   function saveWidth(e) {

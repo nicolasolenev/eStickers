@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function Helpers() {
+export default function Helpers() {
   return (
     <div className="helpers">
       <p>Управление/горячие клавиши:</p>

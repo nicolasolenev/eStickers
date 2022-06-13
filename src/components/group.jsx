@@ -62,9 +62,10 @@ export default function Group({ arrayOfDevicesId, id }) {
       <div className="rulers-wrapper">
         {arrayOfDevicesId.map((deviceId) => (
           <div key={deviceId} className="rulers">
-            {devices[deviceId].modules.value.map((module) => (
+            {/* {devices[deviceId].modules.value.map((module) => (
               <Ruler key={module.id} deviceId={deviceId} moduleId={module.id} />
-            ))}
+            ))} */}
+            <Ruler device={devices[deviceId]} />
           </div>
         ))}
       </div>

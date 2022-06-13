@@ -5,12 +5,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import ButtonVisability from './buttonsComponents/buttonVisability';
 import ButtonCaption from './buttonsComponents/buttonCaption';
 import ButtonMerge from './buttonsComponents/buttonMerge';
-import { clearSelected } from '../store/settingsSlice';
-import { combineGroups } from '../store/devicesSlice';
+import { saveProjectToFile, readProject } from '../fs';
+import { clearSelected, setSettings } from '../store/settingsSlice';
+import { combineGroups, setDevices } from '../store/devicesSlice';
 
 export default function Buttons() {
-  const settings = useSelector((state) => state.settings);
   const dispatch = useDispatch();
+  const settings = useSelector((state) => state.settings);
+  const devices = useSelector((state) => state.devices);
 
   return (
     <div className="buttons">
@@ -23,16 +25,16 @@ export default function Buttons() {
       <ButtonVisability fieldName="descriptions" text="Название" />
       <ButtonVisability fieldName="modulesName" text="Полюса" />
 
-      <div className="buttons__title">Печать модулей</div>
+      <div className="buttons__title">Печать</div>
       <ButtonVisability fieldName="numeration" text="Печать модулей" />
 
-      <Link to="/print">
+      {/* <Link to="/print">
         <button className="button">Сохранить pdf</button>
-      </Link>
+      </Link> */}
 
-      <ButtonMerge />
+      {/* <ButtonMerge /> */}
 
-      <button
+      {/* <button
         className="button"
         onClick={() => {
           if (!settings.selected.length) {
@@ -43,7 +45,26 @@ export default function Buttons() {
         }}
       >
         Сгруппировать
+      </button> */}
+
+      <button
+        className="button"
+        onClick={() => {
+          saveProjectToFile({ devices, settings });
+        }}
+      >
+        Сохранить в файл
       </button>
+
+      <label className="button upload-button" htmlFor="upload-file">
+        Загрузить из файла
+        <input
+          className="upload-file-input"
+          type="file"
+          id="upload-file"
+          onChange={(e) => readProject(e, dispatch, setDevices, setSettings)}
+        ></input>
+      </label>
     </div>
   );
 }

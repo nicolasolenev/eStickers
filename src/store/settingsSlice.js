@@ -1,33 +1,47 @@
 import { createSlice } from '@reduxjs/toolkit';
+import storage from '../storage';
+
+const defaultState = {
+  projectName: 'unnamed',
+  display: {
+    sequence: false,
+    numeration: true,
+    modulesName: true,
+    groups: true,
+    switches: true,
+    descriptions: true,
+    points: true,
+  },
+  paperWidth: 297,
+  selected: [],
+  palette: {
+    theme: '',
+    type: '',
+    checked: {
+      warning: false,
+      group: true,
+      normallyOn: true,
+      switch: true,
+      description: true,
+      modules: true,
+    },
+  },
+};
+
+const initialState = storage.get()?.settings || defaultState;
 
 export const settingsSlice = createSlice({
   name: 'settings',
-  initialState: {
-    display: {
-      sequence: false,
-      numeration: true,
-      modulesName: true,
-      groups: true,
-      switches: true,
-      descriptions: true,
-      points: true,
-    },
-    paperWidth: 297,
-    selected: [],
-    palette: {
-      theme: '',
-      type: '',
-      checked: {
-        warning: false,
-        group: true,
-        normallyOn: true,
-        switch: true,
-        description: true,
-        modules: true,
-      },
-    },
-  },
+  initialState,
   reducers: {
+    setProjectName: (state, action) => {
+      state.projectName = action.payload;
+    },
+
+    setSettings: (state, action) => {
+      state = action.payload;
+    },
+
     setPaperWidth: (state, action) => {
       state.paperWidth = action.payload;
     },
@@ -111,6 +125,8 @@ export const {
   changeTheme,
   toggleVisability,
   setPaperWidth,
+  setSettings,
+  setProjectName,
 } = settingsSlice.actions;
 
 export default settingsSlice.reducer;

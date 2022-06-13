@@ -1,15 +1,35 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createSingleDevice, getMaxDescriptionHeight } from '../functions';
 import THEME from '../theme';
+import storage from '../storage';
 
 const initialDevice = createSingleDevice();
 
+const defaultState = {
+  [initialDevice.id]: initialDevice,
+};
+
+const loadedState = storage.get()?.devices;
+const isLoadedStateNotEmpty = loadedState && Object.values(loadedState).length;
+
+const initialState = isLoadedStateNotEmpty ? loadedState : defaultState;
+
 export const devicesSlice = createSlice({
   name: 'devices',
-  initialState: {
-    [initialDevice.id]: initialDevice,
-  },
+  initialState,
   reducers: {
+    setDevices: (state, action) => {
+      for (let deviceId in state) {
+        delete state[deviceId];
+      }
+
+      const newState = action.payload;
+
+      for (let deviceId in newState) {
+        state[deviceId] = newState[deviceId];
+      }
+    },
+
     setHeight: (state, action) => {
       const { currentHeight, deviceId, type } = action.payload;
 
@@ -137,6 +157,7 @@ export const {
   toggleWarning,
   setHeight,
   combineGroups,
+  setDevices,
 } = devicesSlice.actions;
 
 export default devicesSlice.reducer;

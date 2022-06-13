@@ -21,7 +21,7 @@ export default function Devices() {
   let count = 1;
 
   return (
-    <div style={{ overflowX: 'scroll' }}>
+    <div className="devices-wrapper">
       <div
         className={devicesClasses}
         style={{ width: `${settings.paperWidth}mm` }}

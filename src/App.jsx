@@ -6,6 +6,8 @@ import Devices from './components/devices';
 import Buttons from './components/buttons';
 import Palette from './components/palette/palette';
 import Header from './components/header';
+import ButtonsTop from './components/buttonsTop';
+import storage from './storage';
 import { windowListenerHandler } from './functions';
 import { deleteDevice } from './store/devicesSlice';
 import { clearSelected } from './store/settingsSlice';
@@ -13,6 +15,7 @@ import { clearSelected } from './store/settingsSlice';
 export default function App() {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
+  const devices = useSelector((state) => state.devices);
   const selected = settings.selected;
 
   const onKeydownHandler = (e) =>
@@ -23,14 +26,24 @@ export default function App() {
       clearSelected,
     });
 
+  const onUnloadHandler = () => {
+    storage.save({ devices, settings });
+  };
+
   useEffect(() => {
     window.addEventListener('keydown', onKeydownHandler);
     return () => window.removeEventListener('keydown', onKeydownHandler);
   });
 
+  useEffect(() => {
+    window.addEventListener('unload', onUnloadHandler);
+    return () => window.removeEventListener('unload', onUnloadHandler);
+  });
+
   return (
     <>
       <Header />
+      <ButtonsTop />
       <DevicesRow />
       <Palette />
     </>
