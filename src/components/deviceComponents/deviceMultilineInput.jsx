@@ -25,8 +25,8 @@ export default function DeviceMultilineInput({
     <div
       className={`device__${type}`}
       style={{
-        background: `${device[type].backgroundColor}`,
-        color: `${device[type].textColor}`,
+        background: `${device.groupBackground}`,
+        color: `${device.groupColor}`,
         height: `${getMaxInputHeight(devices, type) + 17}px`,
       }}
     >

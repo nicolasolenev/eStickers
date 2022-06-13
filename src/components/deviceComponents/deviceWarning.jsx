@@ -28,7 +28,7 @@ export default function DeviceWarning({ device, handler }) {
       }
       style={{
         background: `${
-          device.warning.isActive ? device.warning.backgroundColor : '#fff'
+          device.warning.isActive ? device.groupBackground : '#fff'
         }`,
         color: `${device.warning.textColor}`,
         width: `${getDeviceTotalWidth(device)}mm`,

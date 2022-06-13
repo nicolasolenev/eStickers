@@ -9,7 +9,7 @@ export default function ModuleId({ deviceId, id }) {
 
   return (
     <div
-      className="device__id theme-gray"
+      className="device__id"
       onClick={(e) => {
         let shift = false;
         if (e.shiftKey) {

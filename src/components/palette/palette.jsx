@@ -55,8 +55,8 @@ export default function Palette() {
               type="radio"
               id="text"
               name="color"
-              value="textColor"
-              checked={settings.palette.type === 'textColor'}
+              value="groupColor"
+              checked={settings.palette.type === 'groupColor'}
               onChange={onTypeChanged}
             />
             Текст
@@ -66,14 +66,14 @@ export default function Palette() {
               type="radio"
               id="background"
               name="color"
-              value="backgroundColor"
-              checked={settings.palette.type === 'backgroundColor'}
+              value="groupBackground"
+              checked={settings.palette.type === 'groupBackground'}
               onChange={onTypeChanged}
             />
             Фон
           </label>
         </div>
-        <PaletteCheckboxes />
+        {/* <PaletteCheckboxes /> */}
       </div>
 
       <div className="palette__settings">
@@ -90,7 +90,6 @@ export default function Palette() {
                 selected: settings.selected,
                 color: color.hex,
                 type: settings.palette.type,
-                fields: settings.palette.checked,
               })
             );
           }}

@@ -1,5 +1,5 @@
 export function saveProjectToFile(project) {
-  const signedProject = { ...project, type: 'electical-stickers' };
+  const signedProject = { ...project, type: 'electrical-stickers' };
 
   const link = document.createElement('a');
   link.download = `${project.settings.projectName}.json`;

@@ -64,6 +64,9 @@ export function createSingleDevice(theme) {
   return {
     id: id,
     groupId: id,
+    groupBackground: backgroundColor,
+    groupColor: textColor,
+    count: 1,
     group: {
       text: '',
       backgroundColor: backgroundColor,

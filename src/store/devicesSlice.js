@@ -60,15 +60,21 @@ export const devicesSlice = createSlice({
     },
 
     changeColor: (state, action) => {
-      const { selected, color, type, fields } = action.payload;
+      const { selected, color, type } = action.payload;
 
-      selected.forEach((deviceId) => {
-        for (let key in fields) {
-          if (fields[key]) {
-            state[deviceId][key][type] = color;
-          }
+      const selectedGroups = [
+        ...new Set(selected.map((deviceId) => state[deviceId].groupId)),
+      ];
+
+      // selectedGroups.forEach((deviceId) => {
+      //   state[deviceId][type] = color;
+      // });
+
+      for (const deviceId in state) {
+        if (selectedGroups.includes(state[deviceId].groupId)) {
+          state[deviceId][type] = color;
         }
-      });
+      }
     },
 
     addDevice: (state, action) => {

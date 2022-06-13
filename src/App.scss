@@ -48,7 +48,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin: 10px 10px 0 10px;
+  margin: 0 10px 0 10px;
   &:hover {
     .button {
       display: block;
@@ -78,11 +78,12 @@
 
 .rulers-wrapper {
   display: flex;
-  margin-bottom: 20px;
+  margin: 20px 0 4mm 0;
 }
 
 .buttons-top {
   margin-left: 170px;
+  margin-top: 5px;
   .button {
     margin-right: 10px;
     padding: 3px;
@@ -173,7 +174,7 @@
   border: 0.1mm solid #fff;
   border-left: none;
   border-top: none;
-  margin: 0 0 4mm 0;
+  // margin: 0 0 4mm 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -187,7 +188,7 @@
     padding: 7px 3px;
     text-align: center;
     width: 100%;
-    word-break: break-all;
+    // word-break: break-all;
   }
 
   &__point {
@@ -212,15 +213,13 @@
   &__switch {
     height: 25px;
     display: none;
-  }
-
-  &__switch {
     &-input {
       width: 100%;
       background-color: transparent;
       border: transparent;
       text-align: center;
       font-weight: 700;
+      color: inherit;
     }
   }
 
@@ -244,7 +243,7 @@
       border: transparent;
       width: 40px;
       text-align: center;
-      color: gray;
+      color: inherit;
       margin: 5px 3px;
       height: 13px;
       appearance: none;
@@ -264,6 +263,7 @@
     width: 100%;
     padding: 3px;
     color: gray;
+    border-top: 0.1mm solid #fff;
     font-size: 7pt;
     display: none;
     cursor: pointer;
@@ -301,7 +301,7 @@
     color: #eb8044;
     border-radius: 5px 5px 0 0;
     border-bottom: 0.1mm solid #fff;
-    word-break: break-all;
+    // word-break: break-all;
     order: -2;
     border: 0.1mm solid #fff;
     border-left: none;
@@ -556,11 +556,11 @@
   }
 }
 
-.theme-gray {
-  color: #adb1ad;
-  background: #f2f2f2;
-  border-top: 0.1mm solid #fff;
-}
+// .theme-gray {
+//   color: #adb1ad;
+//   background: #f2f2f2;
+//   border-top: 0.1mm solid #fff;
+// }
 
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {

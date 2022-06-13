@@ -27,7 +27,7 @@ export default function Group({ arrayOfDevicesId, id }) {
             handler={(e) => {
               dispatch(
                 updateDeviceText({
-                  deviceId: firstDeviceId,
+                  deviceId,
                   text: e.target.value,
                   key: 'warning',
                 })
@@ -51,7 +51,13 @@ export default function Group({ arrayOfDevicesId, id }) {
           );
         }}
       />
-      <div className="group-devices">
+      <div
+        className="group-devices"
+        style={{
+          background: `${devices[firstDeviceId].groupBackground}`,
+          color: `${devices[firstDeviceId].groupColor}`,
+        }}
+      >
         {arrayOfDevicesId.map((deviceId, index) => {
           const id = count;
           count = count + devices[deviceId].modules.value.length;
