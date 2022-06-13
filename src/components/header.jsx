@@ -9,6 +9,7 @@ export default function Header() {
     <header className="header">
       <Helpers />
       <ProjectName />
+      <button className="button">Начать новый проект</button>
       <PaperFormat />
     </header>
   );

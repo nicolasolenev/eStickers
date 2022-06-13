@@ -12,6 +12,7 @@ export default function ProjectName() {
       Название документа:
       <input
         type="text"
+        className="project-name-input"
         value={settings.projectName}
         onChange={(e) => dispatch(setProjectName(e.target.value))}
       />

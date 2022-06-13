@@ -48,7 +48,7 @@ export default function Palette() {
   return (
     <div className="palette">
       <div className="palette__settings palette__settings_first-col">
-        <div style={{ margin: '5px' }}>Изменение цвета выделенных модулей</div>
+        <div style={{ margin: '5px' }}>Изменение цвета выделенных групп</div>
         <div className="palette__radiobuttons">
           <label className="palette__radiobutton" htmlFor="text">
             <input

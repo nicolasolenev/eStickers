@@ -85,6 +85,7 @@ export function createSingleDevice(theme) {
       height: '29px',
     },
     modules: {
+      totalWidth: 18,
       value: [{ moduleName: '', width: 18, id: id }],
       backgroundColor: backgroundColor,
       textColor: textColor,

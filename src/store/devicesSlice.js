@@ -79,12 +79,30 @@ export const devicesSlice = createSlice({
 
     combineDevices: (state, action) => {
       const selected = [...action.payload.selected];
+
+      const totalWidth = selected
+        .map((deviceId) => state[deviceId].modules.totalWidth)
+        .reduce((sum, width) => sum + Number(width), 0);
+
       const combinedDeviceId = selected.shift();
-      const combinedDeviceModules = state[combinedDeviceId].modules.value;
+
+      const combinedDevice = state[combinedDeviceId];
+
+      const combinedDeviceModules = combinedDevice.modules.value;
 
       selected.forEach((id) => {
         combinedDeviceModules.push(...state[id].modules.value);
         delete state[id];
+      });
+
+      combinedDevice.modules.totalWidth = totalWidth;
+
+      const modulesCount = combinedDevice.modules.value.length;
+
+      const moduleWidth = Math.round((totalWidth / modulesCount) * 10) / 10;
+
+      combinedDevice.modules.value.forEach((module) => {
+        module.width = moduleWidth;
       });
     },
 
@@ -119,21 +137,33 @@ export const devicesSlice = createSlice({
     },
 
     setModuleWidth: (state, action) => {
-      const { width, deviceId, moduleId, selected } = action.payload;
-      const ModeratedWidth = width < 8 ? 8 : width;
-      const device = state[deviceId];
-      const moduleIndex = device.modules.value.findIndex(
-        (module) => module.id === moduleId
-      );
+      const { width, deviceId, selected } = action.payload;
+      const moderatedWidth = width < 8 ? 8 : width;
 
       if (selected.length && selected.includes(deviceId)) {
         selected.forEach((deviceId) => {
+          const modulesCount = state[deviceId].modules.value.length;
+          const moduleWidth =
+            Math.round((moderatedWidth / modulesCount) * 10) / 10;
+
+          state[deviceId].modules.totalWidth = moderatedWidth;
+
           state[deviceId].modules.value.forEach((module) => {
-            module.width = ModeratedWidth;
+            module.width = moduleWidth;
           });
         });
       } else {
-        device.modules.value[moduleIndex].width = ModeratedWidth;
+        const device = state[deviceId];
+
+        device.modules.totalWidth = moderatedWidth;
+
+        const modulesCount = state[deviceId].modules.value.length;
+        const moduleWidth =
+          Math.round((moderatedWidth / modulesCount) * 10) / 10;
+
+        device.modules.value.forEach((module) => {
+          module.width = moduleWidth;
+        });
       }
     },
 

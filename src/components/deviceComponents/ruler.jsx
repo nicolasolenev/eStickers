@@ -4,16 +4,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setModuleWidth } from '../../store/devicesSlice';
 
 export default function Ruler(props) {
-  // const { deviceId, moduleId } = props;
+  const dispatch = useDispatch();
   const { device } = props;
+  const deviceId = device.id;
   const [width, setWidth] = useState();
-  const devices = useSelector((state) => state.devices);
-  // const device = devices[deviceId];
   const settings = useSelector((state) => state.settings);
+  const deviceWidth = Number(device.modules.totalWidth).toFixed(1);
   // const moduleWidth = Number(
   //   device.modules.value.find((module) => module.id === moduleId).width
   // ).toFixed(1);
-  const dispatch = useDispatch();
 
   function saveWidth(e) {
     const width = Number(e.target.value).toFixed(1);
@@ -22,7 +21,6 @@ export default function Ruler(props) {
       setModuleWidth({
         width,
         deviceId,
-        moduleId,
         selected: settings.selected,
       })
     );
@@ -33,7 +31,7 @@ export default function Ruler(props) {
     <div
       className="ruler"
       style={{
-        width: `${moduleWidth}mm`,
+        width: `${deviceWidth}mm`,
       }}
     >
       <input
@@ -41,7 +39,7 @@ export default function Ruler(props) {
         type="number"
         placeholder={10}
         step={0.1}
-        value={width ?? moduleWidth}
+        value={width ?? deviceWidth}
         onChange={(e) => setWidth(e.target.value)}
         onKeyDown={(e) => {
           if (e.code === 'Enter' || e.code === 'NumpadEnder') {

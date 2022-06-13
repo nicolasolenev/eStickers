@@ -12,7 +12,7 @@ export default function ButtonCaption() {
       <input
         className="switch-button-checkbox"
         type="checkbox"
-        checked={settings.sequence}
+        checked={settings.display.sequence}
         onChange={() => dispatch(toggleVisability('sequence'))}
       />
 
