@@ -1,12 +1,9 @@
 import React, { useMemo, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Ruler from './deviceComponents/ruler';
-import DeviceHoverBtns from './deviceComponents/deviceHoverBtns';
 import DevicePoint from './deviceComponents/devicePoint';
 import DeviceMultilineInput from './deviceComponents/deviceMultilineInput';
 import DeviceField from './deviceComponents/deviceField';
-import DeviceWarning from './deviceComponents/deviceWarning';
 import Modules from './deviceComponents/modules';
 import { updateDeviceText } from '../store/devicesSlice';
 import { getDeviceTotalWidth } from '../functions';
@@ -39,25 +36,6 @@ export default function Device({ device, id }) {
         width: `${deviceWidth}mm`,
       }}
     >
-      <DeviceHoverBtns device={device} />
-
-      {device.warning.isActive && (
-        <DeviceWarning device={device} handler={deviceInputHandler} />
-      )}
-
-      {/* <DeviceField
-        name="group"
-        placeholder="Группа"
-        device={device}
-        handler={deviceInputHandler}
-      /> */}
-      <DeviceMultilineInput
-        type="group"
-        device={device}
-        handler={deviceInputHandler}
-        placeholder="Группа"
-      />
-
       <DevicePoint device={device} dispatch={dispatch} deviceId={deviceId} />
 
       <DeviceField
@@ -75,12 +53,6 @@ export default function Device({ device, id }) {
       />
 
       <Modules device={device} deviceId={deviceId} id={id} />
-
-      <div className="rulers">
-        {device.modules.value.map((module) => (
-          <Ruler key={module.id} deviceId={deviceId} moduleId={module.id} />
-        ))}
-      </div>
     </div>
   );
 }

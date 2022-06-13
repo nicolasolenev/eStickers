@@ -11,8 +11,34 @@ export function getClasses(defaultClass, classes) {
   return resultClass;
 }
 
-export function createGroup() {
-  const initialDevice = createSingleDevice();
+export function windowListenerHandler(
+  e,
+  { dispatch, selected, deleteDevice, clearSelected }
+) {
+  const deleteKeyCombination =
+    (e.key === 'Delete' || e.key === 'Backspace') && e.shiftKey;
+  const deselection = e.key === 'Escape';
+
+  if (deleteKeyCombination) {
+    selected.forEach((deviceId) => dispatch(deleteDevice({ deviceId })));
+    dispatch(clearSelected());
+  }
+  if (deselection) {
+    dispatch(clearSelected());
+  }
+}
+
+export function getGroupWidth(devices, devicesId) {
+  return Object.values(devices).reduce((sum, device) => {
+    if (devicesId.includes(device.id)) {
+      return sum + getDeviceTotalWidth(device);
+    }
+    return sum;
+  }, 0);
+}
+
+export function createGroup(theme) {
+  const initialDevice = createSingleDevice(theme);
 
   return {
     id: Number(new Date()),
@@ -37,7 +63,7 @@ export function createSingleDevice(theme) {
 
   return {
     id: id,
-    groupId: 1234,
+    groupId: id,
     group: {
       text: '',
       backgroundColor: backgroundColor,
@@ -68,6 +94,7 @@ export function createSingleDevice(theme) {
       color: '#eb8044',
       backgroundColor: backgroundColor,
       isActive: false,
+      height: '29px',
     },
   };
 }
@@ -81,7 +108,7 @@ export function getDeviceTotalWidth(device) {
   return width;
 }
 
-export function getAllDevicesTotalWidth(devices) {
+export function getDevicesWidth(devices) {
   let allModules = [];
 
   for (let device in devices) {
@@ -107,4 +134,19 @@ export function getMaxInputHeight(devices, type) {
   }
 
   return maxHeight;
+}
+
+export function getGroups(devices) {
+  let groupsId = Object.values(devices).map((device) => device.groupId);
+  groupsId = new Set(groupsId);
+
+  const groups = {};
+  groupsId.forEach((id) => {
+    groups[id] = [];
+  });
+
+  Object.values(devices).forEach((device) => {
+    groups[device.groupId].push(device.id);
+  });
+  return groups;
 }

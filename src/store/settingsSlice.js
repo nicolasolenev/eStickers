@@ -1,15 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export const settingsSlice = createSlice({
-  name: 'devices',
+  name: 'settings',
   initialState: {
-    sequence: false,
-    numeration: true,
-    modulesName: true,
-    groups: true,
-    switches: true,
-    descriptions: true,
-    points: true,
+    display: {
+      sequence: false,
+      numeration: true,
+      modulesName: true,
+      groups: true,
+      switches: true,
+      descriptions: true,
+      points: true,
+    },
     paperWidth: 297,
     selected: [],
     palette: {
@@ -60,16 +62,37 @@ export const settingsSlice = createSlice({
     toggleVisability: (state, action) => {
       const fields = action.payload;
 
-      state[fields] = !state[fields];
+      state.display[fields] = !state.display[fields];
     },
 
     updateSelected: (state, action) => {
-      const deviceId = action.payload.deviceId;
+      const { deviceId, devices, shift } = action.payload;
+      const isSelectedNotEmpty = state.selected.length;
 
-      if (state.selected.includes(deviceId)) {
-        state.selected = state.selected.filter((item) => item !== deviceId);
+      if (shift && isSelectedNotEmpty) {
+        const devicesId = Object.values(devices).map((device) => device.id);
+        const lastIdInSelected = state.selected[state.selected.length - 1];
+        const indexOfLastSelectedDevice = devicesId.indexOf(lastIdInSelected);
+        const indexOfDeviceId = devicesId.indexOf(deviceId);
+        const newSelected = new Set(state.selected);
+
+        if (indexOfDeviceId < indexOfLastSelectedDevice) {
+          for (let i = indexOfDeviceId; i <= indexOfLastSelectedDevice; i++) {
+            newSelected.add(devicesId[i]);
+          }
+        } else {
+          for (let i = indexOfLastSelectedDevice; i <= indexOfDeviceId; i++) {
+            newSelected.add(devicesId[i]);
+          }
+        }
+
+        state.selected = [...newSelected];
       } else {
-        state.selected.push(deviceId);
+        if (state.selected.includes(deviceId)) {
+          state.selected = state.selected.filter((item) => item !== deviceId);
+        } else {
+          state.selected.push(deviceId);
+        }
       }
     },
 

@@ -19,6 +19,7 @@ export const devicesSlice = createSlice({
     toggleWarning: (state, action) => {
       const deviceId = action.payload;
 
+      state[deviceId].warning.text = '';
       state[deviceId].warning.isActive = !state[deviceId].warning.isActive;
     },
 
@@ -52,9 +53,7 @@ export const devicesSlice = createSlice({
 
     addDevice: (state, action) => {
       const newDevice = createSingleDevice(action.payload);
-      // const height = getMaxDescriptionHeight(state);
 
-      // newDevice.description.height = height;
       state[newDevice.id] = newDevice;
     },
 
@@ -66,6 +65,14 @@ export const devicesSlice = createSlice({
       selected.forEach((id) => {
         combinedDeviceModules.push(...state[id].modules.value);
         delete state[id];
+      });
+    },
+
+    combineGroups: (state, action) => {
+      const selected = [...action.payload];
+      const combinedGroupId = state[selected.shift()].groupId;
+      selected.forEach((deviceId) => {
+        state[deviceId].groupId = combinedGroupId;
       });
     },
 
@@ -129,6 +136,7 @@ export const {
   applyTheme,
   toggleWarning,
   setHeight,
+  combineGroups,
 } = devicesSlice.actions;
 
 export default devicesSlice.reducer;

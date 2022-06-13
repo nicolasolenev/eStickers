@@ -11,9 +11,9 @@ export default function DeviceMultilineInput({
   type,
   placeholder,
 }) {
+  const dispatch = useDispatch();
   const devices = useSelector((state) => state.devices);
   const textareaRef = useRef();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const currentHeight = textareaRef.current.clientHeight;
@@ -26,6 +26,7 @@ export default function DeviceMultilineInput({
       className={`device__${type}`}
       style={{
         background: `${device[type].backgroundColor}`,
+        color: `${device[type].textColor}`,
         height: `${getMaxInputHeight(devices, type) + 17}px`,
       }}
     >

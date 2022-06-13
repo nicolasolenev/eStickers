@@ -1,10 +1,11 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleVisability } from '../store/settingsSlice';
 
-export function ButtonCaption() {
-  const settings = useSelector((state) => state.settings);
+import { toggleVisability } from '../../store/settingsSlice';
+
+export default function ButtonCaption() {
   const dispatch = useDispatch();
+  const settings = useSelector((state) => state.settings);
 
   return (
     <div className="switch-button">
@@ -14,7 +15,8 @@ export function ButtonCaption() {
         checked={settings.sequence}
         onChange={() => dispatch(toggleVisability('sequence'))}
       />
-      <label className="switch-button-label" htmlFor="">
+
+      <label className="switch-button-label">
         <span className="switch-button-label-span">Надписи</span>
       </label>
     </div>

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { setModuleWidth } from '../../store/devicesSlice';
-import { getDevicesTotalWidth } from '../../functions';
 
 export default function Ruler(props) {
   const { deviceId, moduleId } = props;
@@ -17,9 +16,7 @@ export default function Ruler(props) {
 
   function saveWidth(e) {
     const width = Number(e.target.value).toFixed(1);
-    // if (getDevicesTotalWidth(devices) + Number(width) > 287) {
-    //   alert('Сори, бро, аппарат такой ширины не поместится на этой строчке');
-    // } else {
+
     dispatch(
       setModuleWidth({
         width,
@@ -29,7 +26,6 @@ export default function Ruler(props) {
       })
     );
     setWidth(null);
-    // }
   }
 
   return (

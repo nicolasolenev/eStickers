@@ -37,8 +37,8 @@
 .wrapper {
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-top: 20px;
+  justify-content: flex-start;
+  margin: 20px 10px 0 10px;
   &:hover {
     .button {
       display: block;
@@ -46,12 +46,35 @@
   }
 }
 
-.devices {
+.group-wrapper {
+  display: flex;
+  flex-direction: column;
+  border: 0.1mm solid #fff;
+  border-left: none;
+}
+
+.warning-wrapper {
+  display: flex;
+}
+
+.group-devices {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.rulers-wrapper {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.devices,
+.groups-test {
   flex-grow: 1;
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-end;
   position: relative;
-  padding: 0 5mm 30px 5mm;
+  padding: 10mm 5mm 45px 5mm;
   background: #fff;
   &:hover {
     .rulers {
@@ -82,7 +105,7 @@
     border-right: 0.1mm solid gray;
     text-align: center;
     position: absolute;
-    bottom: 22px;
+    bottom: 35px;
     left: 5mm;
     color: gray;
     &-height {
@@ -93,6 +116,8 @@
       width: 20px;
       transform: rotate(-90deg);
       color: gray;
+      // отключил пока что, в разработке
+      display: none;
     }
   }
 
@@ -111,17 +136,13 @@
   width: 18mm;
   border: 0.1mm solid #fff;
   border-left: none;
-  margin: 10mm 0;
+  border-top: none;
+  margin: 0 0 4mm 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   position: relative;
-  &:hover {
-    .device__hover-btns-btn {
-      display: block;
-    }
-  }
 
   &__group,
   &__point,
@@ -144,6 +165,7 @@
     textarea {
       width: 100%;
       background-color: transparent;
+      color: inherit;
       border: transparent;
       text-align: center;
       font-weight: 700;
@@ -225,27 +247,16 @@
     textarea {
       width: 100%;
       background-color: transparent;
+      color: inherit;
       border: transparent;
       text-align: center;
       resize: none;
     }
   }
 
-  &__hover-btns {
-    display: flex;
-    position: absolute;
-    top: -17px;
-    padding: 0 0 3px 0;
-    width: 100%;
-    justify-content: center;
-    &-btn {
-      width: 60px;
-      display: none;
-      cursor: pointer;
-    }
-  }
-
   &__warning {
+    display: flex;
+    align-items: center;
     width: 100%;
     background: #f2f2f2;
     text-align: center;
@@ -256,6 +267,14 @@
     border-bottom: 0.1mm solid #fff;
     word-break: break-all;
     order: -2;
+    border: 0.1mm solid #fff;
+    border-left: none;
+    position: relative;
+    &:hover {
+      .device__warning-btn {
+        display: block;
+      }
+    }
 
     textarea {
       width: 100%;
@@ -264,6 +283,26 @@
       resize: none;
       border: transparent;
       color: inherit;
+    }
+
+    &-hide {
+      textarea {
+        display: none;
+      }
+    }
+
+    &-btn-wrapper {
+      display: flex;
+      position: absolute;
+      top: -18px;
+      left: calc(50% - 30px);
+      padding: 0 0 3px 0;
+    }
+
+    &-btn {
+      width: 60px;
+      display: none;
+      cursor: pointer;
     }
   }
 }
@@ -279,9 +318,18 @@
   }
 }
 
-.description {
+.sequence {
+  align-items: flex-start;
+  padding-bottom: 30px;
+
+  .group-wrapper {
+    margin-bottom: 9px;
+  }
+
   .device {
     justify-content: flex-start;
+    margin: 0;
+    border-bottom: none;
   }
   .device__group {
     order: 1;
@@ -302,15 +350,26 @@
     border-radius: 0 0 5px 5px;
     border-top: 0.1mm solid #fff;
   }
-  .device__hover-btns {
+
+  .warning-wrapper {
+    order: 10;
+    border-radius: 0 0 5px 5px;
+    border-top: 0.1mm solid #fff;
+    margin-bottom: 6mm;
+  }
+  .device__warning-btn-wrapper {
     top: auto;
     bottom: -20px;
   }
   .rulers {
-    bottom: -32px;
+    // bottom: -32px;
+    bottom: -56px;
   }
   .devices__ruler {
-    bottom: 15px;
+    bottom: 30px;
+  }
+  .rulers-wrapper {
+    order: 11;
   }
 }
 
@@ -373,7 +432,7 @@
 }
 
 .rulers {
-  position: absolute;
+  // position: absolute;
   left: 0px;
   bottom: -22px;
   width: 101%;
@@ -421,7 +480,7 @@
 .palette {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 10px;
   &__settings {
     width: 270px;
     padding: 5px;
@@ -469,30 +528,30 @@
 
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
-  color: #0000002e;
+  color: #c6c6c6;
 }
 input:-moz-placeholder,
 textarea:-moz-placeholder {
-  color: #0000002e;
+  color: #c6c6c6;
   opacity: 1;
 }
 input::-moz-placeholder,
 textarea::-moz-placeholder {
-  color: #0000002e;
+  color: #c6c6c6;
   opacity: 1;
 }
 input:-ms-input-placeholder,
 textarea:-ms-input-placeholder {
-  color: #0000002e;
+  color: #c6c6c6;
 }
 input::-ms-input-placeholder,
 textarea::-ms-input-placeholder {
-  color: #0000002e;
+  color: #c6c6c6;
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: #0000002e;
+  color: #c6c6c6;
 }
 
 input[type='number'] {

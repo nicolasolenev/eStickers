@@ -1,13 +1,20 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
+import ModuleId from './moduleId';
 import { setModuleName } from '../../store/devicesSlice';
-import { updateSelected } from '../../store/settingsSlice';
 
-export default function Module(props) {
-  const { id, module, deviceId } = props;
-  const settings = useSelector((state) => state.settings);
+export default function Module({ id, module, deviceId }) {
   const dispatch = useDispatch();
+
+  const inputHandler = (e) =>
+    dispatch(
+      setModuleName({
+        name: e.target.value,
+        deviceId,
+        moduleId: module.id,
+      })
+    );
 
   return (
     <div className="device__module" style={{ width: `${module.width}mm` }}>
@@ -15,23 +22,10 @@ export default function Module(props) {
         className="device__module-input"
         placeholder="L1"
         value={module.moduleName}
-        onChange={(e) =>
-          dispatch(
-            setModuleName({
-              name: e.target.value,
-              deviceId,
-              moduleId: module.id,
-            })
-          )
-        }
+        onChange={inputHandler}
       />
 
-      <div
-        className="device__id theme-gray"
-        onClick={() => dispatch(updateSelected({ deviceId }))}
-      >
-        {id}
-      </div>
+      <ModuleId deviceId={deviceId} id={id} />
     </div>
   );
 }
