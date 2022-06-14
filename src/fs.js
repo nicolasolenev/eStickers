@@ -1,8 +1,15 @@
 export function saveProjectToFile(project) {
   const signedProject = { ...project, type: 'electrical-stickers' };
 
+  const name = window.prompt('Сохранить как:', project.settings.projectName);
+
+  if (typeof name !== 'string') {
+    return;
+  }
+  console.log(name);
+
   const link = document.createElement('a');
-  link.download = `${project.settings.projectName}.json`;
+  link.download = `${name.trim()}.json`;
 
   const blob = new Blob([JSON.stringify(signedProject)], {
     type: 'text/plain;charset=utf-8',

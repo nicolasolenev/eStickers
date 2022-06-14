@@ -5,7 +5,7 @@ import { getDevicesWidth } from '../../functions';
 
 export default function Rulers() {
   const devices = useSelector((state) => state.devices);
-  const settings = useSelector((state) => state.devices);
+  const settings = useSelector((state) => state.settings);
 
   const devicesWidth = getDevicesWidth(devices);
 

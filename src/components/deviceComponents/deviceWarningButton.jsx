@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { toggleWarning, updateDeviceText } from '../../store/devicesSlice';
 
-export default function DeviceWarningButton({ device }) {
+export default function DeviceWarningButton({ device, setText }) {
   const dispatch = useDispatch();
 
   return (
@@ -11,6 +11,8 @@ export default function DeviceWarningButton({ device }) {
         className="device__hover-btns-btn device__warning-btn"
         onClick={() => {
           if (device.warning.isActive) {
+            setText('');
+
             dispatch(
               updateDeviceText({
                 deviceId: device.id,

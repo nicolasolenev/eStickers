@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import TextareaAutosize from 'react-autosize-textarea';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -7,17 +7,10 @@ import { getDeviceTotalWidth, getMaxInputHeight } from '../../functions';
 import { setHeight } from '../../store/devicesSlice';
 
 export default function DeviceWarning({ device, handler }) {
-  const devices = useSelector((state) => state.devices);
-  const textareaRef = useRef();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const currentHeight = textareaRef.current.clientHeight;
-
-    dispatch(
-      setHeight({ currentHeight, deviceId: device.id, type: 'warning' })
-    );
-  });
+  const devices = useSelector((state) => state.devices);
+  const [text, setText] = useState(device.warning.text);
+  const textareaRef = useRef();
 
   return (
     <div
@@ -35,12 +28,12 @@ export default function DeviceWarning({ device, handler }) {
         height: `${getMaxInputHeight(devices, 'warning') + 7}px`,
       }}
     >
-      <DeviceWarningButton device={device} />
+      <DeviceWarningButton device={device} setText={setText} />
 
       <TextareaAutosize
         placeholder="Примеч."
         ref={textareaRef}
-        value={device['warning'].text}
+        value={text}
         onChange={(e) => {
           const currentHeight = textareaRef.current.clientHeight;
 
@@ -50,8 +43,9 @@ export default function DeviceWarning({ device, handler }) {
             );
           }
 
-          handler(e, 'warning');
+          setText(e.target.value);
         }}
+        onBlur={(e) => handler(e, 'warning')}
       />
     </div>
   );

@@ -6,6 +6,7 @@
 
   .project-name-input {
     margin-left: 5px;
+    padding: 2px;
   }
 
   .button {
@@ -38,6 +39,17 @@
   }
 }
 
+.total-height {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 4px;
+  background: #fbedcb;
+  border-bottom: 1px dashed gray;
+  &__value {
+    padding: 0 3px;
+  }
+}
+
 .print {
   width: 287mm;
   height: 200mm;
@@ -65,6 +77,7 @@
   flex-direction: column;
   border: 0.1mm solid #fff;
   border-left: none;
+  margin-bottom: 10px;
 }
 
 .warning-wrapper {
@@ -82,8 +95,7 @@
 }
 
 .buttons-top {
-  margin-left: 170px;
-  margin-top: 5px;
+  margin: 5px 5px 3px 170px;
   .button {
     margin-right: 10px;
     padding: 3px;
@@ -111,7 +123,7 @@
   flex-wrap: wrap;
   align-items: flex-end;
   position: relative;
-  padding: 10mm 5mm 45px 5mm;
+  padding: 10mm 5mm 20px 5mm;
   background: #fff;
   &:hover {
     .rulers {

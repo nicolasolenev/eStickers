@@ -32,8 +32,6 @@ export const devicesSlice = createSlice({
     setHeight: (state, action) => {
       const { currentHeight, deviceId, type } = action.payload;
 
-      console.log('setHeight');
-
       state[deviceId][type].height = currentHeight;
     },
 
@@ -142,6 +140,8 @@ export const devicesSlice = createSlice({
       const device = state[action.payload.deviceId];
       const text = action.payload.text;
 
+      console.log('updateDeviceText ');
+
       device[action.payload.key].text = text;
     },
 
@@ -158,6 +158,8 @@ export const devicesSlice = createSlice({
     setModuleWidth: (state, action) => {
       const { width, deviceId, selected } = action.payload;
       const moderatedWidth = width < 8 ? 8 : width;
+
+      console.log('setModuleWidth ', deviceId);
 
       if (selected.length && selected.includes(deviceId)) {
         selected.forEach((deviceId) => {

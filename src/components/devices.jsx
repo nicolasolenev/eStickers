@@ -27,7 +27,7 @@ export default function Devices() {
         style={{ width: `${settings.paperWidth}mm` }}
         ref={devicesRef}
       >
-        <Rulers />
+        {/* <Rulers /> */}
 
         {Object.entries(groups).map(([key, arr]) => {
           const id = count;

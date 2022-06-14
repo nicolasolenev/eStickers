@@ -4,13 +4,21 @@ import { useSelector, useDispatch } from 'react-redux';
 import ButtonMerge from './buttonsComponents/buttonMerge';
 import { clearSelected, toggleVisability } from '../store/settingsSlice';
 import { combineGroups, deleteDevice } from '../store/devicesSlice';
+import { getDevicesWidth } from '../functions';
 
 export default function ButtonsTop() {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
+  const devices = useSelector((state) => state.devices);
+  const devicesWidth = getDevicesWidth(devices);
 
   return (
     <div className="buttons-top">
+      <div className="total-height">
+        Общая длина аппаратов:
+        <span className="total-height__value">{devicesWidth}</span>
+        мм
+      </div>
       <ButtonMerge />
 
       <button
