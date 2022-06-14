@@ -4,6 +4,8 @@ import Select from 'react-select';
 import { ColorPicker, useColor } from 'react-color-palette';
 import 'react-color-palette/lib/css/styles.css';
 
+import { themes } from '../../vars';
+
 import {
   paletteType,
   paletteChecked,
@@ -12,17 +14,18 @@ import {
 import { changeColor, applyTheme } from '../../store/devicesSlice';
 import { PaletteCheckboxes } from './paletteCheckboxes';
 
-const options = [
-  { value: 'gray', label: 'Gray' },
-  { value: '8', label: 'Без групп, серая заливка' },
-  // { value: '10', label: 'Цветная' },
-];
+const options = themes;
 
 export default function Palette() {
+  const dispatch = useDispatch();
   const [color, setColor] = useColor('hex', '#000000ff');
   const settings = useSelector((state) => state.settings);
-  const selectedOption = settings.palette.theme;
-  const dispatch = useDispatch();
+  const defaultValueIndex = options
+    .map((theme) => theme.value)
+    .indexOf(settings.palette.theme);
+
+  const defaultValue =
+    defaultValueIndex !== -1 ? options[defaultValueIndex] : null;
 
   // React.useEffect(() => {
   //   dispatch(
@@ -102,7 +105,8 @@ export default function Palette() {
         <div className="theme">
           Тема:
           <Select
-            // value={selectedOption}
+            // defaultValue={defaultValue}
+            value={defaultValue}
             options={options}
             onChange={(theme) => {
               dispatch(changeTheme(theme.value));

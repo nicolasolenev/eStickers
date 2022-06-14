@@ -1,26 +1,54 @@
 const THEME = {
-  gray: {
-    deviceBackground: '#E7E6E6',
-    deviceText: '#000',
-    deviceBorder: '1px solid #fff',
-    idColor: '#ADB1AD',
-    idBackground: '#F2F2F2',
-    idBorderTop: '1px solid #fff',
-  },
+  gray: [
+    {
+      groupBackground: '#E7E6E6',
+      groupColor: '#000',
+    },
+  ],
 
-  8: {
-    deviceBackground: '#E7E6E6',
-    deviceText: '#000',
-  },
+  colored: [
+    {
+      groupBackground: '#BE0711',
+      groupColor: '#fff',
+    },
 
-  10: {
-    back1: '#BE0711',
-    text1: '#fff',
-    back2: '#D5DCE4',
-    groupText2: '#5E9CD3',
-    back3: '#E3EFDA',
-    groupText3: '#8DB655',
-  },
+    {
+      groupBackground: '#FFF2CE',
+      groupColor: '#FEC83D',
+    },
+
+    {
+      groupBackground: '#E3EFDA',
+      groupColor: '#76B364',
+    },
+
+    {
+      groupBackground: '#DFEAF6',
+      groupColor: '#64A6D9',
+    },
+  ],
+
+  coloredWhiteText: [
+    {
+      groupBackground: '#BE0711',
+      groupColor: '#fff',
+    },
+
+    {
+      groupBackground: '#49811e',
+      groupColor: '#fff',
+    },
+
+    {
+      groupBackground: '#93660b',
+      groupColor: '#fff',
+    },
+
+    {
+      groupBackground: '#2a75c6',
+      groupColor: '#fff',
+    },
+  ],
 };
 
 export default THEME;

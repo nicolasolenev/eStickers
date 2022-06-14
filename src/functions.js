@@ -1,4 +1,4 @@
-import THEME from './theme';
+import { createSingleDevice } from './vars';
 
 export function getClasses(defaultClass, classes) {
   let resultClass = defaultClass;
@@ -17,6 +17,7 @@ export function windowListenerHandler(
 ) {
   const deleteKeyCombination =
     (e.key === 'Delete' || e.key === 'Backspace') && e.shiftKey;
+
   const deselection = e.key === 'Escape';
 
   if (deleteKeyCombination) {
@@ -47,58 +48,6 @@ export function createGroup(theme) {
     height: '29px',
     devices: {
       [initialDevice.id]: initialDevice,
-    },
-  };
-}
-
-export function createSingleDevice(theme) {
-  const id = Number(new Date());
-  let backgroundColor = '#f2f2f2';
-  let textColor = '#000';
-
-  if (theme) {
-    backgroundColor = THEME[theme].deviceBackground;
-    textColor = THEME[theme].deviceText;
-  }
-
-  return {
-    id: id,
-    groupId: id,
-    groupBackground: backgroundColor,
-    groupColor: textColor,
-    count: 1,
-    group: {
-      text: '',
-      backgroundColor: backgroundColor,
-      height: '29px',
-    },
-    normallyOn: {
-      value: true,
-      backgroundColor: backgroundColor,
-    },
-    switch: {
-      text: '',
-      textColor: textColor,
-      backgroundColor: backgroundColor,
-    },
-    description: {
-      text: '',
-      textColor: textColor,
-      backgroundColor: backgroundColor,
-      height: '29px',
-    },
-    modules: {
-      totalWidth: 18,
-      value: [{ moduleName: '', width: 18, id: id }],
-      backgroundColor: backgroundColor,
-      textColor: textColor,
-    },
-    warning: {
-      text: '',
-      color: '#eb8044',
-      backgroundColor: backgroundColor,
-      isActive: false,
-      height: '29px',
     },
   };
 }
@@ -153,4 +102,9 @@ export function getGroups(devices) {
     groups[device.groupId].push(device.id);
   });
   return groups;
+}
+
+export function randomInteger(min, max) {
+  const rand = min + Math.random() * (max + 1 - min);
+  return Math.floor(rand);
 }

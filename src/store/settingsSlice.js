@@ -1,34 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import storage from '../storage';
+import { defaultSettingsState } from '../vars';
 
-const defaultState = {
-  projectName: 'unnamed',
-  display: {
-    sequence: false,
-    numeration: true,
-    modulesName: true,
-    groups: true,
-    switches: true,
-    descriptions: true,
-    points: true,
-  },
-  paperWidth: 297,
-  selected: [],
-  palette: {
-    theme: '',
-    type: '',
-    checked: {
-      warning: false,
-      group: true,
-      normallyOn: true,
-      switch: true,
-      description: true,
-      modules: true,
-    },
-  },
-};
-
-const initialState = storage.get()?.settings || defaultState;
+const initialState = storage.get()?.settings || defaultSettingsState;
 
 export const settingsSlice = createSlice({
   name: 'settings',
@@ -39,7 +13,15 @@ export const settingsSlice = createSlice({
     },
 
     setSettings: (state, action) => {
-      state = action.payload;
+      for (let key in state) {
+        delete state[key];
+      }
+
+      const newState = action.payload;
+
+      for (let key in newState) {
+        state[key] = newState[key];
+      }
     },
 
     setPaperWidth: (state, action) => {
@@ -84,19 +66,23 @@ export const settingsSlice = createSlice({
       const isSelectedNotEmpty = state.selected.length;
 
       if (shift && isSelectedNotEmpty) {
-        const devicesId = Object.values(devices).map((device) => device.id);
+        const countDevice = devices[deviceId].count;
+
         const lastIdInSelected = state.selected[state.selected.length - 1];
-        const indexOfLastSelectedDevice = devicesId.indexOf(lastIdInSelected);
-        const indexOfDeviceId = devicesId.indexOf(deviceId);
+
+        const countLastSelectedDevice = devices[lastIdInSelected].count;
+
         const newSelected = new Set(state.selected);
 
-        if (indexOfDeviceId < indexOfLastSelectedDevice) {
-          for (let i = indexOfDeviceId; i <= indexOfLastSelectedDevice; i++) {
-            newSelected.add(devicesId[i]);
-          }
-        } else {
-          for (let i = indexOfLastSelectedDevice; i <= indexOfDeviceId; i++) {
-            newSelected.add(devicesId[i]);
+        const maxCount = Math.max(countDevice, countLastSelectedDevice);
+        const minCount = Math.min(countDevice, countLastSelectedDevice);
+
+        for (const deviceId in devices) {
+          if (
+            minCount <= devices[deviceId].count &&
+            devices[deviceId].count <= maxCount
+          ) {
+            newSelected.add(devices[deviceId].id);
           }
         }
 

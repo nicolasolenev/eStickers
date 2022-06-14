@@ -24,11 +24,15 @@ export default function DeviceMultilineInput({
   return (
     <div
       className={`device__${type}`}
-      style={{
-        background: `${device.groupBackground}`,
-        color: `${device.groupColor}`,
-        height: `${getMaxInputHeight(devices, type) + 17}px`,
-      }}
+      style={
+        type === 'group'
+          ? {
+              background: `${device.groupBackground}`,
+              color: `${device.groupColor}`,
+              height: `${getMaxInputHeight(devices, type) + 17}px`,
+            }
+          : {}
+      }
     >
       <TextareaAutosize
         placeholder={placeholder}

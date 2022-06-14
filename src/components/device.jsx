@@ -1,11 +1,11 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import DevicePoint from './deviceComponents/devicePoint';
 import DeviceMultilineInput from './deviceComponents/deviceMultilineInput';
 import DeviceField from './deviceComponents/deviceField';
 import Modules from './deviceComponents/modules';
-import { updateDeviceText } from '../store/devicesSlice';
+import { updateDeviceText, addCount } from '../store/devicesSlice';
 import { getDeviceTotalWidth } from '../functions';
 
 export default function Device({ device, id }) {
@@ -13,6 +13,10 @@ export default function Device({ device, id }) {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
   const deviceWidth = useMemo(() => getDeviceTotalWidth(device), [device]);
+
+  useEffect(() => {
+    dispatch(addCount({ count: id, deviceId }));
+  }, [id]);
 
   const deviceInputHandler = useCallback(
     function (e, key) {

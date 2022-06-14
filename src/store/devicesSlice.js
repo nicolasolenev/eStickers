@@ -1,23 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createSingleDevice, getMaxDescriptionHeight } from '../functions';
+import { defaultDevicesState, createSingleDevice } from '../vars';
 import THEME from '../theme';
 import storage from '../storage';
-
-const initialDevice = createSingleDevice();
-
-const defaultState = {
-  [initialDevice.id]: initialDevice,
-};
 
 const loadedState = storage.get()?.devices;
 const isLoadedStateNotEmpty = loadedState && Object.values(loadedState).length;
 
-const initialState = isLoadedStateNotEmpty ? loadedState : defaultState;
+const initialState = isLoadedStateNotEmpty ? loadedState : defaultDevicesState;
 
 export const devicesSlice = createSlice({
   name: 'devices',
   initialState,
   reducers: {
+    addCount: (state, action) => {
+      const { count, deviceId } = action.payload;
+      state[deviceId].count = count;
+    },
+
     setDevices: (state, action) => {
       for (let deviceId in state) {
         delete state[deviceId];
@@ -45,18 +44,30 @@ export const devicesSlice = createSlice({
 
     applyTheme: (state, action) => {
       const { themeName } = action.payload;
+      const groupsId = [];
 
-      if (themeName === '10') {
-      } else {
-        for (let device in state) {
-          for (let key in state[device]) {
-            if (key !== 'id') {
-              state[device][key].backgroundColor =
-                THEME[themeName].deviceBackground;
-            }
-          }
+      for (const deviceId in state) {
+        if (!groupsId.includes(state[deviceId].groupId)) {
+          groupsId.push(state[deviceId].groupId);
         }
       }
+
+      let count = 0;
+
+      groupsId.forEach((id) => {
+        if (count === THEME[themeName].length) {
+          count = 0;
+        }
+
+        for (let deviceId in state) {
+          if (state[deviceId].groupId === id) {
+            state[deviceId].groupBackground =
+              THEME[themeName][count].groupBackground;
+            state[deviceId].groupColor = THEME[themeName][count].groupColor;
+          }
+        }
+        count = count + 1;
+      });
     },
 
     changeColor: (state, action) => {
@@ -194,6 +205,7 @@ export const {
   setHeight,
   combineGroups,
   setDevices,
+  addCount,
 } = devicesSlice.actions;
 
 export default devicesSlice.reducer;
