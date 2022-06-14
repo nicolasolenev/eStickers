@@ -32,6 +32,8 @@ export const devicesSlice = createSlice({
     setHeight: (state, action) => {
       const { currentHeight, deviceId, type } = action.payload;
 
+      console.log('setHeight');
+
       state[deviceId][type].height = currentHeight;
     },
 

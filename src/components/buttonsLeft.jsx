@@ -4,12 +4,11 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import ButtonVisability from './buttonsComponents/buttonVisability';
 import ButtonCaption from './buttonsComponents/buttonCaption';
-import ButtonMerge from './buttonsComponents/buttonMerge';
 import { saveProjectToFile, readProject } from '../fs';
-import { clearSelected, setSettings } from '../store/settingsSlice';
-import { combineGroups, setDevices } from '../store/devicesSlice';
+import { setSettings } from '../store/settingsSlice';
+import { setDevices } from '../store/devicesSlice';
 
-export default function Buttons() {
+export default function ButtonsLeft() {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
   const devices = useSelector((state) => state.devices);

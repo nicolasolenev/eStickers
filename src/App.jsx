@@ -2,15 +2,15 @@ import './App.scss';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import Devices from './components/devices';
-import Buttons from './components/buttons';
 import Palette from './components/palette/palette';
+import Devices from './components/devices';
+import ButtonsLeft from './components/buttonsLeft';
 import Header from './components/header';
 import ButtonsTop from './components/buttonsTop';
-import storage from './storage';
-import { windowListenerHandler } from './functions';
 import { deleteDevice } from './store/devicesSlice';
 import { clearSelected } from './store/settingsSlice';
+import { windowListenerHandler } from './functions';
+import storage from './storage';
 
 export default function App() {
   const dispatch = useDispatch();
@@ -50,10 +50,10 @@ export default function App() {
   );
 }
 
-function DevicesRow(props) {
+function DevicesRow() {
   return (
     <div className="wrapper">
-      <Buttons />
+      <ButtonsLeft />
       <Devices />
     </div>
   );
