@@ -11,6 +11,7 @@ export default function ButtonsTop() {
   const settings = useSelector((state) => state.settings);
   const devices = useSelector((state) => state.devices);
   const devicesWidth = getDevicesWidth(devices);
+  const isDisabled = settings.selected.length === 0;
 
   return (
     <div className="buttons-top">
@@ -19,10 +20,11 @@ export default function ButtonsTop() {
         <span className="total-height__value">{devicesWidth}</span>
         мм
       </div>
-      <ButtonMerge />
+      <ButtonMerge isDisabled={isDisabled} />
 
       <button
         className="button"
+        disabled={isDisabled}
         onClick={() => {
           if (!settings.selected.length) {
             return;
@@ -37,12 +39,17 @@ export default function ButtonsTop() {
         Сгруппировать
       </button>
 
-      <button className="button" onClick={() => dispatch(clearSelected())}>
+      <button
+        className="button"
+        disabled={isDisabled}
+        onClick={() => dispatch(clearSelected())}
+      >
         Отменить выделение
       </button>
 
       <button
         className="button"
+        disabled={isDisabled}
         onClick={() => {
           settings.selected.forEach((deviceId) =>
             dispatch(deleteDevice({ deviceId }))

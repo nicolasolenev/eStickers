@@ -34,7 +34,7 @@ export default function ButtonsLeft() {
       <button
         className="button"
         onClick={() => {
-          saveProjectToFile({ devices, settings });
+          saveProjectToFile({ devices, settings }, 'Сохранить как:');
         }}
       >
         Сохранить в файл
