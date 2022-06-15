@@ -121,9 +121,12 @@ export const devicesSlice = createSlice({
 
     combineGroups: (state, action) => {
       const selected = [...action.payload];
-      const combinedGroupId = state[selected.shift()].groupId;
+      const combinedDevice = state[selected.shift()];
+      const combinedGroupId = combinedDevice.groupId;
       selected.forEach((deviceId) => {
         state[deviceId].groupId = combinedGroupId;
+        state[deviceId].groupBackground = combinedDevice.groupBackground;
+        state[deviceId].groupColor = combinedDevice.groupColor;
       });
     },
 

@@ -37,6 +37,9 @@ $deviceBorderWhite: border(#fff);
       border: none;
     }
   }
+  .device__module {
+    border-right: $deviceBorderBlack;
+  }
 }
 
 .black.sequence {
@@ -99,6 +102,9 @@ $deviceBorderWhite: border(#fff);
     &-hide {
       border: none;
     }
+  }
+  .device__module {
+    border-right: $deviceBorderWhite;
   }
 }
 
@@ -203,6 +209,9 @@ $deviceBorderWhite: border(#fff);
 
 .devices-wrapper {
   overflow-x: scroll;
+  -webkit-box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
+  -moz-box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
+  box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
 }
 
 .group-wrapper {
@@ -582,8 +591,8 @@ $deviceBorderWhite: border(#fff);
   display: flex;
   flex-direction: column;
   align-self: flex-start;
-  margin: 5px 15px 9px;
   width: 120px;
+  margin: 0px 10px 0 0;
 
   .button {
     width: 120px;
