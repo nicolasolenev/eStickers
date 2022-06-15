@@ -31,21 +31,6 @@ export default function ButtonsLeft() {
         <button className="button">Сохранить pdf</button>
       </Link> */}
 
-      {/* <ButtonMerge /> */}
-
-      {/* <button
-        className="button"
-        onClick={() => {
-          if (!settings.selected.length) {
-            return;
-          }
-          dispatch(combineGroups(settings.selected));
-          dispatch(clearSelected());
-        }}
-      >
-        Сгруппировать
-      </button> */}
-
       <button
         className="button"
         onClick={() => {

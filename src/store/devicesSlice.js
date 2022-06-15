@@ -77,10 +77,6 @@ export const devicesSlice = createSlice({
         ...new Set(selected.map((deviceId) => state[deviceId].groupId)),
       ];
 
-      // selectedGroups.forEach((deviceId) => {
-      //   state[deviceId][type] = color;
-      // });
-
       for (const deviceId in state) {
         if (selectedGroups.includes(state[deviceId].groupId)) {
           state[deviceId][type] = color;
@@ -140,8 +136,6 @@ export const devicesSlice = createSlice({
       const device = state[action.payload.deviceId];
       const text = action.payload.text;
 
-      console.log('updateDeviceText ');
-
       device[action.payload.key].text = text;
     },
 
@@ -158,8 +152,6 @@ export const devicesSlice = createSlice({
     setModuleWidth: (state, action) => {
       const { width, deviceId, selected } = action.payload;
       const moderatedWidth = width < 8 ? 8 : width;
-
-      console.log('setModuleWidth ', deviceId);
 
       if (selected.length && selected.includes(deviceId)) {
         selected.forEach((deviceId) => {

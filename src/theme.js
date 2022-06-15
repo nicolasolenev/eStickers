@@ -49,6 +49,19 @@ const THEME = {
       groupColor: '#fff',
     },
   ],
+
+  getDefaultColors: () => {
+    const colors = new Set();
+    for (const name in THEME) {
+      if (typeof THEME[name] !== 'function') {
+        THEME[name].forEach((theme) => {
+          colors.add(theme.groupBackground);
+          colors.add(theme.groupColor);
+        });
+      }
+    }
+    return [...colors];
+  },
 };
 
 export default THEME;

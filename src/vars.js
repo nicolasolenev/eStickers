@@ -3,6 +3,8 @@ import { randomInteger } from './functions';
 
 export const defaultSettingsState = {
   projectName: 'Стикеры',
+  paperWidth: 297,
+  selected: [],
   display: {
     sequence: false,
     numeration: true,
@@ -12,11 +14,10 @@ export const defaultSettingsState = {
     descriptions: true,
     points: true,
   },
-  paperWidth: 297,
-  selected: [],
   palette: {
-    theme: '',
-    type: '',
+    theme: 'gray',
+    type: 'groupBackground',
+    borderColor: 'white',
     checked: {
       warning: false,
       group: true,
@@ -25,6 +26,7 @@ export const defaultSettingsState = {
       description: true,
       modules: true,
     },
+    colors: [],
   },
 };
 
@@ -77,13 +79,14 @@ export function createSingleDevice(theme) {
   };
 }
 
-const initialDevice = createSingleDevice();
+const initialDevice = createSingleDevice('gray');
 
 export const defaultDevicesState = {
   [initialDevice.id]: initialDevice,
 };
 
 export const themes = [
+  { value: '', label: 'Пользовательская' },
   { value: 'gray', label: 'Серая' },
   { value: 'colored', label: 'Цветная' },
   { value: 'coloredWhiteText', label: 'Цветная, белый текст' },

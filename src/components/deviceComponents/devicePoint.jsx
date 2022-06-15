@@ -5,7 +5,6 @@ export default function DevicePoint({ device, dispatch, deviceId }) {
   return (
     <div
       className="device__point"
-      // style={{ background: `${device.normallyOn.backgroundColor}` }}
       onClick={() => dispatch(toggleDeviceNormallyOn({ deviceId }))}
     >
       <span

@@ -28,7 +28,11 @@ export default function DeviceWarning({ device, handler }) {
         height: `${getMaxInputHeight(devices, 'warning') + 7}px`,
       }}
     >
-      <DeviceWarningButton device={device} setText={setText} />
+      <DeviceWarningButton
+        device={device}
+        setText={setText}
+        setHeight={setHeight}
+      />
 
       <TextareaAutosize
         placeholder="Примеч."
@@ -45,7 +49,11 @@ export default function DeviceWarning({ device, handler }) {
 
           setText(e.target.value);
         }}
-        onBlur={(e) => handler(e, 'warning')}
+        onBlur={(e) => {
+          if (device.warning.text !== text) {
+            handler(e, 'warning');
+          }
+        }}
       />
     </div>
   );

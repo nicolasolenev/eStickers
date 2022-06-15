@@ -24,7 +24,10 @@ export default function PaperFormat() {
             if (e.code === 'KeyE') {
               e.preventDefault();
             }
-            if (e.code === 'Enter') {
+            if (
+              (e.code === 'Enter' || e.code === 'NumpadEnter') &&
+              settings.paperWidth !== width
+            ) {
               dispatch(setPaperWidth(width));
             }
           }}

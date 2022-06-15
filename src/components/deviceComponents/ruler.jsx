@@ -10,9 +10,6 @@ export default function Ruler(props) {
   const [width, setWidth] = useState();
   const settings = useSelector((state) => state.settings);
   const deviceWidth = Number(device.modules.totalWidth).toFixed(1);
-  // const moduleWidth = Number(
-  //   device.modules.value.find((module) => module.id === moduleId).width
-  // ).toFixed(1);
 
   function saveWidth(e) {
     const width = Number(e.target.value).toFixed(1);
@@ -42,7 +39,10 @@ export default function Ruler(props) {
         value={width ?? deviceWidth}
         onChange={(e) => setWidth(e.target.value)}
         onKeyDown={(e) => {
-          if (e.code === 'Enter' || e.code === 'NumpadEnder') {
+          if (
+            (e.code === 'Enter' || e.code === 'NumpadEnter') &&
+            e.target.value !== deviceWidth
+          ) {
             saveWidth(e);
           }
 
@@ -50,7 +50,11 @@ export default function Ruler(props) {
             e.preventDefault();
           }
         }}
-        onBlur={saveWidth}
+        onBlur={(e) => {
+          if (e.target.value !== deviceWidth) {
+            saveWidth(e);
+          }
+        }}
       />
     </div>
   );

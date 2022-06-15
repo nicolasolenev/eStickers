@@ -42,7 +42,11 @@ export default function DeviceMultilineInput({
 
           setText(e.target.value);
         }}
-        onBlur={(e) => handler(e, type)}
+        onBlur={(e) => {
+          if (device[type].text !== text) {
+            handler(e, type);
+          }
+        }}
       />
     </div>
   );

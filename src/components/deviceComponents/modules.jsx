@@ -4,15 +4,7 @@ import Module from './module';
 
 export default function Modules({ device, deviceId, id }) {
   return (
-    <div
-      className="device__modules"
-      style={
-        {
-          // background: `${device.modules.backgroundColor}`,
-          // color: `${device.modules.textColor}`,
-        }
-      }
-    >
+    <div className="device__modules">
       {device.modules.value.map((module, index) => (
         <Module
           key={module.id}

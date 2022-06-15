@@ -4,9 +4,6 @@
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.2",
-    "@syncfusion/ej2-react-inputs": "^20.1.59",
-    "html-to-image": "^1.9.0",
-    "jspdf": "^2.5.1",
     "react": "^18.1.0",
     "react-autosize-textarea": "^7.1.0",
     "react-color-palette": "^6.2.0",

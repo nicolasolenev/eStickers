@@ -7,17 +7,16 @@ export default function ModuleId({ deviceId, id }) {
   const dispatch = useDispatch();
   const devices = useSelector((state) => state.devices);
 
+  const onClickHandler = (e) => {
+    let shift = false;
+    if (e.shiftKey) {
+      shift = true;
+    }
+    dispatch(updateSelected({ deviceId, devices, shift }));
+  };
+
   return (
-    <div
-      className="device__id"
-      onClick={(e) => {
-        let shift = false;
-        if (e.shiftKey) {
-          shift = true;
-        }
-        dispatch(updateSelected({ deviceId, devices, shift }));
-      }}
-    >
+    <div className="device__id" onClick={onClickHandler}>
       {id}
     </div>
   );

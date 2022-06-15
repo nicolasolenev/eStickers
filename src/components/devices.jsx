@@ -2,7 +2,6 @@ import React, { useRef, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import Group from './group';
-import Rulers from './devicesComponents/rulers';
 import AddDeviceButton from './devicesComponents/addDeviceButton';
 import { getClasses, getGroups } from '../functions';
 
@@ -11,9 +10,11 @@ export default function Devices() {
   const devices = useSelector((state) => state.devices);
   const devicesRef = useRef();
 
+  const borderColor = settings.palette.borderColor;
+
   const devicesClasses = useMemo(
-    () => getClasses('devices numeration', settings.display),
-    [settings.display]
+    () => getClasses(`devices numeration ${borderColor}`, settings.display),
+    [settings.display, borderColor]
   );
 
   const groups = getGroups(devices);
@@ -27,8 +28,6 @@ export default function Devices() {
         style={{ width: `${settings.paperWidth}mm` }}
         ref={devicesRef}
       >
-        {/* <Rulers /> */}
-
         {Object.entries(groups).map(([key, arr]) => {
           const id = count;
           count =

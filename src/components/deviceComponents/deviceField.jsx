@@ -10,7 +10,11 @@ export default function DeviceField({ name, placeholder, device, handler }) {
         placeholder={placeholder}
         value={text}
         onChange={(e) => setText(e.target.value)}
-        onBlur={(e) => handler(e, name)}
+        onBlur={(e) => {
+          if (device.switch.text !== text) {
+            handler(e, name);
+          }
+        }}
       ></input>
     </div>
   );

@@ -50,7 +50,7 @@ export default function ButtonsTop() {
           dispatch(clearSelected());
         }}
       >
-        Удалить выделение
+        Удалить выделенные
       </button>
     </div>
   );
