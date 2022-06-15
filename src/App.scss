@@ -629,15 +629,15 @@ $deviceBorderWhite: border(#fff);
     width: 0.2mm;
     height: 10px;
   }
-  &:after {
-    // content: '';
-    // position: absolute;
-    // right: -0.1mm;
-    // bottom: -6px;
-    // background: gray;
-    // width: 0.1mm;
-    // height: 10px;
-  }
+  // &:after {
+  // content: '';
+  // position: absolute;
+  // right: -0.1mm;
+  // bottom: -6px;
+  // background: gray;
+  // width: 0.1mm;
+  // height: 10px;
+  // }
 
   &__input {
     border: none;

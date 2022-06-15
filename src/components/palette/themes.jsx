@@ -3,12 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import Select from 'react-select';
 
 import { themes } from '../../vars';
-import { setPaletteValue } from '../../store/settingsSlice';
-import { applyTheme } from '../../store/devicesSlice';
+import { getUsersTheme } from '../../functions';
+import { setPaletteValue, setUsersTheme } from '../../store/settingsSlice';
+import { applyTheme, applyUsersTheme } from '../../store/devicesSlice';
 
 export default function Themes() {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
+  const devices = useSelector((state) => state.devices);
 
   const defaultValueIndex = themes
     .map((theme) => theme.value)
@@ -26,7 +28,19 @@ export default function Themes() {
           options={themes}
           onChange={(theme) => {
             dispatch(setPaletteValue({ theme: theme.value }));
-            dispatch(applyTheme({ themeName: theme.value }));
+
+            if (settings.palette.theme === '' && theme.value !== '') {
+              const usersTheme = getUsersTheme(devices);
+              dispatch(setUsersTheme(usersTheme));
+              dispatch(applyTheme({ themeName: theme.value }));
+            } else if (theme.value === '') {
+              console.log(settings.usersTheme);
+              if (Object.entries(settings.usersTheme).length !== 0) {
+                dispatch(applyUsersTheme(settings.usersTheme));
+              }
+            } else {
+              dispatch(applyTheme({ themeName: theme.value }));
+            }
           }}
           isSearchable={false}
         />

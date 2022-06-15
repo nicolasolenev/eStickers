@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { setPaletteValue } from '../../store/settingsSlice';
 import { changeColor } from '../../store/devicesSlice';
 import THEME from '../../theme';
+import { getUsersColors } from '../../functions';
 import Radiobuttons from './radiobuttons';
 
 const defaultColors = THEME.getDefaultColors();
 
+function getColors(defaultColors, usersColors) {
+  const colors = new Set([...defaultColors]);
+  usersColors.forEach((color) => colors.add(color));
+  return [...colors];
+}
+
 export default function Buttons() {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
+  const usersColors = getUsersColors(settings.usersTheme);
+
+  const colors = getColors(defaultColors, usersColors);
 
   return (
     <div className="palette__settings palette__settings_first-col">
@@ -37,7 +47,7 @@ export default function Buttons() {
           }
         }}
       >
-        {defaultColors.map((color, id) => (
+        {colors.map((color, id) => (
           <div
             key={id}
             id={color}

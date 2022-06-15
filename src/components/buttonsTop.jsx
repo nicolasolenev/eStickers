@@ -52,7 +52,7 @@ export default function ButtonsTop() {
         disabled={isDisabled}
         onClick={() => {
           settings.selected.forEach((deviceId) =>
-            dispatch(deleteDevice({ deviceId }))
+            dispatch(deleteDevice(deviceId))
           );
           dispatch(clearSelected());
         }}

@@ -8,6 +8,10 @@ export const settingsSlice = createSlice({
   name: 'settings',
   initialState,
   reducers: {
+    setUsersTheme: (state, action) => {
+      state.usersTheme = action.payload;
+    },
+
     setProjectName: (state, action) => {
       state.projectName = action.payload;
     },
@@ -82,6 +86,7 @@ export const {
   setSettings,
   setProjectName,
   setPaletteValue,
+  setUsersTheme,
 } = settingsSlice.actions;
 
 export default settingsSlice.reducer;

@@ -42,6 +42,16 @@ export const devicesSlice = createSlice({
       state[deviceId].warning.isActive = !state[deviceId].warning.isActive;
     },
 
+    applyUsersTheme: (state, action) => {
+      const theme = action.payload;
+      for (const deviceId in state) {
+        const device = state[deviceId];
+        const groupId = device.groupId;
+        device.groupBackground = theme[groupId].groupBackground;
+        device.groupColor = theme[groupId].groupColor;
+      }
+    },
+
     applyTheme: (state, action) => {
       const { themeName } = action.payload;
       const groupsId = [];
@@ -184,8 +194,8 @@ export const devicesSlice = createSlice({
     },
 
     deleteDevice: (state, action) => {
-      const id = action.payload.deviceId;
-      delete state[id];
+      const deviceId = action.payload;
+      delete state[deviceId];
     },
   },
 });
@@ -205,6 +215,7 @@ export const {
   combineGroups,
   setDevices,
   addCount,
+  applyUsersTheme,
 } = devicesSlice.actions;
 
 export default devicesSlice.reducer;

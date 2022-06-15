@@ -5,6 +5,7 @@ export const defaultSettingsState = {
   projectName: 'Стикеры',
   paperWidth: 297,
   selected: [],
+  usersTheme: {},
   display: {
     sequence: false,
     numeration: true,

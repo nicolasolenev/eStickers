@@ -21,7 +21,7 @@ export function windowListenerHandler(
   const deselection = e.key === 'Escape';
 
   if (deleteKeyCombination) {
-    selected.forEach((deviceId) => dispatch(deleteDevice({ deviceId })));
+    selected.forEach((deviceId) => dispatch(deleteDevice(deviceId)));
     dispatch(clearSelected());
   }
   if (deselection) {
@@ -102,6 +102,30 @@ export function getGroups(devices) {
     groups[device.groupId].push(device.id);
   });
   return groups;
+}
+
+export function getUsersTheme(devices) {
+  const groups = getGroups(devices);
+  const usersTheme = {};
+  for (const group in groups) {
+    usersTheme[group] = {
+      groupBackground: devices[group].groupBackground,
+      groupColor: devices[group].groupColor,
+    };
+  }
+
+  return usersTheme;
+}
+
+export function getUsersColors(usersTheme) {
+  const usersColors = new Set();
+
+  for (const group in usersTheme) {
+    usersColors.add(usersTheme[group].groupBackground);
+    usersColors.add(usersTheme[group].groupColor);
+  }
+
+  return [...usersColors];
 }
 
 export function randomInteger(min, max) {
