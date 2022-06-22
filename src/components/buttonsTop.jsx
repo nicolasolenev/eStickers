@@ -7,7 +7,7 @@ import {
   toggleVisability,
   setSettings,
 } from '../store/settingsSlice';
-import { setDevices } from '../store/devicesSlice';
+import { setDevices, splitDevice, splitGroup } from '../store/devicesSlice';
 import { pushState, popState } from '../store/historySlice';
 import {
   combineGroups,
@@ -40,6 +40,29 @@ export default function ButtonsTop() {
           if (!settings.selected.length) {
             return;
           }
+
+          if (devices[settings.selected[0]].modules.value.length > 1) {
+            dispatch(
+              splitDevice({
+                deviceId: settings.selected[0],
+                theme: settings.palette.theme,
+              })
+            );
+            dispatch(clearSelected());
+            dispatch(pushState({ devices, settings }));
+          }
+        }}
+      >
+        Разделить выделенные
+      </button>
+
+      <button
+        className="button"
+        disabled={isDisabled}
+        onClick={() => {
+          if (!settings.selected.length) {
+            return;
+          }
           dispatch(combineGroups(settings.selected));
           dispatch(clearSelected());
           dispatch(pushState({ devices, settings }));
@@ -49,6 +72,24 @@ export default function ButtonsTop() {
         }}
       >
         Сгруппировать
+      </button>
+
+      <button
+        className="button"
+        disabled={isDisabled}
+        onClick={() => {
+          if (!settings.selected.length) {
+            return;
+          }
+          dispatch(splitGroup(devices[settings.selected[0]].groupId));
+          dispatch(clearSelected());
+          dispatch(pushState({ devices, settings }));
+          if (!settings.display.groups) {
+            dispatch(toggleVisability('groups'));
+          }
+        }}
+      >
+        Разгруппировать
       </button>
 
       <button

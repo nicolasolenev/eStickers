@@ -1,4 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { nanoid } from 'nanoid';
+
 import { defaultDevicesState, createSingleDevice } from '../vars';
 import THEME from '../theme';
 import storage from '../storage';
@@ -100,6 +102,38 @@ export const devicesSlice = createSlice({
       state[newDevice.id] = newDevice;
     },
 
+    splitDevice: (state, action) => {
+      const combinedDeviceId = action.payload.deviceId;
+
+      let countModules = state[combinedDeviceId].modules.value.length;
+      const moduleWidth =
+        state[combinedDeviceId].modules.totalWidth / countModules;
+
+      state[combinedDeviceId].modules.value = [
+        state[combinedDeviceId].modules.value[0],
+      ];
+
+      state[combinedDeviceId].modules.totalWidth = moduleWidth;
+
+      const newState = {};
+      for (const deviceId in state) {
+        newState[deviceId] = state[deviceId];
+        if (deviceId === combinedDeviceId) {
+          while (countModules > 1) {
+            const newDevice = createSingleDevice(action.payload.theme);
+            newDevice.modules.totalWidth = newDevice.modules.value[0].width =
+              moduleWidth;
+            newState[newDevice.id] = newDevice;
+            countModules--;
+          }
+        }
+      }
+
+      for (const deviceId in newState) {
+        state[deviceId] = newState[deviceId];
+      }
+    },
+
     combineDevices: (state, action) => {
       const selected = [...action.payload.selected];
 
@@ -127,6 +161,16 @@ export const devicesSlice = createSlice({
       combinedDevice.modules.value.forEach((module) => {
         module.width = moduleWidth;
       });
+    },
+
+    splitGroup: (state, action) => {
+      const groupId = action.payload;
+      for (const deviceId in state) {
+        const device = state[deviceId];
+        if ((device.groupId = groupId)) {
+          device.groupId = nanoid();
+        }
+      }
     },
 
     combineGroups: (state, action) => {
@@ -203,6 +247,7 @@ export const devicesSlice = createSlice({
 export const {
   addDevice,
   combineDevices,
+  splitDevice,
   toggleDeviceNormallyOn,
   updateDeviceText,
   setModuleWidth,
@@ -213,6 +258,7 @@ export const {
   toggleWarning,
   setHeight,
   combineGroups,
+  splitGroup,
   setDevices,
   addCount,
   applyUsersTheme,

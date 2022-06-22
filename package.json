@@ -5,6 +5,7 @@
   "dependencies": {
     "@linktime/palette": "^1.0.2",
     "@reduxjs/toolkit": "^1.8.2",
+    "nanoid": "^4.0.0",
     "react": "^18.1.0",
     "react-autosize-textarea": "^7.1.0",
     "react-color-palette": "^6.2.0",

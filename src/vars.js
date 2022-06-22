@@ -1,5 +1,6 @@
 import THEME from './theme';
 import { randomInteger } from './functions';
+import { nanoid } from 'nanoid';
 
 export const defaultSettingsState = {
   projectName: 'Стикеры',
@@ -32,7 +33,8 @@ export const defaultSettingsState = {
 };
 
 export function createSingleDevice(theme) {
-  const id = Number(new Date());
+  // const id = Number(new Date());
+  const id = nanoid();
   let backgroundColor = '#f2f2f2';
   let textColor = '#000';
 
