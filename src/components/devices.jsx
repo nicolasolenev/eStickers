@@ -1,13 +1,25 @@
-import React, { useRef, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useRef, useMemo, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useReactToPrint } from 'react-to-print';
 
 import Group from './group';
 import AddDeviceButton from './devicesComponents/addDeviceButton';
 import { getClasses, getGroups } from '../functions';
+import { pushState } from '../store/historySlice';
+
+function getPageStyle(pageWidth) {
+  return `
+ @page {
+ size: auto ${pageWidth}mm;
+ }
+`;
+}
 
 export default function Devices() {
+  const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
   const devices = useSelector((state) => state.devices);
+  const history = useSelector((state) => state.history);
   const devicesRef = useRef();
 
   const borderColor = settings.palette.borderColor;
@@ -20,6 +32,16 @@ export default function Devices() {
   const groups = getGroups(devices);
 
   let count = 1;
+
+  const handlePrint = useReactToPrint({
+    content: () => devicesRef.current,
+    pageStyle: getPageStyle(settings.paperWidth),
+  });
+
+  // useEffect(() => {
+  //   console.log('render');
+  //   dispatch(pushState({ devices, settings }));
+  // }, [devices, settings, dispatch]);
 
   return (
     <div className="devices-wrapper">
@@ -41,6 +63,9 @@ export default function Devices() {
 
         <AddDeviceButton />
       </div>
+      <button style={{ position: 'absolute' }} onClick={handlePrint}>
+        Print this out!
+      </button>
     </div>
   );
 }

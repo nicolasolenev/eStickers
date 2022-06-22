@@ -141,8 +141,8 @@ export const devicesSlice = createSlice({
     },
 
     toggleDeviceNormallyOn: (state, action) => {
-      const id = action.payload.deviceId;
-      state[id].normallyOn.value = !state[id].normallyOn.value;
+      const { deviceId: id, key } = action.payload;
+      state[id].normallyOn[key] = !state[id].normallyOn[key];
     },
 
     updateDeviceText: (state, action) => {

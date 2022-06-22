@@ -571,6 +571,7 @@ $deviceBorderWhite: border(#fff);
 .points {
   .device__point {
     display: block;
+    height: 27px;
   }
 }
 
@@ -869,5 +870,35 @@ input:focus-visible {
         position: relative;
       }
     }
+  }
+}
+
+@media print {
+  @page {
+    size: landscape;
+    margin: 10mm;
+  }
+  body {
+    background: #fff;
+  }
+  .devices__add,
+  .rulers-wrapper {
+    display: none;
+  }
+  input::-webkit-input-placeholder,
+  textarea::-webkit-input-placeholder,
+  input:-moz-placeholder,
+  textarea:-moz-placeholder,
+  input::-moz-placeholder,
+  textarea::-moz-placeholder,
+  input:-ms-input-placeholder,
+  textarea:-ms-input-placeholder,
+  input::-ms-input-placeholder,
+  textarea::-ms-input-placeholder,
+  input::placeholder,
+  textarea::placeholder {
+    opacity: 0 !important;
+    color: transparent !important;
+    display: none !important;
   }
 }

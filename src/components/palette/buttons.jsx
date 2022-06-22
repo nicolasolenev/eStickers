@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import palette from '@linktime/palette';
 
 import { setPaletteValue } from '../../store/settingsSlice';
 import { changeColor } from '../../store/devicesSlice';
 import THEME from '../../theme';
 import { getUsersColors } from '../../functions';
 import Radiobuttons from './radiobuttons';
+
+// Generate 30 lighter colors from default colors
+// const colors = palette(30, 0.1, ['#1d121c', '#232323', '#23456f']);
 
 const defaultColors = THEME.getDefaultColors();
 

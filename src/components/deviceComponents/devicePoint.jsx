@@ -5,7 +5,9 @@ export default function DevicePoint({ device, dispatch, deviceId }) {
   return (
     <div
       className="device__point"
-      onClick={() => dispatch(toggleDeviceNormallyOn({ deviceId }))}
+      onClick={() =>
+        dispatch(toggleDeviceNormallyOn({ deviceId, key: 'value' }))
+      }
     >
       <span
         className={
@@ -13,6 +15,9 @@ export default function DevicePoint({ device, dispatch, deviceId }) {
             ? 'point-circle'
             : 'point-circle point-circle_active'
         }
+        style={{
+          display: `${device.normallyOn.isVisible ? 'inline-block' : 'none'}`,
+        }}
       ></span>
     </div>
   );

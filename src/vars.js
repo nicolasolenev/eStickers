@@ -60,6 +60,7 @@ export function createSingleDevice(theme) {
     },
     normallyOn: {
       value: true,
+      isVisible: true,
     },
     switch: {
       text: '',

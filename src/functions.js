@@ -13,12 +13,23 @@ export function getClasses(defaultClass, classes) {
 
 export function windowListenerHandler(
   e,
-  { dispatch, selected, deleteDevice, clearSelected }
+  {
+    dispatch,
+    selected,
+    deleteDevice,
+    clearSelected,
+    history,
+    setDevices,
+    setSettings,
+    popState,
+  }
 ) {
   const deleteKeyCombination =
     (e.key === 'Delete' || e.key === 'Backspace') && e.shiftKey;
 
   const deselection = e.key === 'Escape';
+
+  const ctrlZ = e.key === 'z' && e.ctrlKey;
 
   if (deleteKeyCombination) {
     selected.forEach((deviceId) => dispatch(deleteDevice(deviceId)));
@@ -26,6 +37,17 @@ export function windowListenerHandler(
   }
   if (deselection) {
     dispatch(clearSelected());
+  }
+  if (ctrlZ) {
+    const prevState = history[history.length - 1];
+    if (prevState) {
+      const devices = prevState.devices;
+      const settings = prevState.settings;
+      console.log(prevState);
+      dispatch(setDevices(devices));
+      dispatch(setSettings(settings));
+      dispatch(popState({ devices, settings }));
+    }
   }
 }
 

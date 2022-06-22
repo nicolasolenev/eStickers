@@ -9,8 +9,8 @@ import { updateDeviceText, addCount } from '../store/devicesSlice';
 import { getDeviceTotalWidth } from '../functions';
 
 export default function Device({ device, id }) {
-  const deviceId = device.id;
   const dispatch = useDispatch();
+  const deviceId = device.id;
   const settings = useSelector((state) => state.settings);
   const deviceWidth = useMemo(() => getDeviceTotalWidth(device), [device]);
 
