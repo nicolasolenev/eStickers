@@ -137,6 +137,14 @@ $deviceBorderWhite: border(#fff);
   }
 }
 
+#dpi {
+  height: 1in;
+  left: -100%;
+  position: absolute;
+  top: -100%;
+  width: 1in;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -208,6 +216,7 @@ $deviceBorderWhite: border(#fff);
 }
 
 .devices-wrapper {
+  position: relative;
   overflow-x: scroll;
   -webkit-box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
   -moz-box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
@@ -236,11 +245,15 @@ $deviceBorderWhite: border(#fff);
 }
 
 .buttons-top {
-  margin: 5px 5px 5px 170px;
+  margin: 5px 5px 5px 140px;
   .button {
     margin-right: 10px;
     padding: 3px;
     cursor: pointer;
+  }
+
+  &__buttons {
+    margin-bottom: 10px;
   }
 }
 
@@ -308,8 +321,19 @@ $deviceBorderWhite: border(#fff);
       transform: rotate(-90deg);
       color: gray;
       // отключил пока что, в разработке
-      display: none;
+      // display: none;
     }
+  }
+
+  &__height-ruler {
+    position: absolute;
+    // height: 20mm;
+    border-bottom: 0.1mm solid gray;
+    bottom: 72px;
+    left: 0;
+    transform: rotate(-90deg);
+    color: gray;
+    z-index: 1;
   }
 
   .ruler:last-child:after {
@@ -593,7 +617,7 @@ $deviceBorderWhite: border(#fff);
   flex-direction: column;
   align-self: flex-start;
   width: 120px;
-  margin: 0px 10px 0 0;
+  margin: -59px 10px 0 0;
 
   .button {
     width: 120px;
@@ -882,23 +906,39 @@ input:focus-visible {
     background: #fff;
   }
   .devices__add,
-  .rulers-wrapper {
-    display: none;
+  .rulers-wrapper,
+  .device__id-hide {
+    display: none !important;
   }
   input::-webkit-input-placeholder,
-  textarea::-webkit-input-placeholder,
+  textarea::-webkit-input-placeholder {
+    color: transparent !important;
+    opacity: 0 !important;
+  }
   input:-moz-placeholder,
-  textarea:-moz-placeholder,
+  textarea:-moz-placeholder {
+    color: transparent !important;
+    opacity: 0 !important;
+  }
   input::-moz-placeholder,
-  textarea::-moz-placeholder,
+  textarea::-moz-placeholder {
+    color: transparent !important;
+    opacity: 0 !important;
+  }
   input:-ms-input-placeholder,
-  textarea:-ms-input-placeholder,
+  textarea:-ms-input-placeholder {
+    color: transparent !important;
+    opacity: 0 !important;
+  }
   input::-ms-input-placeholder,
-  textarea::-ms-input-placeholder,
+  textarea::-ms-input-placeholder {
+    color: transparent !important;
+    opacity: 0 !important;
+  }
+
   input::placeholder,
   textarea::placeholder {
-    opacity: 0 !important;
     color: transparent !important;
-    display: none !important;
+    opacity: 0 !important;
   }
 }

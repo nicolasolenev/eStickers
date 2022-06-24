@@ -23,7 +23,7 @@ export default function ButtonMerge({ isDisabled }) {
         dispatch(pushState({ devices, settings }));
       }}
     >
-      Объединить выделенные
+      Объединить
     </button>
   );
 }

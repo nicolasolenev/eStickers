@@ -55,7 +55,7 @@ export function createSingleDevice(theme) {
     groupId: id,
     groupBackground: backgroundColor,
     groupColor: textColor,
-    count: 1,
+    count: Infinity,
     group: {
       text: '',
       height: '29px',

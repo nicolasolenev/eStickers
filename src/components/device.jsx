@@ -14,9 +14,9 @@ export default function Device({ device, id }) {
   const settings = useSelector((state) => state.settings);
   const deviceWidth = useMemo(() => getDeviceTotalWidth(device), [device]);
 
-  useEffect(() => {
-    dispatch(addCount({ count: id, deviceId }));
-  }, [id]);
+  // useEffect(() => {
+  //   dispatch(addCount({ count: id, deviceId }));
+  // }, [id]);
 
   const deviceInputHandler = useCallback(
     function (e, key) {

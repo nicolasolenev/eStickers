@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useReactToPrint } from 'react-to-print';
 
 import ButtonVisability from './buttonsComponents/buttonVisability';
 import ButtonCaption from './buttonsComponents/buttonCaption';
@@ -8,10 +9,24 @@ import { saveProjectToFile, readProject } from '../fs';
 import { setSettings } from '../store/settingsSlice';
 import { setDevices } from '../store/devicesSlice';
 
-export default function ButtonsLeft() {
+export default function ButtonsLeft(props) {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
   const devices = useSelector((state) => state.devices);
+  const { devicesRef } = props;
+
+  function getPageStyle(pageWidth) {
+    return `
+    @page {
+    size: auto ${pageWidth}mm;
+    }
+    `;
+  }
+
+  const handlePrint = useReactToPrint({
+    content: () => devicesRef.current,
+    pageStyle: getPageStyle(settings.paperWidth),
+  });
 
   return (
     <div className="buttons">
@@ -30,6 +45,10 @@ export default function ButtonsLeft() {
       {/* <Link to="/print">
         <button className="button">Сохранить pdf</button>
       </Link> */}
+
+      <button className="button" onClick={handlePrint}>
+        Печать
+      </button>
 
       <button
         className="button"

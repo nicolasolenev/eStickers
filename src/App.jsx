@@ -1,5 +1,5 @@
 import './App.scss';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Palette from './components/palette/palette';
@@ -9,7 +9,7 @@ import Header from './components/header';
 import ButtonsTop from './components/buttonsTop';
 import { deleteDevice, setDevices } from './store/devicesSlice';
 import { clearSelected, setSettings } from './store/settingsSlice';
-import { popState } from './store/historySlice';
+import { popState, pushState } from './store/historySlice';
 import { windowListenerHandler } from './functions';
 import storage from './storage';
 
@@ -30,6 +30,9 @@ export default function App() {
       setDevices,
       setSettings,
       popState,
+      pushState,
+      devices,
+      settings,
     });
 
   const onUnloadHandler = () => {
@@ -48,6 +51,7 @@ export default function App() {
 
   return (
     <>
+      <div id="dpi"></div>
       <Header />
       <ButtonsTop />
       <DevicesRow />
@@ -57,10 +61,12 @@ export default function App() {
 }
 
 function DevicesRow() {
+  const devicesRef = useRef();
+
   return (
     <div className="wrapper">
-      <ButtonsLeft />
-      <Devices />
+      <ButtonsLeft devicesRef={devicesRef} />
+      <Devices devicesRef={devicesRef} />
     </div>
   );
 }

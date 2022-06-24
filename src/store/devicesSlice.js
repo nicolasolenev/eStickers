@@ -103,31 +103,60 @@ export const devicesSlice = createSlice({
     },
 
     splitDevice: (state, action) => {
-      const combinedDeviceId = action.payload.deviceId;
+      const { deviceId: combinedDeviceId, theme } = action.payload;
+      const combinedDevice = state[combinedDeviceId];
+      const modules = [...combinedDevice.modules.value].reverse();
+      let count = 1;
 
-      let countModules = state[combinedDeviceId].modules.value.length;
-      const moduleWidth =
-        state[combinedDeviceId].modules.totalWidth / countModules;
+      let countModules = combinedDevice.modules.value.length;
+      const moduleWidth = combinedDevice.modules.totalWidth / countModules;
 
-      state[combinedDeviceId].modules.value = [
-        state[combinedDeviceId].modules.value[0],
-      ];
+      combinedDevice.modules.value = [modules.pop()];
 
-      state[combinedDeviceId].modules.totalWidth = moduleWidth;
+      combinedDevice.modules.totalWidth = moduleWidth;
 
       const newState = {};
-      for (const deviceId in state) {
-        newState[deviceId] = state[deviceId];
-        if (deviceId === combinedDeviceId) {
-          while (countModules > 1) {
-            const newDevice = createSingleDevice(action.payload.theme);
-            newDevice.modules.totalWidth = newDevice.modules.value[0].width =
-              moduleWidth;
-            newState[newDevice.id] = newDevice;
-            countModules--;
+      // for (const deviceId in state) {
+      //   newState[deviceId] = state[deviceId];
+      //   newState[deviceId].count = count;
+      //   count++;
+      //   if (deviceId === combinedDeviceId) {
+      //     while (countModules > 1) {
+      //       const newDevice = createSingleDevice(theme);
+      //       newDevice.modules.totalWidth = newDevice.modules.value[0].width =
+      //         moduleWidth;
+      //       newState[newDevice.id] = newDevice;
+      //       newState[newDevice.id].count = count;
+      //       newState[newDevice.id].groupId = combinedDevice.groupId;
+      //       newState[newDevice.id].modules.value = [modules.pop()];
+      //       count++;
+      //       countModules--;
+      //     }
+      //   }
+      // }
+
+      Object.values(state)
+        .sort((a, b) => a.count - b.count)
+        .forEach((device) => {
+          const deviceId = device.id;
+
+          newState[deviceId] = state[deviceId];
+          newState[deviceId].count = count;
+          count++;
+          if (deviceId === combinedDeviceId) {
+            while (countModules > 1) {
+              const newDevice = createSingleDevice(theme);
+              newDevice.modules.totalWidth = newDevice.modules.value[0].width =
+                moduleWidth;
+              newState[newDevice.id] = newDevice;
+              newState[newDevice.id].count = count;
+              newState[newDevice.id].groupId = combinedDevice.groupId;
+              newState[newDevice.id].modules.value = [modules.pop()];
+              count++;
+              countModules--;
+            }
           }
-        }
-      }
+        });
 
       for (const deviceId in newState) {
         state[deviceId] = newState[deviceId];
@@ -165,12 +194,24 @@ export const devicesSlice = createSlice({
 
     splitGroup: (state, action) => {
       const groupId = action.payload;
-      for (const deviceId in state) {
-        const device = state[deviceId];
-        if ((device.groupId = groupId)) {
-          device.groupId = nanoid();
-        }
-      }
+      let count = 1;
+
+      Object.values(state)
+        .sort((a, b) => a.count - b.count)
+        .forEach((device) => {
+          if (device.groupId === groupId) {
+            device.groupId = nanoid();
+            device.count = count;
+          }
+          count++;
+        });
+
+      // for (const deviceId in state) {
+      //   const device = state[deviceId];
+      //   if (device.groupId === groupId) {
+      //     device.groupId = nanoid();
+      //   }
+      // }
     },
 
     combineGroups: (state, action) => {

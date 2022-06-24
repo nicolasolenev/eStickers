@@ -26,132 +26,143 @@ export default function ButtonsTop() {
 
   return (
     <div className="buttons-top">
-      <div className="total-height">
-        Общая длина аппаратов:
-        <span className="total-height__value">{devicesWidth}</span>
-        мм
-      </div>
-      <ButtonMerge isDisabled={isDisabled} />
+      <div className="buttons-top__buttons">
+        <button
+          className="button"
+          onClick={() => {
+            const prevState = history[history.length - 1];
+            if (prevState) {
+              const devices = prevState.devices;
+              const settings = prevState.settings;
+              console.log(prevState);
+              dispatch(setDevices(devices));
+              dispatch(setSettings(settings));
+              dispatch(popState({ devices, settings }));
+            }
+          }}
+        >
+          Отменить
+        </button>
 
-      <button
-        className="button"
-        disabled={isDisabled}
-        onClick={() => {
-          if (!settings.selected.length) {
-            return;
-          }
+        <ButtonMerge isDisabled={isDisabled} />
 
-          if (devices[settings.selected[0]].modules.value.length > 1) {
-            dispatch(
-              splitDevice({
-                deviceId: settings.selected[0],
-                theme: settings.palette.theme,
-              })
+        <button
+          className="button"
+          disabled={isDisabled}
+          onClick={() => {
+            if (!settings.selected.length) {
+              return;
+            }
+
+            if (devices[settings.selected[0]].modules.value.length > 1) {
+              dispatch(
+                splitDevice({
+                  deviceId: settings.selected[0],
+                  theme: settings.palette.theme,
+                })
+              );
+              dispatch(clearSelected());
+              dispatch(pushState({ devices, settings }));
+            }
+          }}
+        >
+          Разделить
+        </button>
+
+        <button
+          className="button"
+          disabled={isDisabled}
+          onClick={() => {
+            if (!settings.selected.length) {
+              return;
+            }
+            dispatch(combineGroups(settings.selected));
+            dispatch(clearSelected());
+            dispatch(pushState({ devices, settings }));
+            if (!settings.display.groups) {
+              dispatch(toggleVisability('groups'));
+            }
+          }}
+        >
+          Сгруппировать
+        </button>
+
+        <button
+          className="button"
+          disabled={isDisabled}
+          onClick={() => {
+            if (!settings.selected.length) {
+              return;
+            }
+            dispatch(splitGroup(devices[settings.selected[0]].groupId));
+            dispatch(clearSelected());
+            dispatch(pushState({ devices, settings }));
+            if (!settings.display.groups) {
+              dispatch(toggleVisability('groups'));
+            }
+          }}
+        >
+          Разгруппировать
+        </button>
+
+        <button
+          className="button"
+          disabled={isDisabled}
+          onClick={() => {
+            settings.selected.forEach((deviceId) =>
+              dispatch(deleteDevice(deviceId))
             );
             dispatch(clearSelected());
             dispatch(pushState({ devices, settings }));
-          }
-        }}
-      >
-        Разделить выделенные
-      </button>
+          }}
+        >
+          Удалить выделенные
+        </button>
 
-      <button
-        className="button"
-        disabled={isDisabled}
-        onClick={() => {
-          if (!settings.selected.length) {
-            return;
-          }
-          dispatch(combineGroups(settings.selected));
-          dispatch(clearSelected());
-          dispatch(pushState({ devices, settings }));
-          if (!settings.display.groups) {
-            dispatch(toggleVisability('groups'));
-          }
-        }}
-      >
-        Сгруппировать
-      </button>
+        <button
+          className="button"
+          disabled={isDisabled}
+          onClick={() => dispatch(clearSelected())}
+        >
+          Отменить выделение
+        </button>
 
-      <button
-        className="button"
-        disabled={isDisabled}
-        onClick={() => {
-          if (!settings.selected.length) {
-            return;
-          }
-          dispatch(splitGroup(devices[settings.selected[0]].groupId));
-          dispatch(clearSelected());
-          dispatch(pushState({ devices, settings }));
-          if (!settings.display.groups) {
-            dispatch(toggleVisability('groups'));
-          }
-        }}
-      >
-        Разгруппировать
-      </button>
+        <button
+          className="button"
+          disabled={isDisabled}
+          onClick={() => {
+            settings.selected.forEach((deviceId) =>
+              dispatch(toggleDeviceNormallyOn({ deviceId, key: 'isVisible' }))
+            );
+            dispatch(clearSelected());
+          }}
+        >
+          Скрыть/показать норм.положение
+        </button>
 
-      <button
-        className="button"
-        disabled={isDisabled}
-        onClick={() => dispatch(clearSelected())}
-      >
-        Отменить выделение
-      </button>
+        {/* <button
+          className="button"
+          onClick={() => {
+            dispatch(pushState({ devices, settings }));
+          }}
+        >
+          Сохранить состояние
+        </button> */}
+      </div>
 
-      <button
-        className="button"
-        disabled={isDisabled}
-        onClick={() => {
-          settings.selected.forEach((deviceId) =>
-            dispatch(deleteDevice(deviceId))
-          );
-          dispatch(clearSelected());
-          dispatch(pushState({ devices, settings }));
-        }}
-      >
-        Удалить выделенные
-      </button>
+      <div className="lengths">
+        <div className="total-height">
+          Общая длина аппаратов:
+          <span className="total-height__value">{devicesWidth}</span>
+          мм
+        </div>
 
-      <button
-        className="button"
-        disabled={isDisabled}
-        onClick={() => {
-          settings.selected.forEach((deviceId) =>
-            dispatch(toggleDeviceNormallyOn({ deviceId, key: 'isVisible' }))
-          );
-          dispatch(clearSelected());
-        }}
-      >
-        Скрыть/показать норм.положение
-      </button>
-
-      <button
-        className="button"
-        onClick={() => {
-          dispatch(pushState({ devices, settings }));
-        }}
-      >
-        Сохранить состояние
-      </button>
-
-      <button
-        className="button"
-        onClick={() => {
-          const prevState = history[history.length - 1];
-          if (prevState) {
-            const devices = prevState.devices;
-            const settings = prevState.settings;
-            console.log(prevState);
-            dispatch(setDevices(devices));
-            dispatch(setSettings(settings));
-            dispatch(popState({ devices, settings }));
-          }
-        }}
-      >
-        Вернуть состояние
-      </button>
+        <div className="total-height">
+          Высота стикеров:
+          <span className="total-height__value">xyz</span>
+          мм
+        </div>
+      </div>
     </div>
   );
 }

@@ -22,6 +22,9 @@ export function windowListenerHandler(
     setDevices,
     setSettings,
     popState,
+    pushState,
+    devices,
+    settings,
   }
 ) {
   const deleteKeyCombination =
@@ -34,6 +37,7 @@ export function windowListenerHandler(
   if (deleteKeyCombination) {
     selected.forEach((deviceId) => dispatch(deleteDevice(deviceId)));
     dispatch(clearSelected());
+    dispatch(pushState({ devices, settings }));
   }
   if (deselection) {
     dispatch(clearSelected());

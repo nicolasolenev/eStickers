@@ -17,6 +17,7 @@ export default function Group({ arrayOfDevicesId, id }) {
   return (
     <div
       className="group-wrapper"
+      id={devices[firstDeviceId].groupId}
       style={{ width: `${getGroupWidth(devices, arrayOfDevicesId)}mm` }}
     >
       <div className="warning-wrapper">
@@ -58,11 +59,13 @@ export default function Group({ arrayOfDevicesId, id }) {
           color: `${devices[firstDeviceId].groupColor}`,
         }}
       >
-        {arrayOfDevicesId.map((deviceId, index) => {
-          const id = count;
-          count = count + devices[deviceId].modules.value.length;
-          return <Device key={deviceId} id={id} device={devices[deviceId]} />;
-        })}
+        {arrayOfDevicesId
+          .sort((a, b) => devices[a].count - devices[b].count)
+          .map((deviceId, index) => {
+            const id = count;
+            count = count + devices[deviceId].modules.value.length;
+            return <Device key={deviceId} id={id} device={devices[deviceId]} />;
+          })}
       </div>
 
       <div className="rulers-wrapper">
