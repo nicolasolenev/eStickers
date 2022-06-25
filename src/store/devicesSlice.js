@@ -175,46 +175,39 @@ export const devicesSlice = createSlice({
     },
 
     combineDevices: (state) => {
-      const combinedDeviceGroupIndex = state.groups
-        .map((group) => group.id)
-        .indexOf(state.selected[0].groupId);
-
-      const group = state.groups[combinedDeviceGroupIndex];
-
-      const combinedDeviceIndex = group.devices
-        .map((device) => device.id)
-        .indexOf(state.selected[0].deviceId);
+      const { groupId, deviceId } = state.selected[0];
+      const group = findGroup(state.groups, groupId);
+      const combinedDevice = findDevice(state.groups, groupId, deviceId, group);
 
       state.selected.slice(1).forEach((item) => {
         const device = findDevice(state.groups, item.groupId, item.deviceId);
-
         const modules = device.modules;
 
-        group.devices[combinedDeviceIndex].modules.module.push(
-          ...modules.module
-        );
+        combinedDevice.modules.module.push(...modules.module);
 
-        group.devices[combinedDeviceIndex].modules.width =
-          +group.devices[combinedDeviceIndex].modules.width + +modules.width;
+        combinedDevice.modules.width =
+          Number(combinedDevice.modules.width) + Number(modules.width);
       });
 
       const moduleWidth =
-        state.groups[combinedDeviceGroupIndex].devices[combinedDeviceIndex]
-          .modules.width /
-        state.groups[combinedDeviceGroupIndex].devices[combinedDeviceIndex]
-          .modules.module.length;
+        combinedDevice.modules.width / combinedDevice.modules.module.length;
 
-      state.groups[combinedDeviceGroupIndex].devices[
-        combinedDeviceIndex
-      ].modules.module.forEach((module) => {
+      combinedDevice.modules.module.forEach((module) => {
         module.width = moduleWidth;
       });
 
       state.selected.slice(1).forEach((item) => {
         if (item.groupId !== state.selected[0].groupId) {
-          state.groups = state.groups.filter(
-            (group) => group.id !== item.groupId
-          );
+          const group = findGroup(state.groups, item.groupId);
+
+          if (group.devices.length <= 1) {
+            state.groups.splice(state.groups.indexOf(group), 1);
+          } else {
+            group.devices.splice(
+              group.devices.findIndex((device) => device.id === item.deviceId),
+              1
+            );
+          }
         } else {
           group.devices.splice(
             group.devices.findIndex((device) => device.id === item.deviceId),
@@ -296,7 +289,7 @@ export const devicesSlice = createSlice({
     },
 
     toggleDeviceNormallyOn: (state, action) => {
-      const { deviceId, groupId, key } = action.payload;
+      const { deviceId, groupId } = action.payload;
       const device = findDevice(state.groups, groupId, deviceId);
 
       if (device.normallyOn.isVisible && device.normallyOn.value) {
