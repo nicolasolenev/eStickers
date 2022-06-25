@@ -16,14 +16,14 @@ export function windowListenerHandler(
   {
     dispatch,
     selected,
-    deleteDevice,
+    deleteSelectedDevices,
     clearSelected,
     history,
-    setDevices,
+    setGroups,
     setSettings,
     popState,
     pushState,
-    devices,
+    groups,
     settings,
   }
 ) {
@@ -35,9 +35,8 @@ export function windowListenerHandler(
   const ctrlZ = e.key === 'z' && e.ctrlKey;
 
   if (deleteKeyCombination) {
-    selected.forEach((deviceId) => dispatch(deleteDevice(deviceId)));
-    dispatch(clearSelected());
-    dispatch(pushState({ devices, settings }));
+    dispatch(deleteSelectedDevices());
+    dispatch(pushState({ groups, settings }));
   }
   if (deselection) {
     dispatch(clearSelected());
@@ -45,22 +44,19 @@ export function windowListenerHandler(
   if (ctrlZ) {
     const prevState = history[history.length - 1];
     if (prevState) {
-      const devices = prevState.devices;
+      const groups = prevState.groups;
       const settings = prevState.settings;
-      console.log(prevState);
-      dispatch(setDevices(devices));
+
+      dispatch(setGroups({ groups }));
       dispatch(setSettings(settings));
-      dispatch(popState({ devices, settings }));
+      dispatch(popState({ groups, settings }));
     }
   }
 }
 
-export function getGroupWidth(devices, devicesId) {
-  return Object.values(devices).reduce((sum, device) => {
-    if (devicesId.includes(device.id)) {
-      return sum + getDeviceTotalWidth(device);
-    }
-    return sum;
+export function getGroupWidth(group) {
+  return group.devices.reduce((sum, device) => {
+    return sum + getDeviceTotalWidth(device);
   }, 0);
 }
 
@@ -78,8 +74,14 @@ export function createGroup(theme) {
   };
 }
 
+export function getDevices(groups) {
+  const devices = [].concat(...groups.map((group) => group.devices));
+
+  return devices;
+}
+
 export function getDeviceTotalWidth(device) {
-  const width = device.modules.value.reduce(
+  const width = device.modules.module.reduce(
     (total, module) => total + Number(module.width),
     0
   );
@@ -87,29 +89,33 @@ export function getDeviceTotalWidth(device) {
   return width;
 }
 
-export function getDevicesWidth(devices) {
-  let allModules = [];
+export function getDevicesWidth(groups) {
+  const devices = getDevices(groups);
 
-  for (let device in devices) {
-    allModules = allModules.concat(devices[device].modules.value);
-  }
+  const width = devices
+    .map((device) => device.modules.width)
+    .reduce((sum, width) => sum + Number(width), 0);
 
-  const totalWidth = allModules.reduce(
-    (sum, module) => sum + Number(module.width),
-    0
-  );
-
-  return Math.round(totalWidth * 10) / 10;
+  return Math.round(width * 10) / 10;
 }
 
-export function getMaxInputHeight(devices, type) {
+export function getMaxInputHeight(groups, type) {
   let maxHeight = 12;
 
-  for (let deviceId in devices) {
-    const height = devices[deviceId][type].height;
-    if (height > maxHeight) {
-      maxHeight = height;
-    }
+  if (type === 'group') {
+    groups.forEach((group) => {
+      if (group.height > maxHeight) {
+        maxHeight = group.height;
+      }
+    });
+  } else {
+    const devices = [].concat(...groups.map((group) => group.devices));
+
+    devices.forEach((device) => {
+      if (device[type].height > maxHeight) {
+        maxHeight = device[type].height;
+      }
+    });
   }
 
   return maxHeight;
@@ -130,15 +136,29 @@ export function getGroups(devices) {
   return groups;
 }
 
-export function getUsersTheme(devices) {
-  const groups = getGroups(devices);
-  const usersTheme = {};
-  for (const group in groups) {
-    usersTheme[group] = {
-      groupBackground: devices[group].groupBackground,
-      groupColor: devices[group].groupColor,
-    };
+export function findGroup(groups, id) {
+  return groups.find((group) => group.id === id);
+}
+
+export function findDevice(groups, groupId, deviceId, foundGroup) {
+  if (foundGroup) {
+    return foundGroup.devices.find((device) => device.id === deviceId);
   }
+
+  return findGroup(groups, groupId).devices.find(
+    (device) => device.id === deviceId
+  );
+}
+
+export function getUsersTheme(groups) {
+  const usersTheme = {};
+
+  groups.forEach((group) => {
+    usersTheme[group.id] = {
+      backgroundColor: group.backgroundColor,
+      textColor: group.textColor,
+    };
+  });
 
   return usersTheme;
 }
@@ -147,8 +167,8 @@ export function getUsersColors(usersTheme) {
   const usersColors = new Set();
 
   for (const group in usersTheme) {
-    usersColors.add(usersTheme[group].groupBackground);
-    usersColors.add(usersTheme[group].groupColor);
+    usersColors.add(usersTheme[group].backgroundColor);
+    usersColors.add(usersTheme[group].textColor);
   }
 
   return [...usersColors];

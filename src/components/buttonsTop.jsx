@@ -2,27 +2,24 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import ButtonMerge from './buttonsComponents/buttonMerge';
-import {
-  clearSelected,
-  toggleVisability,
-  setSettings,
-} from '../store/settingsSlice';
-import { setDevices, splitDevice, splitGroup } from '../store/devicesSlice';
+import { toggleVisability, setSettings } from '../store/settingsSlice';
+import { setGroups, splitDevices, clearSelected } from '../store/devicesSlice';
 import { pushState, popState } from '../store/historySlice';
 import {
   combineGroups,
-  deleteDevice,
+  splitGroups,
   toggleDeviceNormallyOn,
 } from '../store/devicesSlice';
 import { getDevicesWidth } from '../functions';
+import { deleteSelectedDevices } from '../store/devicesSlice';
 
 export default function ButtonsTop() {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
   const devices = useSelector((state) => state.devices);
   const history = useSelector((state) => state.history);
-  const devicesWidth = getDevicesWidth(devices);
-  const isDisabled = settings.selected.length === 0;
+  const devicesWidth = getDevicesWidth(devices.groups);
+  const isDisabled = devices.selected.length === 0;
 
   return (
     <div className="buttons-top">
@@ -32,12 +29,12 @@ export default function ButtonsTop() {
           onClick={() => {
             const prevState = history[history.length - 1];
             if (prevState) {
-              const devices = prevState.devices;
+              const groups = prevState.groups;
               const settings = prevState.settings;
-              console.log(prevState);
-              dispatch(setDevices(devices));
+              console.log(groups);
+              dispatch(setGroups({ groups }));
               dispatch(setSettings(settings));
-              dispatch(popState({ devices, settings }));
+              dispatch(popState({ groups, settings }));
             }
           }}
         >
@@ -50,20 +47,12 @@ export default function ButtonsTop() {
           className="button"
           disabled={isDisabled}
           onClick={() => {
-            if (!settings.selected.length) {
+            if (!devices.selected.length) {
               return;
             }
 
-            if (devices[settings.selected[0]].modules.value.length > 1) {
-              dispatch(
-                splitDevice({
-                  deviceId: settings.selected[0],
-                  theme: settings.palette.theme,
-                })
-              );
-              dispatch(clearSelected());
-              dispatch(pushState({ devices, settings }));
-            }
+            dispatch(splitDevices());
+            dispatch(pushState({ groups: devices.groups, settings }));
           }}
         >
           Разделить
@@ -73,12 +62,11 @@ export default function ButtonsTop() {
           className="button"
           disabled={isDisabled}
           onClick={() => {
-            if (!settings.selected.length) {
+            if (!devices.selected.length) {
               return;
             }
-            dispatch(combineGroups(settings.selected));
-            dispatch(clearSelected());
-            dispatch(pushState({ devices, settings }));
+            dispatch(combineGroups());
+            dispatch(pushState({ groups: devices.groups, settings }));
             if (!settings.display.groups) {
               dispatch(toggleVisability('groups'));
             }
@@ -91,12 +79,11 @@ export default function ButtonsTop() {
           className="button"
           disabled={isDisabled}
           onClick={() => {
-            if (!settings.selected.length) {
+            if (!devices.selected.length) {
               return;
             }
-            dispatch(splitGroup(devices[settings.selected[0]].groupId));
-            dispatch(clearSelected());
-            dispatch(pushState({ devices, settings }));
+            dispatch(splitGroups());
+            dispatch(pushState({ groups: devices.groups, settings }));
             if (!settings.display.groups) {
               dispatch(toggleVisability('groups'));
             }
@@ -109,11 +96,9 @@ export default function ButtonsTop() {
           className="button"
           disabled={isDisabled}
           onClick={() => {
-            settings.selected.forEach((deviceId) =>
-              dispatch(deleteDevice(deviceId))
-            );
-            dispatch(clearSelected());
-            dispatch(pushState({ devices, settings }));
+            dispatch(deleteSelectedDevices());
+
+            dispatch(pushState({ groups: devices.groups, settings }));
           }}
         >
           Удалить выделенные
@@ -125,19 +110,6 @@ export default function ButtonsTop() {
           onClick={() => dispatch(clearSelected())}
         >
           Отменить выделение
-        </button>
-
-        <button
-          className="button"
-          disabled={isDisabled}
-          onClick={() => {
-            settings.selected.forEach((deviceId) =>
-              dispatch(toggleDeviceNormallyOn({ deviceId, key: 'isVisible' }))
-            );
-            dispatch(clearSelected());
-          }}
-        >
-          Скрыть/показать норм.положение
         </button>
 
         {/* <button

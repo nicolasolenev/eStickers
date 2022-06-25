@@ -9,7 +9,7 @@ export const settingsSlice = createSlice({
   initialState,
   reducers: {
     setUsersTheme: (state, action) => {
-      state.usersTheme = action.payload;
+      state.usersTheme = action.payload.usersTheme;
     },
 
     setProjectName: (state, action) => {
@@ -33,54 +33,17 @@ export const settingsSlice = createSlice({
     },
 
     setSettings: (state, action) => {
-      const newState = action.payload;
+      const { settings } = action.payload;
+      console.log(settings);
 
-      for (let key in newState) {
-        state[key] = newState[key];
+      for (let key in settings) {
+        state[key] = settings[key];
       }
-    },
-
-    updateSelected: (state, action) => {
-      const { deviceId, devices, shift } = action.payload;
-      const isSelectedNotEmpty = state.selected.length;
-
-      if (shift && isSelectedNotEmpty) {
-        const countDevice = devices[deviceId].count;
-        const lastIdInSelected = state.selected[state.selected.length - 1];
-        const countLastSelectedDevice = devices[lastIdInSelected].count;
-        const newSelected = new Set(state.selected);
-        const maxCount = Math.max(countDevice, countLastSelectedDevice);
-        const minCount = Math.min(countDevice, countLastSelectedDevice);
-
-        for (const deviceId in devices) {
-          const device = devices[deviceId];
-          const deviceCount = device.count;
-          const betweenAllocated =
-            minCount <= deviceCount && deviceCount <= maxCount;
-
-          if (betweenAllocated) {
-            newSelected.add(device.id);
-          }
-        }
-        state.selected = [...newSelected];
-      } else {
-        if (state.selected.includes(deviceId)) {
-          state.selected = state.selected.filter((item) => item !== deviceId);
-        } else {
-          state.selected.push(deviceId);
-        }
-      }
-    },
-
-    clearSelected: (state) => {
-      state.selected = [];
     },
   },
 });
 
 export const {
-  updateSelected,
-  clearSelected,
   toggleVisability,
   setPaperWidth,
   setSettings,

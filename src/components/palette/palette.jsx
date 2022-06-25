@@ -29,7 +29,6 @@ export default function Palette() {
             dispatch(setPaletteValue({ theme: '' }));
             dispatch(
               changeColor({
-                selected: settings.selected,
                 color: col.hex,
                 type: settings.palette.type,
               })

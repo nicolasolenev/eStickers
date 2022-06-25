@@ -5,42 +5,41 @@ import DevicePoint from './deviceComponents/devicePoint';
 import DeviceMultilineInput from './deviceComponents/deviceMultilineInput';
 import DeviceField from './deviceComponents/deviceField';
 import Modules from './deviceComponents/modules';
-import { updateDeviceText, addCount } from '../store/devicesSlice';
+import { updateDeviceText } from '../store/devicesSlice';
 import { getDeviceTotalWidth } from '../functions';
 
-export default function Device({ device, id }) {
+export default function Device({ device, groupId, moduleId }) {
   const dispatch = useDispatch();
   const deviceId = device.id;
-  const settings = useSelector((state) => state.settings);
+  const devices = useSelector((state) => state.devices);
   const deviceWidth = useMemo(() => getDeviceTotalWidth(device), [device]);
-
-  // useEffect(() => {
-  //   dispatch(addCount({ count: id, deviceId }));
-  // }, [id]);
 
   const deviceInputHandler = useCallback(
     function (e, key) {
       dispatch(
         updateDeviceText({
           deviceId,
+          groupId,
           text: e.target.value,
           key,
         })
       );
     },
-    [deviceId, dispatch]
+    [deviceId, groupId, dispatch]
   );
 
   return (
     <div
       className={
-        settings.selected.includes(deviceId) ? 'device selected' : 'device'
+        devices.selected.map((item) => item.deviceId).includes(deviceId)
+          ? 'device selected'
+          : 'device'
       }
       style={{
         width: `${deviceWidth}mm`,
       }}
     >
-      <DevicePoint device={device} dispatch={dispatch} deviceId={deviceId} />
+      <DevicePoint device={device} groupId={groupId} dispatch={dispatch} />
 
       <DeviceField
         name="switch"
@@ -52,11 +51,17 @@ export default function Device({ device, id }) {
       <DeviceMultilineInput
         type="description"
         device={device}
+        groupId={groupId}
         handler={deviceInputHandler}
         placeholder="Название"
       />
 
-      <Modules device={device} deviceId={deviceId} id={id} />
+      <Modules
+        device={device}
+        groupId={groupId}
+        deviceId={device.id}
+        moduleId={moduleId}
+      />
     </div>
   );
 }

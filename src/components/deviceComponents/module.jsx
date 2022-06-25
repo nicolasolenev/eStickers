@@ -2,17 +2,18 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import ModuleId from './moduleId';
-import { setModuleName } from '../../store/devicesSlice';
+import { setModuleText } from '../../store/devicesSlice';
 
-export default function Module({ id, module, deviceId }) {
+export default function Module({ id, module, groupId, deviceId }) {
   const dispatch = useDispatch();
-  const [text, setText] = useState(module.moduleName);
+  const [text, setText] = useState(module.text);
 
   const inputHandler = (e) =>
     dispatch(
-      setModuleName({
-        name: e.target.value,
+      setModuleText({
+        text: e.target.value,
         deviceId,
+        groupId,
         moduleId: module.id,
       })
     );
@@ -27,7 +28,12 @@ export default function Module({ id, module, deviceId }) {
         onBlur={inputHandler}
       />
 
-      <ModuleId deviceId={deviceId} id={id} />
+      <ModuleId
+        groupId={groupId}
+        deviceId={deviceId}
+        moduleId={module.id}
+        id={id}
+      />
     </div>
   );
 }

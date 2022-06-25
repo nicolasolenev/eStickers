@@ -8,27 +8,27 @@ import Ruler from './deviceComponents/ruler';
 import { getGroupWidth } from '../functions';
 import { updateDeviceText } from '../store/devicesSlice';
 
-export default function Group({ arrayOfDevicesId, id }) {
+export default function Group({ group, moduleId }) {
   const devices = useSelector((state) => state.devices);
-  const firstDeviceId = arrayOfDevicesId[0];
   const dispatch = useDispatch();
-  let count = id;
+  let count = moduleId;
 
   return (
     <div
       className="group-wrapper"
-      id={devices[firstDeviceId].groupId}
-      style={{ width: `${getGroupWidth(devices, arrayOfDevicesId)}mm` }}
+      style={{ width: `${getGroupWidth(group)}mm` }}
     >
       <div className="warning-wrapper">
-        {arrayOfDevicesId.map((deviceId) => (
+        {group.devices.map((device) => (
           <DeviceWarning
-            key={deviceId}
-            device={devices[deviceId]}
+            key={device.id}
+            device={device}
+            group={group}
             handler={(e) => {
               dispatch(
                 updateDeviceText({
-                  deviceId,
+                  deviceId: device.id,
+                  groupId: group.id,
                   text: e.target.value,
                   key: 'warning',
                 })
@@ -40,38 +40,45 @@ export default function Group({ arrayOfDevicesId, id }) {
 
       <DeviceMultilineInput
         type="group"
-        device={devices[firstDeviceId]}
+        device={group}
+        groupId={group.id}
         placeholder="Группа"
         handler={(e) => {
           dispatch(
             updateDeviceText({
-              deviceId: firstDeviceId,
+              groupId: group.id,
               text: e.target.value,
               key: 'group',
             })
           );
         }}
       />
+
       <div
         className="group-devices"
         style={{
-          background: `${devices[firstDeviceId].groupBackground}`,
-          color: `${devices[firstDeviceId].groupColor}`,
+          background: `${group.backgroundColor}`,
+          color: `${group.textColor}`,
         }}
       >
-        {arrayOfDevicesId
-          .sort((a, b) => devices[a].count - devices[b].count)
-          .map((deviceId, index) => {
-            const id = count;
-            count = count + devices[deviceId].modules.value.length;
-            return <Device key={deviceId} id={id} device={devices[deviceId]} />;
-          })}
+        {group.devices.map((device, index) => {
+          const moduleId = count;
+          count = count + device.modules.module.length;
+          return (
+            <Device
+              key={device.id}
+              groupId={group.id}
+              moduleId={moduleId}
+              device={device}
+            />
+          );
+        })}
       </div>
 
       <div className="rulers-wrapper">
-        {arrayOfDevicesId.map((deviceId) => (
-          <div key={deviceId} className="rulers">
-            <Ruler device={devices[deviceId]} />
+        {group.devices.map((device) => (
+          <div key={device.id} className="rulers">
+            <Ruler device={device} groupId={group.id} />
           </div>
         ))}
       </div>

@@ -30,13 +30,12 @@ export default function Themes() {
             dispatch(setPaletteValue({ theme: theme.value }));
 
             if (settings.palette.theme === '' && theme.value !== '') {
-              const usersTheme = getUsersTheme(devices);
-              dispatch(setUsersTheme(usersTheme));
+              const usersTheme = getUsersTheme(devices.groups);
+              dispatch(setUsersTheme({ usersTheme }));
               dispatch(applyTheme({ themeName: theme.value }));
             } else if (theme.value === '') {
-              console.log(settings.usersTheme);
               if (Object.entries(settings.usersTheme).length !== 0) {
-                dispatch(applyUsersTheme(settings.usersTheme));
+                dispatch(applyUsersTheme({ theme: settings.usersTheme }));
               }
             } else {
               dispatch(applyTheme({ themeName: theme.value }));

@@ -7,8 +7,12 @@ import Devices from './components/devices';
 import ButtonsLeft from './components/buttonsLeft';
 import Header from './components/header';
 import ButtonsTop from './components/buttonsTop';
-import { deleteDevice, setDevices } from './store/devicesSlice';
-import { clearSelected, setSettings } from './store/settingsSlice';
+import {
+  deleteSelectedDevices,
+  setGroups,
+  clearSelected,
+} from './store/devicesSlice';
+import { setSettings } from './store/settingsSlice';
 import { popState, pushState } from './store/historySlice';
 import { windowListenerHandler } from './functions';
 import storage from './storage';
@@ -24,19 +28,19 @@ export default function App() {
     windowListenerHandler(e, {
       dispatch,
       selected,
-      deleteDevice,
+      deleteSelectedDevices,
       clearSelected,
       history,
-      setDevices,
+      setGroups,
       setSettings,
       popState,
       pushState,
-      devices,
+      groups: devices.groups,
       settings,
     });
 
   const onUnloadHandler = () => {
-    storage.save({ devices, settings });
+    storage.save({ devices: devices.groups, settings });
   };
 
   useEffect(() => {

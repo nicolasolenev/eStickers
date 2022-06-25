@@ -1,12 +1,14 @@
 import React from 'react';
 import { toggleDeviceNormallyOn } from '../../store/devicesSlice';
 
-export default function DevicePoint({ device, dispatch, deviceId }) {
+export default function DevicePoint({ device, groupId, dispatch }) {
   return (
     <div
       className="device__point"
       onClick={() =>
-        dispatch(toggleDeviceNormallyOn({ deviceId, key: 'value' }))
+        dispatch(
+          toggleDeviceNormallyOn({ deviceId: device.id, groupId, key: 'value' })
+        )
       }
     >
       <span

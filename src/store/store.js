@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+
 import devicesReducer from './devicesSlice';
 import settingsReducer from './settingsSlice';
 import historyReducer from './historySlice';

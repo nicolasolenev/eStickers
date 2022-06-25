@@ -7,7 +7,7 @@ import ButtonVisability from './buttonsComponents/buttonVisability';
 import ButtonCaption from './buttonsComponents/buttonCaption';
 import { saveProjectToFile, readProject } from '../fs';
 import { setSettings } from '../store/settingsSlice';
-import { setDevices } from '../store/devicesSlice';
+import { setGroups } from '../store/devicesSlice';
 
 export default function ButtonsLeft(props) {
   const dispatch = useDispatch();
@@ -53,7 +53,10 @@ export default function ButtonsLeft(props) {
       <button
         className="button"
         onClick={() => {
-          saveProjectToFile({ devices, settings }, 'Сохранить как:');
+          saveProjectToFile(
+            { groups: devices.groups, settings },
+            'Сохранить как:'
+          );
         }}
       >
         Сохранить в файл
@@ -65,7 +68,7 @@ export default function ButtonsLeft(props) {
           className="upload-file-input"
           type="file"
           id="upload-file"
-          onChange={(e) => readProject(e, dispatch, setDevices, setSettings)}
+          onChange={(e) => readProject(e, dispatch, setGroups, setSettings)}
         ></input>
       </label>
     </div>

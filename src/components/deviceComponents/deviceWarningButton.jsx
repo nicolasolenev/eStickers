@@ -2,7 +2,12 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { toggleWarning, updateDeviceText } from '../../store/devicesSlice';
 
-export default function DeviceWarningButton({ device, setText, setHeight }) {
+export default function DeviceWarningButton({
+  device,
+  groupId,
+  setText,
+  setHeight,
+}) {
   const dispatch = useDispatch();
 
   return (
@@ -12,11 +17,11 @@ export default function DeviceWarningButton({ device, setText, setHeight }) {
         onClick={() => {
           if (device.warning.isActive) {
             setText('');
-
             dispatch(
               setHeight({
                 currentHeight: 12,
                 deviceId: device.id,
+                groupId,
                 type: 'warning',
               })
             );
@@ -24,12 +29,13 @@ export default function DeviceWarningButton({ device, setText, setHeight }) {
             dispatch(
               updateDeviceText({
                 deviceId: device.id,
+                groupId,
                 text: '',
                 key: 'warning',
               })
             );
           }
-          dispatch(toggleWarning(device.id));
+          dispatch(toggleWarning({ deviceId: device.id, groupId }));
         }}
       >
         {device.warning.isActive ? 'x warn' : 'add warn'}

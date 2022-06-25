@@ -40,10 +40,11 @@ export default function Buttons() {
           const isNewColor = e.target.className === 'palette__color';
 
           if (isNewColor) {
-            dispatch(setPaletteValue({ theme: '' }));
+            if (settings.palette.theme !== '') {
+              dispatch(setPaletteValue({ theme: '' }));
+            }
             dispatch(
               changeColor({
-                selected: settings.selected,
                 color: newColor,
                 type: settings.palette.type,
               })

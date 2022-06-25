@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { addDevice } from '../../store/devicesSlice';
+import { addGroup } from '../../store/devicesSlice';
 import { pushState } from '../../store/historySlice';
 
 export default function AddDeviceButton() {
@@ -14,8 +14,8 @@ export default function AddDeviceButton() {
       <button
         className="devices__add-btn"
         onClick={() => {
-          dispatch(addDevice(settings.palette.theme));
-          dispatch(pushState({ devices, settings }));
+          dispatch(addGroup({ theme: settings.palette.theme }));
+          dispatch(pushState({ groups: devices.groups, settings }));
         }}
       >
         +

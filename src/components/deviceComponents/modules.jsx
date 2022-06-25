@@ -2,14 +2,15 @@ import React from 'react';
 
 import Module from './module';
 
-export default function Modules({ device, deviceId, id }) {
+export default function Modules({ device, groupId, deviceId, moduleId }) {
   return (
     <div className="device__modules">
-      {device.modules.value.map((module, index) => (
+      {device.modules.module.map((module, index) => (
         <Module
           key={module.id}
-          id={id + index}
+          id={moduleId + index}
           module={module}
+          groupId={groupId}
           deviceId={deviceId}
         />
       ))}

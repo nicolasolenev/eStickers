@@ -17,8 +17,8 @@ export default function Radiobuttons() {
         <input
           type="radio"
           id="background"
-          value="groupBackground"
-          checked={settings.palette.type === 'groupBackground'}
+          value="backgroundColor"
+          checked={settings.palette.type === 'backgroundColor'}
           onChange={onTypeChanged}
         />
         Фон
@@ -28,8 +28,8 @@ export default function Radiobuttons() {
         <input
           type="radio"
           id="text"
-          value="groupColor"
-          checked={settings.palette.type === 'groupColor'}
+          value="textColor"
+          checked={settings.palette.type === 'textColor'}
           onChange={onTypeChanged}
         />
         Текст

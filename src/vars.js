@@ -18,7 +18,7 @@ export const defaultSettingsState = {
   },
   palette: {
     theme: 'gray',
-    type: 'groupBackground',
+    type: 'backgroundColor',
     borderColor: 'white',
     checked: {
       warning: false,
@@ -33,8 +33,34 @@ export const defaultSettingsState = {
 };
 
 export function createSingleDevice(theme) {
-  // const id = Number(new Date());
   const id = nanoid();
+
+  return {
+    id: id,
+    normallyOn: {
+      value: true,
+      isVisible: true,
+    },
+    switch: {
+      text: '',
+    },
+    description: {
+      text: 'test',
+      height: '29px',
+    },
+    modules: {
+      width: 18,
+      module: [{ id: id, text: '', width: 18 }],
+    },
+    warning: {
+      text: '',
+      isActive: false,
+      height: '29px',
+    },
+  };
+}
+
+export function createGroup(theme = 'gray') {
   let backgroundColor = '#f2f2f2';
   let textColor = '#000';
 
@@ -51,43 +77,14 @@ export function createSingleDevice(theme) {
   }
 
   return {
-    id: id,
-    groupId: id,
-    groupBackground: backgroundColor,
-    groupColor: textColor,
-    count: Infinity,
-    group: {
-      text: '',
-      height: '29px',
-    },
-    normallyOn: {
-      value: true,
-      isVisible: true,
-    },
-    switch: {
-      text: '',
-    },
-    description: {
-      text: '',
-      height: '29px',
-    },
-    modules: {
-      totalWidth: 18,
-      value: [{ moduleName: '', width: 18, id: id }],
-    },
-    warning: {
-      text: '',
-      isActive: false,
-      height: '29px',
-    },
+    id: nanoid(),
+    text: '',
+    height: '29px',
+    backgroundColor,
+    textColor,
+    devices: [createSingleDevice(theme)],
   };
 }
-
-const initialDevice = createSingleDevice('gray');
-
-export const defaultDevicesState = {
-  [initialDevice.id]: initialDevice,
-};
 
 export const themes = [
   { value: '', label: 'Пользовательская' },

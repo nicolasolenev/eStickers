@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.scss';
 import App from './App';
-import Print from './routes/print';
+// import Print from './routes/print';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,7 +14,7 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} />
-          <Route path="print" element={<Print />} />
+          {/* <Route path="print" element={<Print />} /> */}
         </Routes>
       </BrowserRouter>
     </Provider>

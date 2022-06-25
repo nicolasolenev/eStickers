@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { setProjectName } from '../../store/settingsSlice';
@@ -6,6 +6,12 @@ import { setProjectName } from '../../store/settingsSlice';
 export default function ProjectName() {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
+  const [value, setValue] = useState(settings.projectName);
+
+  useEffect(() => {
+    console.log('перезапись имени');
+    setValue(settings.projectName);
+  }, [settings.projectName]);
 
   return (
     <div>
@@ -13,8 +19,11 @@ export default function ProjectName() {
       <input
         type="text"
         className="project-name-input"
-        value={settings.projectName}
-        onChange={(e) => dispatch(setProjectName(e.target.value))}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        onBlur={() => {
+          dispatch(setProjectName(value));
+        }}
       />
     </div>
   );

@@ -15,12 +15,11 @@ export default function ButtonMerge({ isDisabled }) {
       className="button"
       disabled={isDisabled}
       onClick={() => {
-        if (!settings.selected.length) {
+        if (!devices.selected.length) {
           return;
         }
-        dispatch(combineDevices({ selected: settings.selected }));
-        dispatch(clearSelected());
-        dispatch(pushState({ devices, settings }));
+        dispatch(combineDevices());
+        dispatch(pushState({ groups: devices.groups, settings }));
       }}
     >
       Объединить

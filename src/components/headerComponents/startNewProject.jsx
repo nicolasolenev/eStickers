@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setDevices } from '../../store/devicesSlice';
+import { setGroups } from '../../store/devicesSlice';
 import { setSettings } from '../../store/settingsSlice';
-import { defaultDevicesState, defaultSettingsState } from '../../vars';
+import { defaultSettingsState } from '../../vars';
 import { saveProjectToFile } from '../../fs';
 
 export default function StartNewProject() {
@@ -19,8 +19,8 @@ export default function StartNewProject() {
           saveProjectToFile({ devices, settings });
         }
 
-        dispatch(setDevices(defaultDevicesState));
-        dispatch(setSettings(defaultSettingsState));
+        dispatch(setGroups({}));
+        dispatch(setSettings({ settings: defaultSettingsState }));
       }}
       className="button"
     >

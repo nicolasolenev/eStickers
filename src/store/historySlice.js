@@ -5,7 +5,7 @@ export const historySlice = createSlice({
   initialState: [],
   reducers: {
     pushState: (state, action) => {
-      if (state.length >= 20) {
+      if (state.length >= 30) {
         state.shift();
       }
       state.push(action.payload);

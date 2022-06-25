@@ -1,11 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { updateSelected } from '../../store/settingsSlice';
+// import { updateSelected } from '../../store/settingsSlice';
+import { updateSelected } from '../../store/devicesSlice';
 
-export default function ModuleId({ deviceId, id }) {
+export default function ModuleId({ groupId, deviceId, id, moduleId }) {
   const dispatch = useDispatch();
-  const devices = useSelector((state) => state.devices);
+  // const devices = useSelector((state) => state.devices);
   const settings = useSelector((state) => state.settings);
 
   const onClickHandler = (e) => {
@@ -13,7 +14,7 @@ export default function ModuleId({ deviceId, id }) {
     if (e.shiftKey) {
       shift = true;
     }
-    dispatch(updateSelected({ deviceId, devices, shift }));
+    dispatch(updateSelected({ groupId, deviceId, shift }));
   };
 
   return (

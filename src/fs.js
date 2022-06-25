@@ -6,7 +6,6 @@ export function saveProjectToFile(project) {
   if (typeof name !== 'string') {
     return;
   }
-  console.log(name);
 
   const link = document.createElement('a');
   link.download = `${name.trim()}.json`;
@@ -34,8 +33,8 @@ export function readProject(e, dispatch, fn1, fn2) {
       try {
         const project = JSON.parse(reader.result);
         if (project.type === 'electrical-stickers') {
-          dispatch(fn1(project.devices));
-          dispatch(fn2(project.settings));
+          dispatch(fn1({ groups: project.groups }));
+          dispatch(fn2({ settings: project.settings }));
         } else {
           throw new Error('Не могу открыть этот файл');
         }

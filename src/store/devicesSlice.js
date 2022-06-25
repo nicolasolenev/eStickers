@@ -1,307 +1,420 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 
-import { defaultDevicesState, createSingleDevice } from '../vars';
-import THEME from '../theme';
+import { findGroup, findDevice, getDevices } from '../functions';
+import { createGroup } from '../vars';
 import storage from '../storage';
+import THEME from '../theme';
 
-const loadedState = storage.get()?.devices;
-const isLoadedStateNotEmpty = loadedState && Object.values(loadedState).length;
+const loadedGroups = storage.get()?.devices;
 
-const initialState = isLoadedStateNotEmpty ? loadedState : defaultDevicesState;
+const isLoadedStateNotEmpty = loadedGroups?.length;
+
+const initialState = {
+  groups: isLoadedStateNotEmpty ? loadedGroups : [createGroup()],
+  selected: [],
+};
 
 export const devicesSlice = createSlice({
   name: 'devices',
   initialState,
   reducers: {
-    addCount: (state, action) => {
-      const { count, deviceId } = action.payload;
-      state[deviceId].count = count;
+    setGroups: (state, action) => {
+      const { groups } = action.payload;
+      const defaultGroups = [createGroup()];
+      state.groups = groups || defaultGroups;
+      state.selected = [];
     },
 
-    setDevices: (state, action) => {
-      for (let deviceId in state) {
-        delete state[deviceId];
-      }
-
-      const newState = action.payload;
-
-      for (let deviceId in newState) {
-        state[deviceId] = newState[deviceId];
-      }
+    addGroup: (state, action) => {
+      const { theme } = action.payload;
+      state.groups.push(createGroup(theme));
     },
 
-    setHeight: (state, action) => {
-      const { currentHeight, deviceId, type } = action.payload;
+    updateSelected: (state, action) => {
+      const { groupId, deviceId, shift } = action.payload;
+      const isSelectedNotEmpty = state.selected.length;
 
-      state[deviceId][type].height = currentHeight;
-    },
+      if (shift && isSelectedNotEmpty) {
+        const deviceAndGroupIds = [].concat(
+          ...state.groups.map((group) => {
+            const groupId = group.id;
+            return group.devices.map((device) => {
+              return {
+                groupId,
+                deviceId: device.id,
+              };
+            });
+          })
+        );
 
-    toggleWarning: (state, action) => {
-      const deviceId = action.payload;
+        const selectedDevicesIds = state.selected.map((item) => item.deviceId);
 
-      state[deviceId].warning.text = '';
-      state[deviceId].warning.isActive = !state[deviceId].warning.isActive;
-    },
+        const devicesIds = deviceAndGroupIds.map((item) => item.deviceId);
 
-    applyUsersTheme: (state, action) => {
-      const theme = action.payload;
-      for (const deviceId in state) {
-        const device = state[deviceId];
-        const groupId = device.groupId;
-        device.groupBackground = theme[groupId].groupBackground;
-        device.groupColor = theme[groupId].groupColor;
-      }
-    },
+        const lastSelectedDeviceId =
+          selectedDevicesIds[selectedDevicesIds.length - 1];
 
-    applyTheme: (state, action) => {
-      const { themeName } = action.payload;
-      const groupsId = [];
+        const lastSelectedDeviceIndex =
+          devicesIds.indexOf(lastSelectedDeviceId);
 
-      for (const deviceId in state) {
-        if (!groupsId.includes(state[deviceId].groupId)) {
-          groupsId.push(state[deviceId].groupId);
-        }
-      }
+        const selectDeviceIndex = devicesIds.indexOf(deviceId);
 
-      let count = 0;
+        const interval = [lastSelectedDeviceIndex, selectDeviceIndex].sort(
+          (a, b) => a - b
+        );
 
-      groupsId.forEach((id) => {
-        if (count === THEME[themeName].length) {
-          count = 0;
-        }
-
-        for (let deviceId in state) {
-          if (state[deviceId].groupId === id) {
-            state[deviceId].groupBackground =
-              THEME[themeName][count].groupBackground;
-            state[deviceId].groupColor = THEME[themeName][count].groupColor;
-          }
-        }
-        count = count + 1;
-      });
-    },
-
-    changeColor: (state, action) => {
-      const { selected, color, type } = action.payload;
-
-      const selectedGroups = [
-        ...new Set(selected.map((deviceId) => state[deviceId].groupId)),
-      ];
-
-      for (const deviceId in state) {
-        if (selectedGroups.includes(state[deviceId].groupId)) {
-          state[deviceId][type] = color;
-        }
-      }
-    },
-
-    addDevice: (state, action) => {
-      const newDevice = createSingleDevice(action.payload);
-
-      state[newDevice.id] = newDevice;
-    },
-
-    splitDevice: (state, action) => {
-      const { deviceId: combinedDeviceId, theme } = action.payload;
-      const combinedDevice = state[combinedDeviceId];
-      const modules = [...combinedDevice.modules.value].reverse();
-      let count = 1;
-
-      let countModules = combinedDevice.modules.value.length;
-      const moduleWidth = combinedDevice.modules.totalWidth / countModules;
-
-      combinedDevice.modules.value = [modules.pop()];
-
-      combinedDevice.modules.totalWidth = moduleWidth;
-
-      const newState = {};
-      // for (const deviceId in state) {
-      //   newState[deviceId] = state[deviceId];
-      //   newState[deviceId].count = count;
-      //   count++;
-      //   if (deviceId === combinedDeviceId) {
-      //     while (countModules > 1) {
-      //       const newDevice = createSingleDevice(theme);
-      //       newDevice.modules.totalWidth = newDevice.modules.value[0].width =
-      //         moduleWidth;
-      //       newState[newDevice.id] = newDevice;
-      //       newState[newDevice.id].count = count;
-      //       newState[newDevice.id].groupId = combinedDevice.groupId;
-      //       newState[newDevice.id].modules.value = [modules.pop()];
-      //       count++;
-      //       countModules--;
-      //     }
-      //   }
-      // }
-
-      Object.values(state)
-        .sort((a, b) => a.count - b.count)
-        .forEach((device) => {
-          const deviceId = device.id;
-
-          newState[deviceId] = state[deviceId];
-          newState[deviceId].count = count;
-          count++;
-          if (deviceId === combinedDeviceId) {
-            while (countModules > 1) {
-              const newDevice = createSingleDevice(theme);
-              newDevice.modules.totalWidth = newDevice.modules.value[0].width =
-                moduleWidth;
-              newState[newDevice.id] = newDevice;
-              newState[newDevice.id].count = count;
-              newState[newDevice.id].groupId = combinedDevice.groupId;
-              newState[newDevice.id].modules.value = [modules.pop()];
-              count++;
-              countModules--;
+        deviceAndGroupIds
+          .slice(interval[0], interval[1] + 1)
+          .forEach((item) => {
+            if (
+              !state.selected
+                .map((item) => item.deviceId)
+                .includes(item.deviceId)
+            ) {
+              state.selected.push(item);
             }
+          });
+      } else {
+        if (state.selected.map((item) => item.deviceId).includes(deviceId)) {
+          state.selected = state.selected.filter(
+            (item) => item.deviceId !== deviceId
+          );
+        } else {
+          state.selected.push({ deviceId, groupId });
+        }
+      }
+    },
+
+    deleteSelectedDevices: (state) => {
+      state.selected.forEach((item) => {
+        state.groups = state.groups.map((group) => {
+          if (group.id === item.groupId) {
+            return Object.assign({}, group, {
+              devices: group.devices.filter(
+                (device) => device.id !== item.deviceId
+              ),
+            });
           }
+          return group;
         });
 
-      for (const deviceId in newState) {
-        state[deviceId] = newState[deviceId];
-      }
-    },
-
-    combineDevices: (state, action) => {
-      const selected = [...action.payload.selected];
-
-      const totalWidth = selected
-        .map((deviceId) => state[deviceId].modules.totalWidth)
-        .reduce((sum, width) => sum + Number(width), 0);
-
-      const combinedDeviceId = selected.shift();
-
-      const combinedDevice = state[combinedDeviceId];
-
-      const combinedDeviceModules = combinedDevice.modules.value;
-
-      selected.forEach((id) => {
-        combinedDeviceModules.push(...state[id].modules.value);
-        delete state[id];
+        state.groups = state.groups.filter((group) => group.devices.length > 0);
       });
 
-      combinedDevice.modules.totalWidth = totalWidth;
+      state.selected = [];
+    },
 
-      const modulesCount = combinedDevice.modules.value.length;
+    combineGroups: (state) => {
+      const combinedGroupIndex = state.groups
+        .map((group) => group.id)
+        .indexOf(state.selected[0].groupId);
 
-      const moduleWidth = Math.round((totalWidth / modulesCount) * 10) / 10;
+      const devices = getDevices(state.groups);
 
-      combinedDevice.modules.value.forEach((module) => {
+      state.selected.slice(1).forEach((item) => {
+        if (
+          !state.groups[combinedGroupIndex].devices
+            .map((device) => device.id)
+            .includes(item.deviceId)
+        ) {
+          state.groups[combinedGroupIndex].devices.push(
+            devices.find((device) => device.id === item.deviceId)
+          );
+        }
+      });
+
+      state.selected.slice(1).forEach((item) => {
+        const combinedGroupIndex = state.groups
+          .map((group) => group.id)
+          .indexOf(state.selected[0].groupId);
+
+        if (state.groups[combinedGroupIndex].id !== item.groupId) {
+          const groupIndex = state.groups
+            .map((group) => group.id)
+            .indexOf(item.groupId);
+
+          if (state.groups[groupIndex].devices.length <= 1) {
+            state.groups = state.groups.filter(
+              (group) => group.id !== state.groups[groupIndex].id
+            );
+          } else
+            state.groups[groupIndex].devices = state.groups[
+              groupIndex
+            ].devices.filter(
+              (device) =>
+                !state.selected.map((item) => item.deviceId).includes(device.id)
+            );
+        }
+      });
+
+      state.selected = [];
+    },
+
+    splitGroups: (state) => {
+      const selected = state.selected.map((item) => item.groupId);
+      const selectedGroups = new Set(selected);
+      selectedGroups.forEach((groupId) => {
+        const groupIndex = state.groups
+          .map((group) => group.id)
+          .indexOf(groupId);
+
+        const devices = state.groups[groupIndex].devices;
+
+        const splitedGroups = devices.map((device) => {
+          return Object.assign({}, state.groups[groupIndex], {
+            devices: [device],
+            id: nanoid(),
+          });
+        });
+
+        state.groups.splice(groupIndex, 1, ...splitedGroups);
+      });
+
+      state.selected = [];
+    },
+
+    combineDevices: (state) => {
+      const combinedDeviceGroupIndex = state.groups
+        .map((group) => group.id)
+        .indexOf(state.selected[0].groupId);
+
+      const group = state.groups[combinedDeviceGroupIndex];
+
+      const combinedDeviceIndex = group.devices
+        .map((device) => device.id)
+        .indexOf(state.selected[0].deviceId);
+
+      state.selected.slice(1).forEach((item) => {
+        const device = findDevice(state.groups, item.groupId, item.deviceId);
+
+        const modules = device.modules;
+
+        group.devices[combinedDeviceIndex].modules.module.push(
+          ...modules.module
+        );
+
+        group.devices[combinedDeviceIndex].modules.width =
+          +group.devices[combinedDeviceIndex].modules.width + +modules.width;
+      });
+
+      const moduleWidth =
+        state.groups[combinedDeviceGroupIndex].devices[combinedDeviceIndex]
+          .modules.width /
+        state.groups[combinedDeviceGroupIndex].devices[combinedDeviceIndex]
+          .modules.module.length;
+
+      state.groups[combinedDeviceGroupIndex].devices[
+        combinedDeviceIndex
+      ].modules.module.forEach((module) => {
         module.width = moduleWidth;
       });
-    },
 
-    splitGroup: (state, action) => {
-      const groupId = action.payload;
-      let count = 1;
-
-      Object.values(state)
-        .sort((a, b) => a.count - b.count)
-        .forEach((device) => {
-          if (device.groupId === groupId) {
-            device.groupId = nanoid();
-            device.count = count;
-          }
-          count++;
-        });
-
-      // for (const deviceId in state) {
-      //   const device = state[deviceId];
-      //   if (device.groupId === groupId) {
-      //     device.groupId = nanoid();
-      //   }
-      // }
-    },
-
-    combineGroups: (state, action) => {
-      const selected = [...action.payload];
-      const combinedDevice = state[selected.shift()];
-      const combinedGroupId = combinedDevice.groupId;
-      selected.forEach((deviceId) => {
-        state[deviceId].groupId = combinedGroupId;
-        state[deviceId].groupBackground = combinedDevice.groupBackground;
-        state[deviceId].groupColor = combinedDevice.groupColor;
+      state.selected.slice(1).forEach((item) => {
+        if (item.groupId !== state.selected[0].groupId) {
+          state.groups = state.groups.filter(
+            (group) => group.id !== item.groupId
+          );
+        } else {
+          group.devices.splice(
+            group.devices.findIndex((device) => device.id === item.deviceId),
+            1
+          );
+        }
       });
+
+      state.selected = [];
     },
 
-    toggleDeviceNormallyOn: (state, action) => {
-      const { deviceId: id, key } = action.payload;
-      state[id].normallyOn[key] = !state[id].normallyOn[key];
-    },
+    splitDevices: (state) => {
+      state.selected.forEach((item) => {
+        const group = findGroup(state.groups, item.groupId);
+        const device = findDevice(
+          state.groups,
+          item.groupId,
+          item.deviceId,
+          group
+        );
 
-    updateDeviceText: (state, action) => {
-      const device = state[action.payload.deviceId];
-      const text = action.payload.text;
+        const modules = device.modules.module;
 
-      device[action.payload.key].text = text;
-    },
+        if (modules.length > 1) {
+          const newDevices = modules.map((module) => {
+            return Object.assign({}, device, {
+              modules: { width: module.width, module: [module] },
+              id: nanoid(),
+            });
+          });
 
-    setModuleName: (state, action) => {
-      const { name, deviceId, moduleId } = action.payload;
-      const device = state[deviceId];
-      const moduleIndex = device.modules.value.findIndex(
-        (module) => module.id === moduleId
-      );
+          const devices = group.devices;
 
-      device.modules.value[moduleIndex].moduleName = name;
+          devices.splice(
+            devices.findIndex((device) => device.id === item.deviceId),
+            1,
+            ...newDevices
+          );
+        }
+      });
+
+      state.selected = [];
     },
 
     setModuleWidth: (state, action) => {
-      const { width, deviceId, selected } = action.payload;
+      const { width, deviceId, groupId } = action.payload;
       const moderatedWidth = width < 8 ? 8 : width;
 
-      if (selected.length && selected.includes(deviceId)) {
-        selected.forEach((deviceId) => {
-          const modulesCount = state[deviceId].modules.value.length;
+      if (
+        state.selected.length &&
+        state.selected.map((item) => item.deviceId).includes(deviceId)
+      ) {
+        state.selected.forEach((item) => {
+          const device = findDevice(state.groups, item.groupId, item.deviceId);
+
+          const modulesCount = device.modules.module.length;
+
           const moduleWidth =
             Math.round((moderatedWidth / modulesCount) * 10) / 10;
 
-          state[deviceId].modules.totalWidth = moderatedWidth;
+          device.modules.width = moderatedWidth;
 
-          state[deviceId].modules.value.forEach((module) => {
+          device.modules.module.forEach((module) => {
             module.width = moduleWidth;
           });
         });
       } else {
-        const device = state[deviceId];
-
-        device.modules.totalWidth = moderatedWidth;
-
-        const modulesCount = state[deviceId].modules.value.length;
+        const device = findDevice(state.groups, groupId, deviceId);
+        const modulesCount = device.modules.module.length;
         const moduleWidth =
           Math.round((moderatedWidth / modulesCount) * 10) / 10;
 
-        device.modules.value.forEach((module) => {
+        device.modules.width = moderatedWidth;
+
+        device.modules.module.forEach((module) => {
           module.width = moduleWidth;
         });
       }
     },
 
-    deleteDevice: (state, action) => {
-      const deviceId = action.payload;
-      delete state[deviceId];
+    toggleDeviceNormallyOn: (state, action) => {
+      const { deviceId, groupId, key } = action.payload;
+      const device = findDevice(state.groups, groupId, deviceId);
+
+      if (device.normallyOn.isVisible && device.normallyOn.value) {
+        device.normallyOn.value = false;
+      } else if (!device.normallyOn.value) {
+        device.normallyOn.isVisible = false;
+        device.normallyOn.value = true;
+      } else {
+        device.normallyOn.isVisible = true;
+      }
+    },
+
+    clearSelected: (state) => {
+      state.selected = [];
+    },
+
+    updateDeviceText: (state, action) => {
+      const { deviceId, groupId, text, key } = action.payload;
+
+      if (key === 'group') {
+        const group = findGroup(state.groups, groupId);
+        group.text = text;
+      } else {
+        const device = findDevice(state.groups, groupId, deviceId);
+
+        device[key].text = text;
+      }
+    },
+
+    setHeight: (state, action) => {
+      const { currentHeight, deviceId, groupId, type } = action.payload;
+
+      if (type === 'group') {
+        const group = findGroup(state.groups, groupId);
+        group.height = currentHeight;
+      } else {
+        const device = findDevice(state.groups, groupId, deviceId);
+        device[type].height = currentHeight;
+      }
+    },
+
+    toggleWarning: (state, action) => {
+      const { deviceId, groupId } = action.payload;
+      const device = findDevice(state.groups, groupId, deviceId);
+      device.warning.text = '';
+      device.warning.isActive = !device.warning.isActive;
+    },
+
+    setModuleText: (state, action) => {
+      const { text, groupId, deviceId, moduleId } = action.payload;
+      const device = findDevice(state.groups, groupId, deviceId);
+      const module = device.modules.module.find(
+        (module) => module.id === moduleId
+      );
+
+      module.text = text;
+    },
+
+    changeColor: (state, action) => {
+      const { color, type } = action.payload;
+      const selectedGroups = [
+        ...new Set(state.selected.map((item) => item.groupId)),
+      ];
+
+      state.groups.forEach((group) => {
+        if (selectedGroups.includes(group.id)) {
+          group[type] = color;
+        }
+      });
+    },
+
+    applyTheme: (state, action) => {
+      const { themeName } = action.payload;
+      let count = 0;
+
+      state.groups.forEach((group) => {
+        if (count === THEME[themeName].length) {
+          count = 0;
+        }
+
+        group.backgroundColor = THEME[themeName][count].groupBackground;
+        group.textColor = THEME[themeName][count].groupColor;
+        count++;
+      });
+    },
+
+    applyUsersTheme: (state, action) => {
+      const { theme } = action.payload;
+
+      state.groups.forEach((group) => {
+        const isThemeExist = Object.keys(theme).includes(group.id);
+        if (isThemeExist) {
+          group.backgroundColor = theme[group.id].backgroundColor;
+          group.textColor = theme[group.id].textColor;
+        }
+      });
     },
   },
 });
 
 export const {
-  addDevice,
+  addGroup,
+  setGroups,
+  updateSelected,
+  deleteSelectedDevices,
+  combineGroups,
+  splitGroups,
   combineDevices,
-  splitDevice,
-  toggleDeviceNormallyOn,
-  updateDeviceText,
+  splitDevices,
   setModuleWidth,
-  setModuleName,
-  deleteDevice,
+  toggleDeviceNormallyOn,
+  clearSelected,
+  updateDeviceText,
+  setHeight,
+  toggleWarning,
+  setModuleText,
   changeColor,
   applyTheme,
-  toggleWarning,
-  setHeight,
-  combineGroups,
-  splitGroup,
-  setDevices,
-  addCount,
   applyUsersTheme,
 } = devicesSlice.actions;
 
