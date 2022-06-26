@@ -22,6 +22,10 @@ export default function ModalSaveProject() {
   };
 
   const onCancel = () => {
+    if (modal.prevModal === 'isNeedSave') {
+      dispatch(setGroups({}));
+      dispatch(setSettings({ settings: defaultSettingsState }));
+    }
     dispatch(setModal({ type: '', prevModal: 'saving' }));
   };
 
