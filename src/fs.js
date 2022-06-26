@@ -1,7 +1,5 @@
-export function saveProjectToFile(project) {
+export function saveProjectToFile(project, name) {
   const signedProject = { ...project, type: 'electrical-stickers' };
-
-  const name = window.prompt('Сохранить как:', project.settings.projectName);
 
   if (typeof name !== 'string') {
     return;

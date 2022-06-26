@@ -45,7 +45,7 @@ export function createSingleDevice(theme) {
       text: '',
     },
     description: {
-      text: 'test',
+      text: '',
       height: '29px',
     },
     modules: {

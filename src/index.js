@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.scss';
 import App from './App';
+// import ModalSaveProject from './components/modalSaveProject';
 // import Print from './routes/print';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -17,6 +18,7 @@ root.render(
           {/* <Route path="print" element={<Print />} /> */}
         </Routes>
       </BrowserRouter>
+      {/* <ModalSaveProject isOpen={true} setIsOpen={console.log} /> */}
     </Provider>
   </React.StrictMode>
 );

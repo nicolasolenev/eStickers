@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { setGroups } from '../../store/devicesSlice';
 import { setSettings } from '../../store/settingsSlice';
+import { setModal } from '../../store/modalSlice';
 import { defaultSettingsState } from '../../vars';
 import { saveProjectToFile } from '../../fs';
 
@@ -12,19 +13,22 @@ export default function StartNewProject() {
   const settings = useSelector((state) => state.settings);
 
   return (
-    <button
-      onClick={() => {
-        const isNeedSave = window.confirm('Сохранить текущий проект?');
-        if (isNeedSave) {
-          saveProjectToFile({ groups: devices.groups, settings });
-        }
+    <>
+      <button
+        onClick={() => {
+          // const isNeedSave = window.confirm('Сохранить текущий проект?');
+          // if (isNeedSave) {
+          //   saveProjectToFile({ groups: devices.groups, settings });
+          // }
 
-        dispatch(setGroups({}));
-        dispatch(setSettings({ settings: defaultSettingsState }));
-      }}
-      className="button"
-    >
-      Начать новый проект
-    </button>
+          // dispatch(setGroups({}));
+          // dispatch(setSettings({ settings: defaultSettingsState }));
+          dispatch(setModal({ type: 'isNeedSave' }));
+        }}
+        className="button"
+      >
+        Начать новый проект
+      </button>
+    </>
   );
 }

@@ -9,7 +9,6 @@ export default function ProjectName() {
   const [value, setValue] = useState(settings.projectName);
 
   useEffect(() => {
-    console.log('перезапись имени');
     setValue(settings.projectName);
   }, [settings.projectName]);
 

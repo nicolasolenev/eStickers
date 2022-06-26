@@ -8,12 +8,13 @@ import ButtonCaption from './buttonsComponents/buttonCaption';
 import { saveProjectToFile, readProject } from '../fs';
 import { setSettings } from '../store/settingsSlice';
 import { setGroups } from '../store/devicesSlice';
+import { setModal } from '../store/modalSlice';
 
 export default function ButtonsLeft(props) {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
   const devices = useSelector((state) => state.devices);
-  const { devicesRef } = props;
+  const { devicesRef, setIsOpen } = props;
 
   function getPageStyle(pageWidth) {
     return `
@@ -42,22 +43,13 @@ export default function ButtonsLeft(props) {
       <div className="buttons__title">Печать</div>
       <ButtonVisability fieldName="numeration" text="Печать модулей" />
 
-      {/* <Link to="/print">
-        <button className="button">Сохранить pdf</button>
-      </Link> */}
-
       <button className="button" onClick={handlePrint}>
         Печать
       </button>
 
       <button
         className="button"
-        onClick={() => {
-          saveProjectToFile(
-            { groups: devices.groups, settings },
-            'Сохранить как:'
-          );
-        }}
+        onClick={() => dispatch(setModal({ type: 'saving' }))}
       >
         Сохранить в файл
       </button>

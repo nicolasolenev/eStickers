@@ -7,6 +7,8 @@ import Devices from './components/devices';
 import ButtonsLeft from './components/buttonsLeft';
 import Header from './components/header';
 import ButtonsTop from './components/buttonsTop';
+import ModalSaveProject from './components/modalSaveProject';
+import IsNeedSaveModal from './components/isNeedSaveModal';
 import {
   deleteSelectedDevices,
   setGroups,
@@ -22,6 +24,7 @@ export default function App() {
   const settings = useSelector((state) => state.settings);
   const devices = useSelector((state) => state.devices);
   const history = useSelector((state) => state.history);
+  const modal = useSelector((state) => state.modal);
   const selected = settings.selected;
 
   const onKeydownHandler = (e) =>
@@ -60,6 +63,8 @@ export default function App() {
       <ButtonsTop />
       <DevicesRow />
       <Palette />
+      {modal.type === 'saving' && <ModalSaveProject />}
+      {modal.type === 'isNeedSave' && <IsNeedSaveModal />}
     </>
   );
 }
