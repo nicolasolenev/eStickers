@@ -16,7 +16,7 @@ export default function StartNewProject() {
       onClick={() => {
         const isNeedSave = window.confirm('Сохранить текущий проект?');
         if (isNeedSave) {
-          saveProjectToFile({ devices, settings });
+          saveProjectToFile({ groups: devices.groups, settings });
         }
 
         dispatch(setGroups({}));
