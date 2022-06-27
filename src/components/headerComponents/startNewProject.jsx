@@ -24,6 +24,7 @@ export default function StartNewProject() {
           // dispatch(setGroups({}));
           // dispatch(setSettings({ settings: defaultSettingsState }));
           dispatch(setModal({ type: 'isNeedSave' }));
+          setTimeout(() => dispatch(setModal({ isVisible: true })), 0);
         }}
         className="button"
       >

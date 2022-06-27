@@ -32,7 +32,7 @@ export function windowListenerHandler(
 
   const deselection = e.key === 'Escape';
 
-  const ctrlZ = e.key === 'z' && e.ctrlKey;
+  const ctrlZ = e.code === 'KeyZ' && e.ctrlKey;
 
   if (deleteKeyCombination) {
     dispatch(deleteSelectedDevices());
@@ -177,4 +177,46 @@ export function getUsersColors(usersTheme) {
 export function randomInteger(min, max) {
   const rand = min + Math.random() * (max + 1 - min);
   return Math.floor(rand);
+}
+
+export function generateContrastColors(i, count) {
+  // const h = randomInteger(0, 360);
+  const h = Math.floor(360 / count) * i;
+
+  const sB = randomInteger(40, 100);
+  const sT = randomInteger(90, 100);
+
+  const lB = randomInteger(89, 94);
+  const lT = randomInteger(20, 30);
+
+  const a = 100;
+
+  return {
+    backgroundColor: `hsla(${h}, ${sB}%, ${lB}%, ${a}%)`,
+    textColor: `hsla(${h}, ${sT}%, ${lT}%, ${a}%)`,
+  };
+}
+
+export function generateCoupleColors(count = 1) {
+  const colors = [];
+
+  for (let i = 0; i < count; i++) {
+    // if (i % 2) {
+    colors.push(generateContrastColors(i, count));
+    // } else {
+    //   colors.unshift(generateContrastColors(i, count));
+    // }
+  }
+
+  return shuffleArray(colors);
+}
+
+function shuffleArray(arr) {
+  const arrCopy = [...arr];
+  const shuffledArray = [];
+  for (arrCopy.length; arrCopy.length > 0; ) {
+    const index = randomInteger(0, arrCopy.length - 1);
+    shuffledArray.push(...arrCopy.splice(index, 1));
+  }
+  return shuffledArray;
 }

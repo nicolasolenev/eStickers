@@ -3,9 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import Select from 'react-select';
 
 import { themes } from '../../vars';
-import { getUsersTheme } from '../../functions';
+import { getUsersTheme, generateCoupleColors } from '../../functions';
 import { setPaletteValue, setUsersTheme } from '../../store/settingsSlice';
-import { applyTheme, applyUsersTheme } from '../../store/devicesSlice';
+import {
+  applyTheme,
+  applyUsersTheme,
+  applyRandomColors,
+} from '../../store/devicesSlice';
 
 export default function Themes() {
   const dispatch = useDispatch();
@@ -42,6 +46,17 @@ export default function Themes() {
             }
           }}
           isSearchable={false}
+        />
+      </div>
+      <div className="random-colors">
+        <button
+          className="random-colors-btn"
+          onClick={() => {
+            const colors = generateCoupleColors(devices.groups.length);
+
+            dispatch(applyRandomColors({ colors }));
+            dispatch(setPaletteValue({ theme: '' }));
+          }}
         />
       </div>
     </div>

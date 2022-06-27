@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { saveProjectToFile } from '../fs';
 import { setModal } from '../store/modalSlice';
 import { setGroups } from '../store/devicesSlice';
-import { setSettings } from '../store/settingsSlice';
+import { setSettings, setProjectName } from '../store/settingsSlice';
 import { defaultSettingsState } from '../vars';
 
 import Modal from './modal';
@@ -26,18 +26,29 @@ export default function ModalSaveProject() {
       dispatch(setGroups({}));
       dispatch(setSettings({ settings: defaultSettingsState }));
     }
-    dispatch(setModal({ type: '', prevModal: 'saving' }));
+
+    dispatch(setModal({ isVisible: false }));
+    setTimeout(
+      () => dispatch(setModal({ type: '', prevModal: 'saving' })),
+      200
+    );
   };
 
   const onSubmit = () => {
+    if (name !== settings.projectName) {
+      dispatch(setProjectName(name));
+    }
+
     saveProjectToFile(project, name);
     if (modal.prevModal === 'isNeedSave') {
       dispatch(setGroups({}));
       dispatch(setSettings({ settings: defaultSettingsState }));
     }
+
+    dispatch(setModal({ isVisible: false }));
     setTimeout(
       () => dispatch(setModal({ type: '', prevModal: 'saving' })),
-      1000
+      200
     );
   };
 
@@ -53,6 +64,7 @@ export default function ModalSaveProject() {
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Название проекта..."
+        autoFocus
       />
     </Modal>
   );

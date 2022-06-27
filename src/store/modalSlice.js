@@ -5,6 +5,7 @@ export const modalSlice = createSlice({
   initialState: {
     type: '',
     prevModal: '',
+    isVisible: false,
   },
   reducers: {
     setModal: (state, action) => {

@@ -49,7 +49,10 @@ export default function ButtonsLeft(props) {
 
       <button
         className="button"
-        onClick={() => dispatch(setModal({ type: 'saving' }))}
+        onClick={() => {
+          dispatch(setModal({ type: 'saving' }));
+          setTimeout(() => dispatch(setModal({ isVisible: true })), 0);
+        }}
       >
         Сохранить в файл
       </button>

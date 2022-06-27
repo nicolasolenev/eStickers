@@ -3,7 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import ButtonMerge from './buttonsComponents/buttonMerge';
 import { toggleVisability, setSettings } from '../store/settingsSlice';
-import { setGroups, splitDevices, clearSelected } from '../store/devicesSlice';
+import {
+  setGroups,
+  splitDevices,
+  clearSelected,
+  addGroupAfterSelected,
+} from '../store/devicesSlice';
 import { pushState, popState } from '../store/historySlice';
 import {
   combineGroups,
@@ -110,6 +115,16 @@ export default function ButtonsTop() {
           onClick={() => dispatch(clearSelected())}
         >
           Отменить выделение
+        </button>
+
+        <button
+          className="button"
+          disabled={isDisabled}
+          onClick={() =>
+            dispatch(addGroupAfterSelected({ theme: settings.palette.theme }))
+          }
+        >
+          Добавить аппарат после выделенной группы
         </button>
 
         {/* <button

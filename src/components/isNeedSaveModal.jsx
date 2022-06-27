@@ -12,11 +12,17 @@ export default function IsNeedSaveModal() {
   const onCancel = () => {
     dispatch(setGroups({}));
     dispatch(setSettings({ settings: defaultSettingsState }));
-    dispatch(setModal({ type: '' }));
+    dispatch(setModal({ isVisible: false }));
+    setTimeout(() => dispatch(setModal({ type: '' })), 300);
   };
 
   const onSubmit = () => {
-    dispatch(setModal({ type: 'saving', prevModal: 'isNeedSave' }));
+    dispatch(setModal({ isVisible: false }));
+    setTimeout(
+      () => dispatch(setModal({ type: 'saving', prevModal: 'isNeedSave' })),
+      100
+    );
+    setTimeout(() => dispatch(setModal({ isVisible: true })), 200);
   };
 
   return (

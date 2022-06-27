@@ -31,6 +31,15 @@ export const devicesSlice = createSlice({
       state.groups.push(createGroup(theme));
     },
 
+    addGroupAfterSelected: (state, action) => {
+      const { theme } = action.payload;
+      const selected = state.selected[0];
+      const index = state.groups.findIndex(
+        (group) => group.id === selected.groupId
+      );
+      state.groups.splice(index + 1, 0, createGroup(theme));
+    },
+
     updateSelected: (state, action) => {
       const { groupId, deviceId, shift } = action.payload;
       const isSelectedNotEmpty = state.selected.length;
@@ -387,11 +396,22 @@ export const devicesSlice = createSlice({
         }
       });
     },
+
+    applyRandomColors: (state, action) => {
+      const { colors } = action.payload;
+      console.log(colors);
+
+      state.groups.forEach((group, index) => {
+        group.backgroundColor = colors[index].backgroundColor;
+        group.textColor = colors[index].textColor;
+      });
+    },
   },
 });
 
 export const {
   addGroup,
+  addGroupAfterSelected,
   setGroups,
   updateSelected,
   deleteSelectedDevices,
@@ -409,6 +429,7 @@ export const {
   changeColor,
   applyTheme,
   applyUsersTheme,
+  applyRandomColors,
 } = devicesSlice.actions;
 
 export default devicesSlice.reducer;

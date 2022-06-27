@@ -688,6 +688,21 @@ $deviceBorderWhite: border(#fff);
     &_first-col {
       padding-left: 56px;
     }
+    .random-colors {
+      margin: 20px 0;
+      display: flex;
+      justify-content: center;
+      &-btn {
+        padding: 3px 5px;
+        background: url(../public/img/onerog.png);
+        background-position: center;
+        background-size: cover;
+        width: 150px;
+        height: 84px;
+        border: transparent;
+        cursor: pointer;
+      }
+    }
   }
 
   &__title {
@@ -966,6 +981,14 @@ input:focus-visible {
   -webkit-box-shadow: 0px 0px 7px 5px rgba(34, 60, 80, 0.15);
   -moz-box-shadow: 0px 0px 7px 5px rgba(34, 60, 80, 0.15);
   box-shadow: 0px 0px 7px 5px rgba(34, 60, 80, 0.15);
+  // margin-top: -70%;
+  opacity: 0;
+  overflow: hidden;
+  transition: 0.1s ease-in-out;
+  &-active {
+    // margin-top: 0;
+    opacity: 1;
+  }
 
   &__header,
   &__body {
@@ -990,9 +1013,16 @@ input:focus-visible {
   &__button {
     padding: 5px 20px;
     font-size: 12px;
+    border-radius: 3px;
+    border: 1px solid gray;
+    cursor: pointer;
 
     &:first-child {
       margin: 0 10px 0 0;
+    }
+
+    &_submit {
+      background: #fbedcb;
     }
   }
 }
