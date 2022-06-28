@@ -4,14 +4,9 @@ import palette from '@linktime/palette';
 
 import { setPaletteValue } from '../../store/settingsSlice';
 import { changeColor } from '../../store/devicesSlice';
-import THEME from '../../theme';
+import THEME, { defaultColors } from '../../theme';
 import { getUsersColors } from '../../functions';
 import Radiobuttons from './radiobuttons';
-
-// Generate 30 lighter colors from default colors
-// const colors = palette(30, 0.1, ['#1d121c', '#232323', '#23456f']);
-
-const defaultColors = THEME.getDefaultColors();
 
 function getColors(defaultColors, usersColors) {
   const colors = new Set([...defaultColors]);
@@ -22,9 +17,16 @@ function getColors(defaultColors, usersColors) {
 export default function Buttons() {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
-  const usersColors = getUsersColors(settings.usersTheme);
+  const devices = useSelector((state) => state.devices);
 
-  const colors = getColors(defaultColors, usersColors);
+  const selectedColors = () => {
+    const colors = [].concat(
+      ...devices.selected.map((item) => [item.backgroundColor, item.textColor])
+    );
+    const uniqColors = new Set([...colors]);
+
+    return [...uniqColors];
+  };
 
   return (
     <div className="palette__settings palette__settings_first-col">
@@ -52,7 +54,7 @@ export default function Buttons() {
           }
         }}
       >
-        {colors.map((color, id) => (
+        {defaultColors.map((color, id) => (
           <div
             key={id}
             id={color}
@@ -61,9 +63,24 @@ export default function Buttons() {
           ></div>
         ))}
       </div>
+
+      <div className="palette__title">Цвета выделенных аппаратов:</div>
+      <div className="palette__selected-colors">
+        {selectedColors().map((color, id) => (
+          <div
+            key={id + color}
+            id={color}
+            className="palette__color"
+            style={{ background: `${color}` }}
+          ></div>
+        ))}
+      </div>
+
       <div className="palette__border-colors">
-        <div className="palette__title">Цвет рамок:</div>
-        <div className="palette__colors">
+        <div className="palette__title palette__border-colors_title">
+          Цвет рамок:
+        </div>
+        <div className="palette__colors palette__border-colors_colors">
           <div
             className="palette__color"
             style={{ background: `#000` }}

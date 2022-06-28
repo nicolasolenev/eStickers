@@ -36,6 +36,11 @@ export default function DeviceMultilineInput({
         placeholder={placeholder}
         ref={textareaRef}
         value={text}
+        onFocus={(e) => {
+          setTimeout(function () {
+            e.target.selectionStart = e.target.selectionEnd = 10000;
+          }, 0);
+        }}
         onChange={(e) => {
           const currentHeight = textareaRef.current.clientHeight;
 

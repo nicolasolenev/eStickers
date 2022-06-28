@@ -5,7 +5,6 @@ import { nanoid } from 'nanoid';
 export const defaultSettingsState = {
   projectName: 'Стикеры',
   paperWidth: 297,
-  selected: [],
   usersTheme: {},
   display: {
     sequence: false,
@@ -28,7 +27,6 @@ export const defaultSettingsState = {
       description: true,
       modules: true,
     },
-    colors: [],
   },
 };
 
@@ -89,6 +87,7 @@ export function createGroup(theme = 'gray') {
 export const themes = [
   { value: '', label: 'Пользовательская' },
   { value: 'gray', label: 'Серая' },
-  { value: 'colored', label: 'Цветная' },
-  { value: 'coloredWhiteText', label: 'Цветная, белый текст' },
+  { value: 'random-gradient', label: 'Случайная градиентная' },
+  // { value: 'colored', label: 'Цветная' },
+  // { value: 'coloredWhiteText', label: 'Цветная, белый текст' },
 ];

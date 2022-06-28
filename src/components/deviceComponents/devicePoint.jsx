@@ -2,14 +2,23 @@ import React from 'react';
 import { toggleDeviceNormallyOn } from '../../store/devicesSlice';
 
 export default function DevicePoint({ device, groupId, dispatch }) {
+  const pointHandler = () => {
+    dispatch(
+      toggleDeviceNormallyOn({ deviceId: device.id, groupId, key: 'value' })
+    );
+  };
+
   return (
     <div
       className="device__point"
-      onClick={() =>
-        dispatch(
-          toggleDeviceNormallyOn({ deviceId: device.id, groupId, key: 'value' })
-        )
-      }
+      tabIndex={0}
+      onClick={pointHandler}
+      onKeyDown={(e) => {
+        if (e.code === 'Space') {
+          e.preventDefault();
+          pointHandler();
+        }
+      }}
     >
       <span
         className={

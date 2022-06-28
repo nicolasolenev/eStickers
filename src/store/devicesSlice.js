@@ -48,10 +48,15 @@ export const devicesSlice = createSlice({
         const deviceAndGroupIds = [].concat(
           ...state.groups.map((group) => {
             const groupId = group.id;
+            const backgroundColor = group.backgroundColor;
+            const textColor = group.textColor;
+
             return group.devices.map((device) => {
               return {
                 groupId,
                 deviceId: device.id,
+                backgroundColor,
+                textColor,
               };
             });
           })
@@ -90,7 +95,17 @@ export const devicesSlice = createSlice({
             (item) => item.deviceId !== deviceId
           );
         } else {
-          state.selected.push({ deviceId, groupId });
+          const group = findGroup(state.groups, groupId);
+
+          const backgroundColor = group.backgroundColor;
+          const textColor = group.textColor;
+
+          state.selected.push({
+            deviceId,
+            groupId,
+            backgroundColor,
+            textColor,
+          });
         }
       }
     },
@@ -398,12 +413,19 @@ export const devicesSlice = createSlice({
     },
 
     applyRandomColors: (state, action) => {
-      const { colors } = action.payload;
-      console.log(colors);
+      const { colors, inversion } = action.payload;
+      console.log(colors, inversion);
 
       state.groups.forEach((group, index) => {
-        group.backgroundColor = colors[index].backgroundColor;
-        group.textColor = colors[index].textColor;
+        if (group.devices.length > 1) {
+          if (inversion) {
+            group.backgroundColor = colors[index].textColor;
+            group.textColor = colors[index].backgroundColor;
+          } else {
+            group.backgroundColor = colors[index].backgroundColor;
+            group.textColor = colors[index].textColor;
+          }
+        }
       });
     },
   },

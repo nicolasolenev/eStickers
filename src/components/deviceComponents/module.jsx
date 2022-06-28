@@ -24,6 +24,11 @@ export default function Module({ id, module, groupId, deviceId }) {
         className="device__module-input"
         placeholder="L1"
         value={text}
+        onFocus={(e) => {
+          setTimeout(function () {
+            e.target.selectionStart = e.target.selectionEnd = 10000;
+          }, 0);
+        }}
         onChange={(e) => setText(e.target.value)}
         onBlur={inputHandler}
       />

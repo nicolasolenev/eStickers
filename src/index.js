@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.scss';
 import App from './App';
+import Home from './Home';
 // import ModalSaveProject from './components/modalSaveProject';
 // import Print from './routes/print';
 
@@ -14,7 +15,8 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<App />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/constructor" element={<App />} />
           {/* <Route path="print" element={<Print />} /> */}
         </Routes>
       </BrowserRouter>

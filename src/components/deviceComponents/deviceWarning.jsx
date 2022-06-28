@@ -39,6 +39,11 @@ export default function DeviceWarning({ group, device, handler }) {
         placeholder="Примеч."
         ref={textareaRef}
         value={text}
+        onFocus={(e) => {
+          setTimeout(function () {
+            e.target.selectionStart = e.target.selectionEnd = 10000;
+          }, 0);
+        }}
         onChange={(e) => {
           const currentHeight = textareaRef.current.clientHeight;
 

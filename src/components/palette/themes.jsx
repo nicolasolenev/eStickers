@@ -3,7 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import Select from 'react-select';
 
 import { themes } from '../../vars';
-import { getUsersTheme, generateCoupleColors } from '../../functions';
+import {
+  getUsersTheme,
+  generateCoupleColors,
+  getRandomGradientColors,
+} from '../../functions';
 import { setPaletteValue, setUsersTheme } from '../../store/settingsSlice';
 import {
   applyTheme,
@@ -34,9 +38,15 @@ export default function Themes() {
             dispatch(setPaletteValue({ theme: theme.value }));
 
             if (settings.palette.theme === '' && theme.value !== '') {
-              const usersTheme = getUsersTheme(devices.groups);
-              dispatch(setUsersTheme({ usersTheme }));
-              dispatch(applyTheme({ themeName: theme.value }));
+              if (theme.value === 'random-gradient') {
+                const colors = getRandomGradientColors(devices.groups.length);
+                dispatch(applyRandomColors({ colors }));
+                dispatch(setPaletteValue({ theme: '' }));
+              } else {
+                const usersTheme = getUsersTheme(devices.groups);
+                dispatch(setUsersTheme({ usersTheme }));
+                dispatch(applyTheme({ themeName: theme.value }));
+              }
             } else if (theme.value === '') {
               if (Object.entries(settings.usersTheme).length !== 0) {
                 dispatch(applyUsersTheme({ theme: settings.usersTheme }));
@@ -49,6 +59,7 @@ export default function Themes() {
         />
       </div>
       <div className="random-colors">
+        Случайные цвета для групп с несколькими аппаратами (светлый фон):
         <button
           className="random-colors-btn"
           onClick={() => {
@@ -58,6 +69,19 @@ export default function Themes() {
             dispatch(setPaletteValue({ theme: '' }));
           }}
         />
+        Случайные цвета для групп с несколькими аппаратами (темный фон):
+        <button
+          style={{ padding: '2px 10px', margin: '5px 0 0 0' }}
+          className="button"
+          onClick={() => {
+            const colors = generateCoupleColors(devices.groups.length);
+
+            dispatch(applyRandomColors({ colors, inversion: true }));
+            dispatch(setPaletteValue({ theme: '' }));
+          }}
+        >
+          Click
+        </button>
       </div>
     </div>
   );

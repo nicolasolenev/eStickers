@@ -220,3 +220,28 @@ function shuffleArray(arr) {
   }
   return shuffledArray;
 }
+
+export function getRandomGradientColors(count = 1) {
+  const colors = [];
+  const hMin = randomInteger(0, 160);
+  const hMax = randomInteger(170, 360);
+  const h = randomInteger(hMin, hMax);
+  const a = 100;
+
+  for (let i = 0; i < count; i++) {
+    const hGradient = Math.floor(h / count) * i;
+
+    colors.push({
+      backgroundColor: `hsla(${hGradient}, ${randomInteger(
+        40,
+        100
+      )}%, ${randomInteger(89, 94)}%, ${a}%)`,
+      textColor: `hsla(${hGradient}, ${randomInteger(
+        90,
+        100
+      )}%, ${randomInteger(20, 30)}%, ${a}%)`,
+    });
+  }
+
+  return colors;
+}
