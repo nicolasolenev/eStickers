@@ -56,10 +56,7 @@ export default function Buttons() {
             style={{ background: `${color}` }}
           ></div>
         ))}
-      </div>
 
-      {/* <div className="palette__title">Цвета выделенных аппаратов:</div> */}
-      <div className="palette__selected-colors">
         {selectedColors().map((color, id) => (
           <div
             key={id + color}
@@ -69,6 +66,19 @@ export default function Buttons() {
           ></div>
         ))}
       </div>
+
+      {/* <div className="palette__title">Цвета выделенных аппаратов:</div> */}
+
+      {/* <div className="palette__selected-colors">
+        {selectedColors().map((color, id) => (
+          <div
+            key={id + color}
+            id={color}
+            className="palette__color"
+            style={{ background: `${color}` }}
+          ></div>
+        ))}
+      </div> */}
 
       <div className="palette__title">Примечания выделенных аппаратов:</div>
       <div className="palette__colors">

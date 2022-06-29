@@ -1,6 +1,5 @@
 import style from './Home.module.scss';
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import sample1 from './images/sample/sample1.jpg';
 import sample2 from './images/sample/sample2.jpg';

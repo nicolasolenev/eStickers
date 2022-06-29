@@ -15,8 +15,6 @@ export default function DeviceMultilineInput({
   const dispatch = useDispatch();
   const [text, setText] = useState(device.text ?? device[type].text);
   const devices = useSelector((state) => state.devices);
-  // const groups = useSelector((state) => state.devices);
-  // const devices = [].concat(...groups.groups.map((group) => group.devices));
   const textareaRef = useRef();
 
   return (

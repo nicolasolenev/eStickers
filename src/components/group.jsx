@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import DeviceMultilineInput from './deviceComponents/deviceMultilineInput';
 import Device from './device';
@@ -9,7 +9,6 @@ import { getGroupWidth } from '../functions';
 import { updateDeviceText } from '../store/devicesSlice';
 
 export default function Group({ group, moduleId }) {
-  const devices = useSelector((state) => state.devices);
   const dispatch = useDispatch();
   let count = moduleId;
 

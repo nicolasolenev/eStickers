@@ -245,28 +245,30 @@ $deviceBorderWhite: border(#fff);
 }
 
 .buttons-top {
-  margin: 5px 5px 5px 140px;
+  margin-bottom: 10px;
+
+  &-wrapper {
+    margin: 5px 5px 5px 140px;
+  }
+
   .button {
-    margin-right: 10px;
     padding: 3px;
     cursor: pointer;
 
     &-wrapper {
       display: inline-block;
       position: relative;
+      margin-right: 10px;
     }
 
     &-tip {
       background: #fff;
       position: absolute;
       top: 25px;
-      left: 50%;
+      left: 0;
       padding: 1px;
+      white-space: nowrap;
     }
-  }
-
-  &__buttons {
-    margin-bottom: 10px;
   }
 }
 

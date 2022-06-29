@@ -6,8 +6,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.scss';
 import App from './App';
 import Home from './Home';
-// import ModalSaveProject from './components/modalSaveProject';
-// import Print from './routes/print';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,10 +15,9 @@ root.render(
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/constructor" element={<App />} />
-          {/* <Route path="print" element={<Print />} /> */}
+          <Route path="*" element={<Home />} />
         </Routes>
       </BrowserRouter>
-      {/* <ModalSaveProject isOpen={true} setIsOpen={console.log} /> */}
     </Provider>
   </React.StrictMode>
 );

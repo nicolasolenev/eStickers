@@ -30,6 +30,7 @@ export function windowListenerHandler(
     combineGroups,
     splitGroups,
     toggleVisability,
+    addGroupAfterSelected,
   }
 ) {
   const deleteKeyCombination =
@@ -42,13 +43,9 @@ export function windowListenerHandler(
   if (deleteKeyCombination) {
     dispatch(deleteSelectedDevices());
     dispatch(pushState({ groups, settings }));
-  }
-
-  if (deselection) {
+  } else if (deselection) {
     dispatch(clearSelected());
-  }
-
-  if (ctrlZ) {
+  } else if (ctrlZ) {
     const prevState = history[history.length - 1];
     if (prevState) {
       const groups = prevState.groups;
@@ -58,17 +55,23 @@ export function windowListenerHandler(
       dispatch(setSettings(settings));
       dispatch(popState({ groups, settings }));
     }
-  }
-
-  if (e.code === 'KeyA' && e.ctrlKey && e.shiftKey && devices.selected.length) {
+  } else if (
+    e.code === 'KeyA' &&
+    e.ctrlKey &&
+    e.shiftKey &&
+    devices.selected.length
+  ) {
     dispatch(splitDevices());
     dispatch(pushState({ groups: devices.groups, settings }));
   } else if (e.code === 'KeyA' && e.ctrlKey && devices.selected.length) {
     dispatch(combineDevices());
     dispatch(pushState({ groups: devices.groups, settings }));
-  }
-
-  if (e.code === 'KeyS' && e.ctrlKey && e.shiftKey && devices.selected.length) {
+  } else if (
+    e.code === 'KeyS' &&
+    e.ctrlKey &&
+    e.shiftKey &&
+    devices.selected.length
+  ) {
     dispatch(splitGroups());
     dispatch(pushState({ groups: devices.groups, settings }));
     if (!settings.display.groups) {
@@ -80,6 +83,9 @@ export function windowListenerHandler(
     if (!settings.display.groups) {
       dispatch(toggleVisability('groups'));
     }
+  } else if (e.code === 'KeyN' && e.ctrlKey && devices.selected.length) {
+    dispatch(addGroupAfterSelected({ theme: settings.palette.theme }));
+    dispatch(pushState({ groups: devices.groups, settings }));
   }
 }
 
@@ -209,7 +215,6 @@ export function randomInteger(min, max) {
 }
 
 export function generateContrastColors(i, count) {
-  // const h = randomInteger(0, 360);
   const h = Math.floor(360 / count) * i;
 
   const sB = randomInteger(40, 100);

@@ -1,17 +1,18 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import ButtonMerge from './buttonsComponents/buttonMerge';
+import Button from './buttonsComponents/Button';
+import Lengths from './Lengths';
 import { toggleVisability, setSettings } from '../store/settingsSlice';
 import {
   setGroups,
   splitDevices,
   clearSelected,
   addGroupAfterSelected,
+  combineDevices,
 } from '../store/devicesSlice';
 import { pushState, popState } from '../store/historySlice';
 import { combineGroups, splitGroups } from '../store/devicesSlice';
-import { getDevicesWidth } from '../functions';
 import { deleteSelectedDevices } from '../store/devicesSlice';
 
 export default function ButtonsTop() {
@@ -19,133 +20,120 @@ export default function ButtonsTop() {
   const settings = useSelector((state) => state.settings);
   const devices = useSelector((state) => state.devices);
   const history = useSelector((state) => state.history);
-  const devicesWidth = getDevicesWidth(devices.groups);
   const isDisabled = devices.selected.length === 0;
 
+  const onClickHandler = (actions, isGroupsVisability) => {
+    actions.forEach((action) => dispatch(action));
+    if (isGroupsVisability && !settings.display.groups) {
+      dispatch(toggleVisability('groups'));
+    }
+  };
+
+  const onCancelClickHandler = () => {
+    const prevState = history[history.length - 1];
+    if (prevState) {
+      const groups = prevState.groups;
+      const settings = prevState.settings;
+      dispatch(setGroups({ groups }));
+      dispatch(setSettings(settings));
+      dispatch(popState({ groups, settings }));
+    }
+  };
+
   return (
-    <div className="buttons-top">
-      <div className="buttons-top__buttons">
-        <button
-          className="button"
-          onClick={() => {
-            const prevState = history[history.length - 1];
-            if (prevState) {
-              const groups = prevState.groups;
-              const settings = prevState.settings;
-              console.log(groups);
-              dispatch(setGroups({ groups }));
-              dispatch(setSettings(settings));
-              dispatch(popState({ groups, settings }));
-            }
-          }}
-        >
-          Отменить
-        </button>
+    <div className="buttons-top-wrapper">
+      <div className="buttons-top">
+        <Button
+          value="Отменить"
+          tip="Ctrl + Z"
+          isDisabled={history.length === 0}
+          onClickHandler={onCancelClickHandler}
+        />
 
-        <ButtonMerge isDisabled={isDisabled} />
-
-        <button
-          className="button"
-          disabled={isDisabled}
-          onClick={() => {
-            if (!devices.selected.length) {
-              return;
-            }
-
-            dispatch(splitDevices());
-            dispatch(pushState({ groups: devices.groups, settings }));
-          }}
-        >
-          Разделить
-        </button>
-
-        <button
-          className="button"
-          disabled={isDisabled}
-          onClick={() => {
-            if (!devices.selected.length) {
-              return;
-            }
-            dispatch(combineGroups());
-            dispatch(pushState({ groups: devices.groups, settings }));
-            if (!settings.display.groups) {
-              dispatch(toggleVisability('groups'));
-            }
-          }}
-        >
-          Сгруппировать
-        </button>
-
-        <button
-          className="button"
-          disabled={isDisabled}
-          onClick={() => {
-            if (!devices.selected.length) {
-              return;
-            }
-            dispatch(splitGroups());
-            dispatch(pushState({ groups: devices.groups, settings }));
-            if (!settings.display.groups) {
-              dispatch(toggleVisability('groups'));
-            }
-          }}
-        >
-          Разгруппировать
-        </button>
-
-        <button
-          className="button"
-          disabled={isDisabled}
-          onClick={() => {
-            dispatch(deleteSelectedDevices());
-
-            dispatch(pushState({ groups: devices.groups, settings }));
-          }}
-        >
-          Удалить выделенные
-        </button>
-
-        <button
-          className="button"
-          disabled={isDisabled}
-          onClick={() => dispatch(clearSelected())}
-        >
-          Отменить выделение
-        </button>
-
-        <button
-          className="button"
-          disabled={isDisabled}
-          onClick={() =>
-            dispatch(addGroupAfterSelected({ theme: settings.palette.theme }))
+        <Button
+          value="Объединить"
+          tip="Ctrl + A"
+          isDisabled={isDisabled}
+          onClickHandler={() =>
+            onClickHandler([
+              combineDevices(),
+              pushState({ groups: devices.groups, settings }),
+            ])
           }
-        >
-          Добавить аппарат после выделенной группы
-        </button>
+        />
 
-        {/* <button
-          className="button"
-          onClick={() => {
-            dispatch(pushState({ devices, settings }));
-          }}
-        >
-          Сохранить состояние
-        </button> */}
+        <Button
+          value="Разделить"
+          tip="Ctrl + Shift + A"
+          isDisabled={isDisabled}
+          onClickHandler={() =>
+            onClickHandler([
+              splitDevices(),
+              pushState({ groups: devices.groups, settings }),
+            ])
+          }
+        />
+
+        <Button
+          value="Сгруппировать"
+          tip="Ctrl + S"
+          isDisabled={isDisabled}
+          onClickHandler={() =>
+            onClickHandler(
+              [
+                combineGroups(),
+                pushState({ groups: devices.groups, settings }),
+              ],
+              true
+            )
+          }
+        />
+
+        <Button
+          value="Разгруппировать"
+          tip="Ctrl + Shift + S"
+          isDisabled={isDisabled}
+          onClickHandler={() =>
+            onClickHandler(
+              [splitGroups(), pushState({ groups: devices.groups, settings })],
+              true
+            )
+          }
+        />
+
+        <Button
+          value="Удалить выделенные"
+          tip="Shift + Delete"
+          isDisabled={isDisabled}
+          onClickHandler={() =>
+            onClickHandler([
+              deleteSelectedDevices(),
+              pushState({ groups: devices.groups, settings }),
+            ])
+          }
+        />
+
+        <Button
+          value="Отменить выделение"
+          tip="Escape"
+          isDisabled={isDisabled}
+          onClickHandler={() => onClickHandler([clearSelected()])}
+        />
+
+        <Button
+          value="Добавить группу после выделенной группы"
+          tip="Ctrl + N"
+          isDisabled={isDisabled}
+          onClickHandler={() =>
+            onClickHandler([
+              addGroupAfterSelected({ theme: settings.palette.theme }),
+              pushState({ groups: devices.groups, settings }),
+            ])
+          }
+        />
       </div>
 
-      <div className="lengths">
-        <div className="total-height">
-          Общая длина аппаратов:
-          <span className="total-height__value">{devicesWidth}</span>
-          мм
-        </div>
-
-        <div className="total-height">
-          Высота стикеров:
-          <span className="total-height__value">xyz</span>
-          мм
-        </div>
-      </div>
+      <Lengths />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { setModuleWidth } from '../../store/devicesSlice';
 
@@ -8,7 +8,6 @@ export default function Ruler(props) {
   const { device, groupId } = props;
   const deviceId = device.id;
   const [width, setWidth] = useState();
-  const settings = useSelector((state) => state.settings);
   const deviceWidth = Number(device.modules.width).toFixed(1);
 
   function saveWidth(e) {
@@ -49,6 +48,9 @@ export default function Ruler(props) {
           if (e.code === 'KeyE') {
             e.preventDefault();
           }
+        }}
+        onFocus={(e) => {
+          e.target.select();
         }}
         onBlur={(e) => {
           if (e.target.value !== deviceWidth) {

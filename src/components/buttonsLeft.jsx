@@ -1,11 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useReactToPrint } from 'react-to-print';
 
 import ButtonVisability from './buttonsComponents/buttonVisability';
 import ButtonCaption from './buttonsComponents/buttonCaption';
-import { saveProjectToFile, readProject } from '../fs';
+import { readProject } from '../fs';
 import { setSettings } from '../store/settingsSlice';
 import { setGroups } from '../store/devicesSlice';
 import { setModal } from '../store/modalSlice';
@@ -13,8 +12,7 @@ import { setModal } from '../store/modalSlice';
 export default function ButtonsLeft(props) {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
-  const devices = useSelector((state) => state.devices);
-  const { devicesRef, setIsOpen } = props;
+  const { devicesRef } = props;
 
   function getPageStyle(pageWidth) {
     return `

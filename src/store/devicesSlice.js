@@ -33,11 +33,13 @@ export const devicesSlice = createSlice({
 
     addGroupAfterSelected: (state, action) => {
       const { theme } = action.payload;
-      const selected = state.selected[0];
-      const index = state.groups.findIndex(
-        (group) => group.id === selected.groupId
-      );
-      state.groups.splice(index + 1, 0, createGroup(theme));
+
+      state.selected.forEach((item) => {
+        const index = state.groups.findIndex(
+          (group) => group.id === item.groupId
+        );
+        state.groups.splice(index + 1, 0, createGroup(theme));
+      });
     },
 
     updateSelected: (state, action) => {
