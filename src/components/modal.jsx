@@ -1,18 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { getClasses } from '../functions';
+import { setModal } from '../store/modalSlice';
 
 const modalRoot = document.getElementById('modalRoot');
 
 export default function Modal({ title, onCancel, onSubmit, children }) {
+  const dispatch = useDispatch();
   const modal = useSelector((state) => state.modal);
 
   const overlayClickHandler = (e) => {
-    console.log('test');
     if (e.target.className === 'modal-overlay') {
-      onCancel();
+      dispatch(setModal({ isVisible: false }));
+      setTimeout(() => dispatch(setModal({ type: '' })), 300);
     }
   };
 

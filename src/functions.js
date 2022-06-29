@@ -201,11 +201,7 @@ export function generateCoupleColors(count = 1) {
   const colors = [];
 
   for (let i = 0; i < count; i++) {
-    // if (i % 2) {
     colors.push(generateContrastColors(i, count));
-    // } else {
-    //   colors.unshift(generateContrastColors(i, count));
-    // }
   }
 
   return shuffleArray(colors);
@@ -223,23 +219,28 @@ function shuffleArray(arr) {
 
 export function getRandomGradientColors(count = 1) {
   const colors = [];
-  const hMin = randomInteger(0, 160);
-  const hMax = randomInteger(170, 360);
-  const h = randomInteger(hMin, hMax);
+  const h = randomInteger(0, 360);
   const a = 100;
 
+  const sBmin = 40;
+  const sBmax = 100;
+  const lBmin = 60;
+  const lBmax = 94;
+
+  const sTmin = 90;
+  const sTmax = 100;
+  const lTmin = 20;
+  const lTmax = 30;
+
   for (let i = 0; i < count; i++) {
-    const hGradient = Math.floor(h / count) * i;
+    const sB = sBmin + Math.floor(((sBmax - sBmin) / count) * i) + 1;
+    const lB = lBmin + Math.floor(((lBmax - lBmin) / count) * i) + 1;
+    const sT = sTmin + Math.floor(((sTmax - sTmin) / count) * i) + 1;
+    const lT = lTmin + Math.floor(((lTmax - lTmin) / count) * i) + 1;
 
     colors.push({
-      backgroundColor: `hsla(${hGradient}, ${randomInteger(
-        40,
-        100
-      )}%, ${randomInteger(89, 94)}%, ${a}%)`,
-      textColor: `hsla(${hGradient}, ${randomInteger(
-        90,
-        100
-      )}%, ${randomInteger(20, 30)}%, ${a}%)`,
+      backgroundColor: `hsla(${h}, ${sB}%, ${lB}%, ${a}%)`,
+      textColor: `hsla(${h}, ${sT}%, ${lT}%, ${a}%)`,
     });
   }
 

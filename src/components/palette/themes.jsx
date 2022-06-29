@@ -52,7 +52,13 @@ export default function Themes() {
                 dispatch(applyUsersTheme({ theme: settings.usersTheme }));
               }
             } else {
-              dispatch(applyTheme({ themeName: theme.value }));
+              if (theme.value === 'random-gradient') {
+                const colors = getRandomGradientColors(devices.groups.length);
+                dispatch(applyRandomColors({ colors }));
+                dispatch(setPaletteValue({ theme: '' }));
+              } else {
+                dispatch(applyTheme({ themeName: theme.value }));
+              }
             }
           }}
           isSearchable={false}

@@ -414,7 +414,6 @@ export const devicesSlice = createSlice({
 
     applyRandomColors: (state, action) => {
       const { colors, inversion } = action.payload;
-      console.log(colors, inversion);
 
       state.groups.forEach((group, index) => {
         if (group.devices.length > 1) {

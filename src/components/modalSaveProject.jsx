@@ -16,11 +16,6 @@ export default function ModalSaveProject() {
   const modal = useSelector((state) => state.modal);
   const [name, setName] = useState(settings.projectName);
 
-  const project = {
-    groups: devices.groups,
-    settings,
-  };
-
   const onCancel = () => {
     if (modal.prevModal === 'isNeedSave') {
       dispatch(setGroups({}));
@@ -39,7 +34,13 @@ export default function ModalSaveProject() {
       dispatch(setProjectName(name));
     }
 
+    const project = {
+      groups: devices.groups,
+      settings: Object.assign({}, settings, { projectName: name }),
+    };
+
     saveProjectToFile(project, name);
+
     if (modal.prevModal === 'isNeedSave') {
       dispatch(setGroups({}));
       dispatch(setSettings({ settings: defaultSettingsState }));

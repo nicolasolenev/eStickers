@@ -8,7 +8,7 @@ $deviceBorderWhite: border(#fff);
 .black {
   .group-wrapper:first-child {
     .device__group,
-    .group-devices .device {
+    .group-devices .device:first-child {
       border-left: $deviceBorderBlack;
     }
   }
@@ -867,14 +867,19 @@ textarea:focus-visible,
 input:focus-visible,
 .device__point:focus-visible,
 .devices__add-btn:focus-visible {
-  // outline: none;
-  // outline: 1px solid gray;
   outline-style: dotted;
   border-radius: 2px;
   outline-color: rgba(106, 121, 197, 0.758);
 }
 .devices__add-btn:focus-visible {
   border-radius: 50%;
+}
+input.project-name-input:focus-visible,
+input.paper-format__input,
+input.modal__input {
+  // тут нужно сделать нормально
+  outline: none;
+  outline-style: none;
 }
 
 .switch-button {
