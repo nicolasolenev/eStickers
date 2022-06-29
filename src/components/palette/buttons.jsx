@@ -1,18 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import palette from '@linktime/palette';
 
 import { setPaletteValue } from '../../store/settingsSlice';
 import { changeColor } from '../../store/devicesSlice';
-import THEME, { defaultColors } from '../../theme';
-import { getUsersColors } from '../../functions';
+import { defaultColors, defaultWarningColors } from '../../theme';
 import Radiobuttons from './radiobuttons';
-
-function getColors(defaultColors, usersColors) {
-  const colors = new Set([...defaultColors]);
-  usersColors.forEach((color) => colors.add(color));
-  return [...colors];
-}
 
 export default function Buttons() {
   const dispatch = useDispatch();
@@ -20,9 +12,11 @@ export default function Buttons() {
   const devices = useSelector((state) => state.devices);
 
   const selectedColors = () => {
-    const colors = [].concat(
-      ...devices.selected.map((item) => [item.backgroundColor, item.textColor])
-    );
+    const colors = devices.selected.map((item) => {
+      return settings.palette.type === 'backgroundColor'
+        ? item.backgroundColor
+        : item.textColor;
+    });
     const uniqColors = new Set([...colors]);
 
     return [...uniqColors];
@@ -30,7 +24,7 @@ export default function Buttons() {
 
   return (
     <div className="palette__settings palette__settings_first-col">
-      <div className="palette__title">Изменение цвета выделенных групп:</div>
+      {/* <div className="palette__title">Изменение цвета выделенных групп:</div> */}
       <Radiobuttons />
       <div
         className="palette__colors"
@@ -64,7 +58,7 @@ export default function Buttons() {
         ))}
       </div>
 
-      <div className="palette__title">Цвета выделенных аппаратов:</div>
+      {/* <div className="palette__title">Цвета выделенных аппаратов:</div> */}
       <div className="palette__selected-colors">
         {selectedColors().map((color, id) => (
           <div
@@ -73,6 +67,28 @@ export default function Buttons() {
             className="palette__color"
             style={{ background: `${color}` }}
           ></div>
+        ))}
+      </div>
+
+      <div className="palette__title">Примечания выделенных аппаратов:</div>
+      <div className="palette__colors">
+        {defaultWarningColors.map((item, i) => (
+          <div
+            className="palette__color"
+            key={i}
+            onClick={() =>
+              dispatch(changeColor({ color: item, isWarningColor: true }))
+            }
+          >
+            <div
+              className="palette__color_warning"
+              style={{ background: `${item[0]}` }}
+            ></div>
+            <div
+              className="palette__color_warning"
+              style={{ background: `${item[1]}` }}
+            ></div>
+          </div>
         ))}
       </div>
 

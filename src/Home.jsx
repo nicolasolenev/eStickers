@@ -32,9 +32,13 @@ export default function Home() {
           </div>
 
           <div className={style.samples}>
-            {samples.map((i) => (
-              <div className={style.sample}>
-                <img className={style.sampleImg} src={i} alt="" />
+            {samples.map((i, index) => (
+              <div className={style.sample} key={index}>
+                <img
+                  className={style.sampleImg}
+                  src={i}
+                  alt={`Пример ${index + 1}`}
+                />
               </div>
             ))}
           </div>

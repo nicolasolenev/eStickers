@@ -15,7 +15,6 @@ export function windowListenerHandler(
   e,
   {
     dispatch,
-    selected,
     deleteSelectedDevices,
     clearSelected,
     history,
@@ -25,6 +24,12 @@ export function windowListenerHandler(
     pushState,
     groups,
     settings,
+    devices,
+    combineDevices,
+    splitDevices,
+    combineGroups,
+    splitGroups,
+    toggleVisability,
   }
 ) {
   const deleteKeyCombination =
@@ -38,9 +43,11 @@ export function windowListenerHandler(
     dispatch(deleteSelectedDevices());
     dispatch(pushState({ groups, settings }));
   }
+
   if (deselection) {
     dispatch(clearSelected());
   }
+
   if (ctrlZ) {
     const prevState = history[history.length - 1];
     if (prevState) {
@@ -50,6 +57,28 @@ export function windowListenerHandler(
       dispatch(setGroups({ groups }));
       dispatch(setSettings(settings));
       dispatch(popState({ groups, settings }));
+    }
+  }
+
+  if (e.code === 'KeyA' && e.ctrlKey && e.shiftKey && devices.selected.length) {
+    dispatch(splitDevices());
+    dispatch(pushState({ groups: devices.groups, settings }));
+  } else if (e.code === 'KeyA' && e.ctrlKey && devices.selected.length) {
+    dispatch(combineDevices());
+    dispatch(pushState({ groups: devices.groups, settings }));
+  }
+
+  if (e.code === 'KeyS' && e.ctrlKey && e.shiftKey && devices.selected.length) {
+    dispatch(splitGroups());
+    dispatch(pushState({ groups: devices.groups, settings }));
+    if (!settings.display.groups) {
+      dispatch(toggleVisability('groups'));
+    }
+  } else if (e.code === 'KeyS' && e.ctrlKey && devices.selected.length) {
+    dispatch(combineGroups());
+    dispatch(pushState({ groups: devices.groups, settings }));
+    if (!settings.display.groups) {
+      dispatch(toggleVisability('groups'));
     }
   }
 }

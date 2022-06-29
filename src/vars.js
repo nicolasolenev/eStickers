@@ -51,6 +51,8 @@ export function createSingleDevice(theme) {
       module: [{ id: id, text: '', width: 18 }],
     },
     warning: {
+      backgroundColor: '#E7E6E6',
+      textColor: 'ED7D31',
       text: '',
       isActive: false,
       height: '29px',
@@ -59,7 +61,7 @@ export function createSingleDevice(theme) {
 }
 
 export function createGroup(theme = 'gray') {
-  let backgroundColor = '#f2f2f2';
+  let backgroundColor = '#E7E6E6';
   let textColor = '#000';
 
   if (theme) {

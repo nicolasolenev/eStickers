@@ -74,7 +74,7 @@ $deviceBorderWhite: border(#fff);
 .white {
   .group-wrapper:first-child {
     .device__group,
-    .group-devices .device {
+    .group-devices .device:first-child {
       border-left: $deviceBorderWhite;
     }
   }
@@ -250,6 +250,19 @@ $deviceBorderWhite: border(#fff);
     margin-right: 10px;
     padding: 3px;
     cursor: pointer;
+
+    &-wrapper {
+      display: inline-block;
+      position: relative;
+    }
+
+    &-tip {
+      background: #fff;
+      position: absolute;
+      top: 25px;
+      left: 50%;
+      padding: 1px;
+    }
   }
 
   &__buttons {
@@ -482,6 +495,7 @@ $deviceBorderWhite: border(#fff);
       resize: none;
       border: transparent;
       color: inherit;
+      font-weight: 700;
     }
 
     &-hide {
@@ -578,6 +592,7 @@ $deviceBorderWhite: border(#fff);
 .numeration {
   .device__id {
     display: block;
+    color: inherit;
   }
 }
 
@@ -743,10 +758,12 @@ $deviceBorderWhite: border(#fff);
   &__colors {
     display: flex;
     flex-wrap: wrap;
-    margin: 10px 0 15px;
+    margin: 10px 0;
   }
 
   &__color {
+    display: flex;
+    flex-wrap: wrap;
     width: 20px;
     height: 20px;
     margin: 2px;
@@ -756,6 +773,12 @@ $deviceBorderWhite: border(#fff);
     -moz-box-shadow: 0px 0px 7px 1px rgba(34, 60, 80, 0.15);
     box-shadow: 0px 0px 7px 1px rgba(34, 60, 80, 0.15);
     cursor: pointer;
+    overflow: hidden;
+
+    &_warning {
+      height: 20px;
+      width: 9.5px;
+    }
   }
 
   &__selected-colors {

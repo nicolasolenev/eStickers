@@ -13,8 +13,12 @@ import {
   deleteSelectedDevices,
   setGroups,
   clearSelected,
+  combineDevices,
+  splitDevices,
+  combineGroups,
+  splitGroups,
 } from './store/devicesSlice';
-import { setSettings } from './store/settingsSlice';
+import { setSettings, toggleVisability } from './store/settingsSlice';
 import { popState, pushState } from './store/historySlice';
 import { windowListenerHandler } from './functions';
 import storage from './storage';
@@ -40,6 +44,12 @@ export default function App() {
       pushState,
       groups: devices.groups,
       settings,
+      devices,
+      combineDevices,
+      splitDevices,
+      combineGroups,
+      splitGroups,
+      toggleVisability,
     });
 
   const onUnloadHandler = () => {

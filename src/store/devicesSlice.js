@@ -373,16 +373,27 @@ export const devicesSlice = createSlice({
     },
 
     changeColor: (state, action) => {
-      const { color, type } = action.payload;
-      const selectedGroups = [
-        ...new Set(state.selected.map((item) => item.groupId)),
-      ];
+      const { color, type, isWarningColor } = action.payload;
+      if (!isWarningColor) {
+        const selectedGroups = [
+          ...new Set(state.selected.map((item) => item.groupId)),
+        ];
 
-      state.groups.forEach((group) => {
-        if (selectedGroups.includes(group.id)) {
-          group[type] = color;
-        }
-      });
+        state.groups.forEach((group) => {
+          if (selectedGroups.includes(group.id)) {
+            group[type] = color;
+          }
+        });
+      } else {
+        const devices = getDevices(state.groups);
+        const selectedDevices = state.selected.map((item) => item.deviceId);
+        devices.forEach((device) => {
+          if (selectedDevices.includes(device.id)) {
+            device.warning.backgroundColor = color[0];
+            device.warning.textColor = color[1];
+          }
+        });
+      }
     },
 
     applyTheme: (state, action) => {

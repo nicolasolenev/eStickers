@@ -30,6 +30,7 @@ export function readProject(e, dispatch, fn1, fn2) {
     reader.onload = function () {
       try {
         const project = JSON.parse(reader.result);
+
         if (project.type === 'electrical-stickers') {
           dispatch(fn1({ groups: project.groups }));
           dispatch(fn2({ settings: project.settings }));

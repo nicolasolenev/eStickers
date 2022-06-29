@@ -63,7 +63,10 @@ export default function ButtonsLeft(props) {
           className="upload-file-input"
           type="file"
           id="upload-file"
-          onChange={(e) => readProject(e, dispatch, setGroups, setSettings)}
+          onChange={(e) => {
+            readProject(e, dispatch, setGroups, setSettings);
+            e.target.value = null;
+          }}
         ></input>
       </label>
     </div>

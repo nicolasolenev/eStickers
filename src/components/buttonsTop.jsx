@@ -10,11 +10,7 @@ import {
   addGroupAfterSelected,
 } from '../store/devicesSlice';
 import { pushState, popState } from '../store/historySlice';
-import {
-  combineGroups,
-  splitGroups,
-  toggleDeviceNormallyOn,
-} from '../store/devicesSlice';
+import { combineGroups, splitGroups } from '../store/devicesSlice';
 import { getDevicesWidth } from '../functions';
 import { deleteSelectedDevices } from '../store/devicesSlice';
 
