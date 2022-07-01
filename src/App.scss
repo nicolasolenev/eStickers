@@ -218,9 +218,6 @@ $deviceBorderWhite: border(#fff);
 .devices-wrapper {
   position: relative;
   overflow-x: scroll;
-  -webkit-box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
-  -moz-box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
-  box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
 }
 
 .group-wrapper {
@@ -248,7 +245,7 @@ $deviceBorderWhite: border(#fff);
   margin-bottom: 10px;
 
   &-wrapper {
-    margin: 5px 5px 5px 140px;
+    margin: 5px 5px 5px 161px;
   }
 
   .button {
@@ -292,8 +289,12 @@ $deviceBorderWhite: border(#fff);
   flex-wrap: wrap;
   align-items: flex-end;
   position: relative;
-  padding: 10mm 5mm 20px 5mm;
   background: #fff;
+  padding: 10mm 5mm 20px 5mm;
+  margin: 7px 10px;
+  -webkit-box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
+  -moz-box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
+  box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
   &:hover {
     .rulers {
       display: flex;
@@ -635,8 +636,13 @@ $deviceBorderWhite: border(#fff);
   display: flex;
   flex-direction: column;
   align-self: flex-start;
-  width: 120px;
-  margin: -59px 10px 0 0;
+  // width: 120px;
+  margin: -59px 0 0 0;
+  padding: 10px 10px;
+  -webkit-box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
+  -moz-box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
+  box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
+  z-index: 1;
 
   .button {
     width: 120px;
@@ -765,7 +771,7 @@ $deviceBorderWhite: border(#fff);
 
   &__color {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     width: 20px;
     height: 20px;
     margin: 2px;

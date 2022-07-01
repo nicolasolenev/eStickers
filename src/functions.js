@@ -280,3 +280,19 @@ export function getRandomGradientColors(count = 1) {
 
   return colors;
 }
+
+export function getDpMM() {
+  var d = document.createElement('DIV');
+
+  d.style.width = d.style.height = '1mm';
+
+  d.style.display = 'table-cell';
+
+  document.body.appendChild(d);
+
+  var r = d.getBoundingClientRect();
+
+  document.body.removeChild(d);
+
+  return { h: r.width, v: r.height };
+}

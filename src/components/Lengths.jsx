@@ -5,6 +5,7 @@ import { getDevicesWidth } from '../functions';
 
 export default function Lengths() {
   const devices = useSelector((state) => state.devices);
+  const settings = useSelector((state) => state.settings);
   const devicesWidth = getDevicesWidth(devices.groups);
 
   return (
@@ -16,8 +17,8 @@ export default function Lengths() {
       </div>
 
       <div className="total-height">
-        Высота стикеров:
-        <span className="total-height__value">xyz</span>
+        Высота стикеров (без учёта примечаний):
+        <span className="total-height__value">{settings.devicesHeight}</span>
         мм
       </div>
     </div>

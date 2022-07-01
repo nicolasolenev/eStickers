@@ -39,6 +39,11 @@ export const settingsSlice = createSlice({
         state[key] = settings[key];
       }
     },
+
+    setDevicesHeight: (state, action) => {
+      const height = action.payload.height;
+      state.devicesHeight = height;
+    },
   },
 });
 
@@ -49,6 +54,7 @@ export const {
   setProjectName,
   setPaletteValue,
   setUsersTheme,
+  setDevicesHeight,
 } = settingsSlice.actions;
 
 export default settingsSlice.reducer;

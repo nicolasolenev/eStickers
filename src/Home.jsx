@@ -1,12 +1,13 @@
 import style from './Home.module.scss';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import sample1 from './images/sample/sample1.jpg';
-import sample2 from './images/sample/sample2.jpg';
-import sample3 from './images/sample/sample3.jpg';
-import sample4 from './images/sample/sample4.jpg';
+import sample1 from './images/sample/sample1.png';
+import sample2 from './images/sample/sample2.png';
+import sample3 from './images/sample/sample3.png';
+import sample4 from './images/sample/sample4.png';
+import samplePhoto from './images/sample/samplePhoto1.jpg';
 
-const samples = [sample1, sample2, sample3, sample4];
+const samples = [sample1, sample2, sample3, sample4, samplePhoto];
 
 export default function Home() {
   return (
