@@ -218,6 +218,7 @@ $deviceBorderWhite: border(#fff);
 .devices-wrapper {
   position: relative;
   overflow-x: scroll;
+  display: flex;
 }
 
 .group-wrapper {
@@ -284,7 +285,8 @@ $deviceBorderWhite: border(#fff);
 }
 
 .devices {
-  flex-grow: 1;
+  // flex-grow: 1;
+  flex-shrink: 0;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;

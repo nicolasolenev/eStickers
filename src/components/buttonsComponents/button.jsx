@@ -27,6 +27,7 @@ export default function Button({ value, tip, isDisabled, onClickHandler }) {
   return (
     <div className="button-wrapper">
       <button
+        title="test"
         className="button"
         disabled={isDisabled}
         onClick={onClickHandler}
