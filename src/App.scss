@@ -354,10 +354,10 @@ $deviceBorderWhite: border(#fff);
   .ruler:last-child:after {
     content: '';
     position: absolute;
-    right: 0mm;
+    right: -1px;
     bottom: -6px;
     background: gray;
-    width: 0.1mm;
+    width: 1px;
     height: 10px;
   }
 }
@@ -670,7 +670,7 @@ $deviceBorderWhite: border(#fff);
     left: -0.1mm;
     bottom: -6px;
     background: gray;
-    width: 0.2mm;
+    width: 1px;
     height: 10px;
   }
   // &:after {
