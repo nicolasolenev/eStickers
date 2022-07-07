@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import Button from './buttonsComponents/Button';
+import Button from './buttonsComponents/button';
 import Lengths from './Lengths';
 import { toggleVisability, setSettings } from '../store/settingsSlice';
 import {
