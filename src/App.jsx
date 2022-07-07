@@ -70,7 +70,6 @@ export default function App() {
 
   return (
     <>
-      <div id="dpi"></div>
       <Header />
       <ButtonsTop />
       <DevicesRow />

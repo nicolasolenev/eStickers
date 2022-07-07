@@ -6,7 +6,7 @@ import AddDeviceButton from './devicesComponents/addDeviceButton';
 import { getClasses, getDpMM } from '../functions';
 import { setDevicesHeight } from '../store/settingsSlice';
 
-// const dpi = document.getElementById('dpi').offsetHeight;
+const DpMM = getDpMM();
 
 export default function Devices(props) {
   const dispatch = useDispatch();
@@ -28,17 +28,22 @@ export default function Devices(props) {
       .map((el) => el.offsetHeight)
       .reduce((sum, h) => sum + h, 0);
 
-    const heightMm = heightPixels / getDpMM().h;
+    const heightMm = heightPixels / DpMM.h;
     const height = Math.round(heightMm * 10) / 10;
 
-    dispatch(setDevicesHeight({ height }));
+    if (settings.devicesHeight !== height) {
+      dispatch(setDevicesHeight({ height }));
+    }
   });
 
   return (
     <div className="devices-wrapper">
       <div
         className={devicesClasses}
-        style={{ width: `${settings.paperWidth}mm` }}
+        style={{
+          width: `${settings.paperWidth}mm`,
+          fontSize: `${settings.fontSize}pt`,
+        }}
         ref={devicesRef}
       >
         {devices.groups.map((group) => {

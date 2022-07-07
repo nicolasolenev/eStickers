@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import TextareaAutosize from 'react-autosize-textarea';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -16,6 +16,25 @@ export default function DeviceMultilineInput({
   const [text, setText] = useState(device.text ?? device[type].text);
   const devices = useSelector((state) => state.devices);
   const textareaRef = useRef();
+
+  useEffect(() => {
+    console.log('test');
+    const currentHeight = textareaRef.current.clientHeight;
+
+    if (type !== 'group' && currentHeight !== device[type].height) {
+      dispatch(
+        setHeight({ currentHeight, deviceId: device.id, groupId, type })
+      );
+    } else if (
+      type === 'group' &&
+      currentHeight !==
+        devices.groups.find((group) => group.id === groupId).height
+    ) {
+      dispatch(
+        setHeight({ currentHeight, deviceId: device.id, groupId, type })
+      );
+    }
+  });
 
   return (
     <div

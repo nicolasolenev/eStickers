@@ -5,7 +5,7 @@ import { useReactToPrint } from 'react-to-print';
 import ButtonVisability from './buttonsComponents/buttonVisability';
 import ButtonCaption from './buttonsComponents/buttonCaption';
 import { readProject } from '../fs';
-import { setSettings } from '../store/settingsSlice';
+import { setSettings, setFontSize } from '../store/settingsSlice';
 import { setGroups } from '../store/devicesSlice';
 import { setModal } from '../store/modalSlice';
 
@@ -67,6 +67,30 @@ export default function ButtonsLeft(props) {
           }}
         ></input>
       </label>
+
+      <div>
+        <button
+          className=""
+          style={{ width: '17px', marginRight: '10px' }}
+          onClick={() => {
+            dispatch(setFontSize({ fontSize: settings.fontSize + 1 }));
+          }}
+        >
+          +
+        </button>
+
+        <button
+          className=""
+          style={{ width: '17px', marginRight: '10px' }}
+          onClick={() => {
+            dispatch(setFontSize({ fontSize: settings.fontSize - 1 }));
+          }}
+        >
+          -
+        </button>
+
+        <span>{settings.fontSize}pt</span>
+      </div>
     </div>
   );
 }
