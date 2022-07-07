@@ -1,13 +1,15 @@
 import React, { useMemo, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Group from './group';
 import AddDeviceButton from './devicesComponents/addDeviceButton';
-import { getClasses } from '../functions';
+import { getClasses, getDpMM } from '../functions';
+import { setDevicesHeight } from '../store/settingsSlice';
 
-// const dpi = document.getElementById('dpi').offsetHeight;
+const DpMM = getDpMM();
 
 export default function Devices(props) {
+  const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
   const devices = useSelector((state) => state.devices);
   const { devicesRef } = props;
@@ -20,11 +22,28 @@ export default function Devices(props) {
     [settings.display, borderColor]
   );
 
+  useEffect(() => {
+    const heightPixels = [...devicesRef.current.firstChild.children]
+      .slice(1, 3)
+      .map((el) => el.offsetHeight)
+      .reduce((sum, h) => sum + h, 0);
+
+    const heightMm = heightPixels / DpMM.h;
+    const height = Math.round(heightMm * 10) / 10;
+
+    if (settings.devicesHeight !== height) {
+      dispatch(setDevicesHeight({ height }));
+    }
+  });
+
   return (
     <div className="devices-wrapper">
       <div
         className={devicesClasses}
-        style={{ width: `${settings.paperWidth}mm` }}
+        style={{
+          width: `${settings.paperWidth}mm`,
+          fontSize: `${settings.fontSize}pt`,
+        }}
         ref={devicesRef}
       >
         {devices.groups.map((group) => {

@@ -218,9 +218,7 @@ $deviceBorderWhite: border(#fff);
 .devices-wrapper {
   position: relative;
   overflow-x: scroll;
-  -webkit-box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
-  -moz-box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
-  box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
+  display: flex;
 }
 
 .group-wrapper {
@@ -228,15 +226,18 @@ $deviceBorderWhite: border(#fff);
   flex-direction: column;
   border-left: none;
   margin-bottom: 10px;
+  font-size: inherit;
 }
 
 .warning-wrapper {
   display: flex;
+  font-size: inherit;
 }
 
 .group-devices {
   display: flex;
   flex-wrap: nowrap;
+  font-size: inherit;
 }
 
 .rulers-wrapper {
@@ -248,7 +249,7 @@ $deviceBorderWhite: border(#fff);
   margin-bottom: 10px;
 
   &-wrapper {
-    margin: 5px 5px 5px 140px;
+    margin: 5px 5px 5px 161px;
   }
 
   .button {
@@ -287,13 +288,18 @@ $deviceBorderWhite: border(#fff);
 }
 
 .devices {
-  flex-grow: 1;
+  // flex-grow: 1;
+  flex-shrink: 0;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
   position: relative;
-  padding: 10mm 5mm 20px 5mm;
   background: #fff;
+  padding: 10mm 5mm 20px 5mm;
+  margin: 7px 10px;
+  -webkit-box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
+  -moz-box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
+  box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
   &:hover {
     .rulers {
       display: flex;
@@ -369,6 +375,7 @@ $deviceBorderWhite: border(#fff);
   align-items: center;
   justify-content: flex-end;
   position: relative;
+  font-size: inherit;
 
   &__group,
   &__point,
@@ -388,6 +395,7 @@ $deviceBorderWhite: border(#fff);
   &__group {
     height: 25px;
     display: none;
+    font-size: inherit;
     textarea {
       width: 100%;
       background-color: transparent;
@@ -396,12 +404,14 @@ $deviceBorderWhite: border(#fff);
       text-align: center;
       font-weight: 700;
       resize: none;
+      font-size: inherit;
     }
   }
 
   &__switch {
     height: 25px;
     display: none;
+    font-size: inherit;
     &-input {
       width: 100%;
       background-color: transparent;
@@ -409,6 +419,7 @@ $deviceBorderWhite: border(#fff);
       text-align: center;
       font-weight: 700;
       color: inherit;
+      font-size: inherit;
     }
   }
 
@@ -417,6 +428,7 @@ $deviceBorderWhite: border(#fff);
     width: 100%;
     text-align: center;
     display: flex;
+    font-size: inherit;
   }
 
   &__module {
@@ -424,16 +436,18 @@ $deviceBorderWhite: border(#fff);
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
+    font-size: inherit;
 
     &-input {
       display: none;
       background-color: transparent;
       border: transparent;
-      width: 40px;
+      width: 90%;
       text-align: center;
       color: inherit;
       margin: 5px 3px;
       height: 13px;
+      font-size: inherit;
       appearance: none;
       -moz-appearance: none;
       -webkit-appearance: none;
@@ -447,7 +461,7 @@ $deviceBorderWhite: border(#fff);
     width: 100%;
     padding: 3px;
     color: gray;
-    font-size: 7pt;
+    font-size: 8pt;
     display: none;
     cursor: pointer;
     -webkit-touch-callout: none;
@@ -461,7 +475,7 @@ $deviceBorderWhite: border(#fff);
   &__description {
     width: 100%;
     display: none;
-
+    font-size: inherit;
     textarea {
       width: 100%;
       background-color: transparent;
@@ -469,6 +483,7 @@ $deviceBorderWhite: border(#fff);
       border: transparent;
       text-align: center;
       resize: none;
+      font-size: inherit;
     }
   }
 
@@ -481,6 +496,7 @@ $deviceBorderWhite: border(#fff);
     padding: 5px;
     font-weight: 700;
     color: #eb8044;
+    font-size: inherit;
     border-radius: 5px 5px 0 0;
     order: -2;
     position: relative;
@@ -497,6 +513,7 @@ $deviceBorderWhite: border(#fff);
       resize: none;
       border: transparent;
       color: inherit;
+      font-size: inherit;
       font-weight: 700;
     }
 
@@ -635,8 +652,13 @@ $deviceBorderWhite: border(#fff);
   display: flex;
   flex-direction: column;
   align-self: flex-start;
-  width: 120px;
-  margin: -59px 10px 0 0;
+  // width: 120px;
+  margin: -59px 0 0 0;
+  padding: 10px 10px;
+  -webkit-box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
+  -moz-box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
+  box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
+  z-index: 1;
 
   .button {
     width: 120px;
@@ -765,7 +787,7 @@ $deviceBorderWhite: border(#fff);
 
   &__color {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     width: 20px;
     height: 20px;
     margin: 2px;

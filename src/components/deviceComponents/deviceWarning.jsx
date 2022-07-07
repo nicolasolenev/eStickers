@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import TextareaAutosize from 'react-autosize-textarea';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -11,6 +11,21 @@ export default function DeviceWarning({ group, device, handler }) {
   const devices = useSelector((state) => state.devices);
   const [text, setText] = useState(device.warning.text);
   const textareaRef = useRef();
+
+  useEffect(() => {
+    const currentHeight = textareaRef.current.clientHeight;
+
+    if (currentHeight !== device['warning'].height) {
+      dispatch(
+        setHeight({
+          currentHeight,
+          deviceId: device.id,
+          groupId: group.id,
+          type: 'warning',
+        })
+      );
+    }
+  });
 
   return (
     <div

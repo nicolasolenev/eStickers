@@ -16,6 +16,10 @@ export const settingsSlice = createSlice({
       state.projectName = action.payload;
     },
 
+    setFontSize: (state, action) => {
+      state.fontSize = action.payload.fontSize;
+    },
+
     toggleVisability: (state, action) => {
       const fields = action.payload;
 
@@ -39,6 +43,11 @@ export const settingsSlice = createSlice({
         state[key] = settings[key];
       }
     },
+
+    setDevicesHeight: (state, action) => {
+      const height = action.payload.height;
+      state.devicesHeight = height;
+    },
   },
 });
 
@@ -49,6 +58,8 @@ export const {
   setProjectName,
   setPaletteValue,
   setUsersTheme,
+  setDevicesHeight,
+  setFontSize,
 } = settingsSlice.actions;
 
 export default settingsSlice.reducer;
