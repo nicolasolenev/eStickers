@@ -18,7 +18,6 @@ export default function DeviceMultilineInput({
   const textareaRef = useRef();
 
   useEffect(() => {
-    console.log('test');
     const currentHeight = textareaRef.current.clientHeight;
 
     if (type !== 'group' && currentHeight !== device[type].height) {
