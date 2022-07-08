@@ -221,7 +221,7 @@ export function generateContrastColors(i, count) {
   const sT = randomInteger(90, 100);
 
   const lB = randomInteger(89, 94);
-  const lT = randomInteger(20, 30);
+  const lT = randomInteger(30, 40);
 
   const a = 100;
 
