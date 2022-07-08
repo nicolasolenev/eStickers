@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Palette from './components/palette/palette';
 import Devices from './components/devices';
-import ButtonsLeft from './components/buttonsLeft';
+// import ButtonsLeft from './components/buttonsLeft';
 import Header from './components/header';
 import ButtonsTop from './components/buttonsTop';
 import ModalSaveProject from './components/modalSaveProject';
@@ -31,6 +31,7 @@ export default function App() {
   const history = useSelector((state) => state.history);
   const modal = useSelector((state) => state.modal);
   const selected = settings.selected;
+  const devicesRef = useRef();
 
   const onKeydownHandler = (e) =>
     windowListenerHandler(e, {
@@ -71,8 +72,12 @@ export default function App() {
   return (
     <>
       <Header />
-      <ButtonsTop />
-      <DevicesRow />
+      <ButtonsTop devicesRef={devicesRef} />
+      {/* <DevicesRow /> */}
+      <div className="wrapper">
+        {/* <ButtonsLeft devicesRef={devicesRef} /> */}
+        <Devices devicesRef={devicesRef} />
+      </div>
       <Palette />
       {modal.type === 'saving' && <ModalSaveProject />}
       {modal.type === 'isNeedSave' && <IsNeedSaveModal />}
@@ -85,7 +90,7 @@ function DevicesRow() {
 
   return (
     <div className="wrapper">
-      <ButtonsLeft devicesRef={devicesRef} />
+      {/* <ButtonsLeft devicesRef={devicesRef} /> */}
       <Devices devicesRef={devicesRef} />
     </div>
   );

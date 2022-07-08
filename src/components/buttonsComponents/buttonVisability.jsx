@@ -8,9 +8,9 @@ export default function ButtonVisability({ fieldName, text }) {
   const settings = useSelector((state) => state.settings);
 
   return (
-    <label className="palette__checkbox" htmlFor={fieldName}>
+    <label className="displaying-checkbox" htmlFor={fieldName}>
       <input
-        className="palette__checkbox-input"
+        className="displaying-checkbox-input"
         type="checkbox"
         id={fieldName}
         name={fieldName}
