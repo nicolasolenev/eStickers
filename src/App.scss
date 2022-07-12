@@ -207,7 +207,8 @@ $deviceBorderWhite: border(#fff);
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  margin: 0 0 0 10px;
+  // margin: 0 0 0 10px;
+  margin: 0 0 0 0;
   &:hover {
     .button {
       display: block;
@@ -246,10 +247,15 @@ $deviceBorderWhite: border(#fff);
 }
 
 .buttons-top {
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 400px;
 
   &-wrapper {
-    margin: 5px 5px 5px 161px;
+    margin: 10px 10px 0;
+    display: flex;
+    flex-wrap: nowrap;
   }
 
   .button {
@@ -259,7 +265,7 @@ $deviceBorderWhite: border(#fff);
     &-wrapper {
       display: inline-block;
       position: relative;
-      margin-right: 10px;
+      margin: 2px;
     }
 
     &-tip {
@@ -271,6 +277,80 @@ $deviceBorderWhite: border(#fff);
       white-space: nowrap;
     }
   }
+}
+
+.buttons-container {
+  display: flex;
+  flex-wrap: nowrap;
+  height: 50px;
+}
+
+.buttons-setcion {
+  position: relative;
+  margin: 0 5px 0 0;
+
+  &:after {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 65px;
+    background: gray;
+    top: 10px;
+    right: 0;
+  }
+
+  &:last-child {
+    margin: 0;
+    &:after {
+      display: none;
+    }
+  }
+}
+
+.buttons-title {
+  text-align: center;
+  text-decoration: underline;
+  margin-bottom: 10px;
+  font-size: 9pt;
+}
+
+.buttons-font-size-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.displaying-checkboxes {
+  width: 220px;
+  margin: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
+}
+
+.displaying-checkbox {
+  margin: 0 5px 0 0;
+  display: inline-flex;
+  cursor: pointer;
+
+  &-input {
+    margin-right: 2px;
+  }
+}
+
+.buttons-file {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-right: 5px;
+
+  .button {
+    padding: 3px;
+    cursor: pointer;
+  }
+}
+
+.buttons-print {
+  display: flex;
 }
 
 .upload-button {
@@ -653,7 +733,7 @@ $deviceBorderWhite: border(#fff);
   flex-direction: column;
   align-self: flex-start;
   // width: 120px;
-  margin: -59px 0 0 0;
+  // margin: -59px 0 0 0;
   padding: 10px 10px;
   -webkit-box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
   -moz-box-shadow: 0px 0px 7px 0px rgba(34, 60, 80, 0.11);
@@ -936,12 +1016,10 @@ input.modal__input {
   overflow: hidden;
   width: 65px;
   height: 40px;
-
   text-align: center;
   font-size: 8pt;
   color: #000;
   position: relative;
-  margin-bottom: 10px;
   align-self: center;
 
   &:before {
