@@ -63,7 +63,7 @@ export function windowListenerHandler(
   ) {
     dispatch(splitDevices());
     dispatch(pushState({ groups: devices.groups, settings }));
-  } else if (e.code === 'KeyA' && e.ctrlKey && devices.selected.length) {
+  } else if (e.code === 'KeyA' && e.shiftKey && devices.selected.length) {
     dispatch(combineDevices());
     dispatch(pushState({ groups: devices.groups, settings }));
   } else if (
@@ -77,7 +77,7 @@ export function windowListenerHandler(
     if (!settings.display.groups) {
       dispatch(toggleVisability('groups'));
     }
-  } else if (e.code === 'KeyS' && e.ctrlKey && devices.selected.length) {
+  } else if (e.code === 'KeyS' && e.shiftKey && devices.selected.length) {
     dispatch(combineGroups());
     dispatch(pushState({ groups: devices.groups, settings }));
     if (!settings.display.groups) {

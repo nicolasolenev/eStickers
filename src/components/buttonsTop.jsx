@@ -133,7 +133,7 @@ export default function ButtonsTop({ devicesRef }) {
 
               <Button
                 value="Объединить"
-                tip="Ctrl + A"
+                tip="Shift + A"
                 isDisabled={isDisabled}
                 onClickHandler={() =>
                   onClickHandler([
@@ -157,7 +157,7 @@ export default function ButtonsTop({ devicesRef }) {
 
               <Button
                 value="Сгруппировать"
-                tip="Ctrl + S"
+                tip="Shift + S"
                 isDisabled={isDisabled}
                 onClickHandler={() =>
                   onClickHandler(
