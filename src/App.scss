@@ -31,7 +31,7 @@ $deviceBorderWhite: border(#fff);
     border-top: $deviceBorderBlack;
   }
   .device__warning {
-    border: $deviceBorderBlack;
+    // border: $deviceBorderBlack;
     border-bottom: none;
     &-hide {
       border: none;
@@ -291,6 +291,7 @@ $deviceBorderWhite: border(#fff);
     flex-wrap: wrap;
     justify-content: center;
     width: 125px;
+    margin-right: 3px;
 
     .button {
       margin: 2px;
@@ -314,7 +315,7 @@ $deviceBorderWhite: border(#fff);
     position: absolute;
     width: 1px;
     height: 85px;
-    background: gray;
+    background: rgba(128, 128, 128, 0.578);
     top: 10px;
     right: 0;
   }
@@ -350,7 +351,7 @@ $deviceBorderWhite: border(#fff);
 }
 
 .displaying-checkbox {
-  margin: 0 5px 0 0;
+  margin: 0 5px 2px 0;
   display: inline-flex;
   cursor: pointer;
 
@@ -842,14 +843,27 @@ $deviceBorderWhite: border(#fff);
 
 .palette {
   display: flex;
-  justify-content: center;
-  margin-top: 20px;
+  // justify-content: center;
+  // margin-top: 20px;
+  border-top: 1px dashed rgba(128, 128, 128, 0.578);
+  margin: 0 10px;
 
   &__settings {
-    width: 240px;
+    // width: 240px;
+    display: flex;
     padding: 5px;
+
+    &-picker {
+      padding-top: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 53px;
+      margin-right: 10px;
+    }
+
     &_first-col {
-      padding-left: 35px;
+      // padding-left: 35px;
     }
     .random-colors {
       margin: 20px 0;
@@ -870,16 +884,16 @@ $deviceBorderWhite: border(#fff);
   }
 
   &__title {
-    margin: 0 0 10px 5px;
+    margin: 0px 0px 2px 5px;
   }
 
   &__radiobuttons {
-    margin: 10px 0 15px 5px;
+    // margin: 0px 0px 0px 5px;
     display: flex;
   }
 
   &__radiobutton {
-    margin-right: 15px;
+    margin-left: 15px;
     display: flex;
     align-items: center;
     input {
@@ -901,10 +915,33 @@ $deviceBorderWhite: border(#fff);
     }
   }
 
+  &__colors-wrapper {
+    margin: 0 20px 0 0;
+    position: relative;
+
+    &:after {
+      content: '';
+      position: absolute;
+      width: 1px;
+      height: 30px;
+      background: rgba(128, 128, 128, 0.578);
+      top: 7px;
+      right: -10px;
+    }
+
+    &:last-child:after {
+      // display: none;
+    }
+  }
+
   &__colors {
     display: flex;
     flex-wrap: wrap;
-    margin: 10px 0;
+    // margin: 10px 0;
+
+    &-warnings {
+      width: 189px;
+    }
   }
 
   &__color {
@@ -936,20 +973,20 @@ $deviceBorderWhite: border(#fff);
   }
 
   &__border-colors {
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    &_title {
-      margin-top: 0;
-      margin-bottom: 0;
-      margin-right: 10px;
-    }
+    // margin-top: 10px;
+    // display: flex;
+    // align-items: center;
+
     &_colors {
       margin: 0;
       width: 50px;
       justify-content: space-between;
     }
   }
+}
+
+.theme {
+  width: 152px;
 }
 
 .selected {

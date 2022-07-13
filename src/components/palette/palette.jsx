@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { ChromePicker } from 'react-color';
+import { ChromePicker, HuePicker, AlphaPicker } from 'react-color';
 
 import { setPaletteValue } from '../../store/settingsSlice';
 import { changeColor } from '../../store/devicesSlice';
@@ -17,7 +17,7 @@ export default function Palette() {
     dispatch(setPaletteValue({ theme: '' }));
     dispatch(
       changeColor({
-        color: color.hex,
+        color: `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`,
         type: settings.palette.type,
       })
     );
@@ -25,18 +25,30 @@ export default function Palette() {
 
   return (
     <div className="palette">
-      <Buttons />
+      <Buttons setColor={setColor} />
 
-      {/* <div className="palette__settings">
-        <ChromePicker
+      <div className="palette__settings palette__settings-picker">
+        {/* <ChromePicker
+          color={color}
+          onChange={(color) => {
+            handleChange(color);
+          }}
+        /> */}
+        <HuePicker
           color={color}
           onChange={(color) => {
             handleChange(color);
           }}
         />
-      </div> */}
+        <AlphaPicker
+          color={color}
+          onChange={(color) => {
+            handleChange(color);
+          }}
+        />
+      </div>
 
-      {/* <Themes /> */}
+      <Themes />
     </div>
   );
 }

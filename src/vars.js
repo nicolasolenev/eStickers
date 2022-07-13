@@ -92,6 +92,6 @@ export const themes = [
   { value: '', label: 'Пользовательская' },
   { value: 'gray', label: 'Серая' },
   { value: 'random-gradient', label: 'Случайная градиентная' },
-  // { value: 'colored', label: 'Цветная' },
-  // { value: 'coloredWhiteText', label: 'Цветная, белый текст' },
+  { value: 'random-light', label: 'Случайная светлая' },
+  { value: 'random-dark', label: 'Случайная тёмная' },
 ];

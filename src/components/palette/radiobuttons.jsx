@@ -12,7 +12,8 @@ export default function Radiobuttons() {
   }
 
   return (
-    <div className="palette__radiobuttons">
+    <div className="palette__radiobuttons palette__title">
+      Цвет выделенных аппаратов:
       <label className="palette__radiobutton" htmlFor="background">
         <input
           type="radio"
@@ -23,7 +24,6 @@ export default function Radiobuttons() {
         />
         Фон
       </label>
-
       <label className="palette__radiobutton" htmlFor="text">
         <input
           type="radio"
