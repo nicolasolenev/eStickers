@@ -10,6 +10,7 @@ import { updateDeviceText } from '../store/devicesSlice';
 
 export default function Group({ group, moduleId, index }) {
   const dispatch = useDispatch();
+  const groupIndex = index;
   let count = moduleId;
 
   return (
@@ -69,6 +70,7 @@ export default function Group({ group, moduleId, index }) {
               index={index}
               key={device.id}
               groupId={group.id}
+              groupIndex={groupIndex}
               moduleId={moduleId}
               device={device}
             />

@@ -14,7 +14,7 @@ import {
   splitDevices,
   combineGroups,
   splitGroups,
-  addGroupAfterSelected,
+  addDeviceBefore,
 } from './store/devicesSlice';
 import { setSettings, toggleVisability } from './store/settingsSlice';
 import { popState, pushState } from './store/historySlice';
@@ -49,7 +49,7 @@ export default function App() {
       combineGroups,
       splitGroups,
       toggleVisability,
-      addGroupAfterSelected,
+      addDeviceBefore,
     });
 
   const onUnloadHandler = () => {

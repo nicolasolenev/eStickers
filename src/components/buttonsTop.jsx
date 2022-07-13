@@ -21,7 +21,6 @@ import {
   setGroups,
   splitDevices,
   clearSelected,
-  addGroupAfterSelected,
   combineDevices,
 } from '../store/devicesSlice';
 import { pushState, popState } from '../store/historySlice';
@@ -203,18 +202,6 @@ export default function ButtonsTop({ devicesRef }) {
                 tip="Escape"
                 isDisabled={isDisabled}
                 onClickHandler={() => onClickHandler([clearSelected()])}
-              />
-
-              <Button
-                value="Добавить гр. после выделенных"
-                tip="Ctrl + N"
-                isDisabled={isDisabled}
-                onClickHandler={() =>
-                  onClickHandler([
-                    addGroupAfterSelected({ theme: settings.palette.theme }),
-                    pushState({ groups: devices.groups, settings }),
-                  ])
-                }
               />
             </div>
 

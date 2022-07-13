@@ -30,7 +30,7 @@ export function windowListenerHandler(
     combineGroups,
     splitGroups,
     toggleVisability,
-    addGroupAfterSelected,
+    addDeviceBefore,
   }
 ) {
   const deleteKeyCombination =
@@ -84,7 +84,7 @@ export function windowListenerHandler(
       dispatch(toggleVisability('groups'));
     }
   } else if (e.code === 'KeyN' && e.ctrlKey && devices.selected.length) {
-    dispatch(addGroupAfterSelected({ theme: settings.palette.theme }));
+    dispatch(addDeviceBefore({ theme: settings.palette.theme }));
     dispatch(pushState({ groups: devices.groups, settings }));
   }
 }

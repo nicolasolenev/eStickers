@@ -5,13 +5,21 @@ import DevicePoint from './deviceComponents/devicePoint';
 import DeviceMultilineInput from './deviceComponents/deviceMultilineInput';
 import DeviceField from './deviceComponents/deviceField';
 import Modules from './deviceComponents/modules';
-import { updateDeviceText } from '../store/devicesSlice';
+import { updateDeviceText, addDeviceBefore } from '../store/devicesSlice';
+import { pushState } from '../store/historySlice';
 import { getDeviceTotalWidth } from '../functions';
 
-export default function Device({ device, groupId, moduleId, index }) {
+export default function Device({
+  device,
+  groupId,
+  moduleId,
+  index,
+  groupIndex,
+}) {
   const dispatch = useDispatch();
   const deviceId = device.id;
   const devices = useSelector((state) => state.devices);
+  const settings = useSelector((state) => state.settings);
   const deviceWidth = useMemo(() => {
     const width = getDeviceTotalWidth(device);
     return `calc(${width}mm + 1px)`;
@@ -42,6 +50,23 @@ export default function Device({ device, groupId, moduleId, index }) {
         width: `${deviceWidth}`,
       }}
     >
+      <div className="addDeviceBefore">
+        <button
+          className="addDeviceBefore-btn"
+          onClick={() => {
+            dispatch(
+              addDeviceBefore({
+                theme: settings.palette.theme,
+                groupIndex,
+                index,
+              })
+            );
+            dispatch(pushState({ groups: devices.groups, settings }));
+          }}
+        >
+          +
+        </button>
+      </div>
       <DevicePoint device={device} groupId={groupId} dispatch={dispatch} />
 
       <DeviceField
