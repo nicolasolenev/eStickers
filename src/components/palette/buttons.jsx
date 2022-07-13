@@ -30,7 +30,7 @@ export default function Buttons({ setColor }) {
       <div className="palette__colors-wrapper">
         <Radiobuttons />
         <div
-          className="palette__colors"
+          className="palette__colors palette__colors-default"
           onClick={(e) => {
             e.stopPropagation();
 
