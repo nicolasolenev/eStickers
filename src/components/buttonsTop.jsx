@@ -245,13 +245,6 @@ export default function ButtonsTop({ devicesRef }) {
           </div>
         </section>
 
-        {/* <section className="buttons-section">
-          <div className="buttons-title">Лист</div>
-          <div className="buttons-container">
-            <PaperFormat />
-          </div>
-        </section> */}
-
         <section className="buttons-section">
           <div className="buttons-title">Печать</div>
           <div className="buttons-container">

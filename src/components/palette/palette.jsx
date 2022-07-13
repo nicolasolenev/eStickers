@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { ChromePicker, HuePicker, AlphaPicker } from 'react-color';
+import { HuePicker, AlphaPicker } from 'react-color';
 
 import { setPaletteValue } from '../../store/settingsSlice';
 import { changeColor } from '../../store/devicesSlice';

@@ -101,36 +101,6 @@ export default function Themes() {
           isSearchable={false}
         />
       </div>
-
-      {/* <div className="random-colors">
-        Случайные цвета для групп с несколькими аппаратами (светлый фон):
-        <button
-          // className="random-colors-btn"
-          style={{ padding: '2px 10px', margin: '5px 0 0 0' }}
-          className="button"
-          onClick={() => {
-            const colors = generateCoupleColors(devices.groups.length);
-
-            dispatch(applyRandomColors({ colors }));
-            dispatch(setPaletteValue({ theme: '' }));
-          }}
-        >
-          Click
-        </button>
-        Случайные цвета для групп с несколькими аппаратами (темный фон):
-        <button
-          style={{ padding: '2px 10px', margin: '5px 0 0 0' }}
-          className="button"
-          onClick={() => {
-            const colors = generateCoupleColors(devices.groups.length);
-
-            dispatch(applyRandomColors({ colors, inversion: true }));
-            dispatch(setPaletteValue({ theme: '' }));
-          }}
-        >
-          Click
-        </button>
-      </div> */}
     </div>
   );
 }

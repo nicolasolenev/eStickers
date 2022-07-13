@@ -26,7 +26,6 @@ export default function Buttons({ setColor }) {
 
   return (
     <div className="palette__settings palette__settings_first-col">
-      {/* <div className="palette__title">Изменение цвета выделенных групп:</div> */}
       <div className="palette__colors-wrapper">
         <Radiobuttons />
         <div
@@ -77,19 +76,6 @@ export default function Buttons({ setColor }) {
         </div>
       </div>
 
-      {/* <div className="palette__title">Цвета выделенных аппаратов:</div> */}
-
-      {/* <div className="palette__selected-colors">
-        {selectedColors().map((color, id) => (
-          <div
-            key={id + color}
-            id={color}
-            className="palette__color"
-            style={{ background: `${color}` }}
-          ></div>
-        ))}
-      </div> */}
-
       <div className="palette__colors-wrapper">
         <div className="palette__title">Примечания выделенных аппаратов:</div>
         <div className="palette__colors palette__colors-warnings">
@@ -107,10 +93,6 @@ export default function Buttons({ setColor }) {
               >
                 {letterInWarningColor[i]}
               </div>
-              {/* <div
-                className="palette__color_warning"
-                style={{ background: `${item[1]}` }}
-              ></div> */}
             </div>
           ))}
         </div>
