@@ -27,16 +27,16 @@ export default function Palette() {
     <div className="palette">
       <Buttons />
 
-      <div className="palette__settings">
+      {/* <div className="palette__settings">
         <ChromePicker
           color={color}
           onChange={(color) => {
             handleChange(color);
           }}
         />
-      </div>
+      </div> */}
 
-      <Themes />
+      {/* <Themes /> */}
     </div>
   );
 }

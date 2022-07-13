@@ -71,14 +71,14 @@ export default function App() {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <ButtonsTop devicesRef={devicesRef} />
       {/* <DevicesRow /> */}
       <div className="wrapper">
         {/* <ButtonsLeft devicesRef={devicesRef} /> */}
         <Devices devicesRef={devicesRef} />
       </div>
-      <Palette />
+      {/* <Palette /> */}
       {modal.type === 'saving' && <ModalSaveProject />}
       {modal.type === 'isNeedSave' && <IsNeedSaveModal />}
     </>

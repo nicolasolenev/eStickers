@@ -8,10 +8,10 @@ import StartNewProject from './headerComponents/startNewProject';
 export default function Header() {
   return (
     <header className="header">
-      <Helpers />
-      <ProjectName />
-      <StartNewProject />
-      <PaperFormat />
+      {/* <Helpers /> */}
+      {/* <ProjectName />
+      <StartNewProject /> */}
+      {/* <PaperFormat /> */}
     </header>
   );
 }

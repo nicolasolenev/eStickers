@@ -163,21 +163,23 @@ $deviceBorderWhite: border(#fff);
 }
 
 .paper-format {
-  margin: 0 10px 0 0;
+  margin: 0 5px 0 0;
+  width: 150px;
 
   &__field {
-    margin: 0 0 5px 0;
+    margin: 14px 0 5px 0;
   }
 
   &__button {
-    margin: 5px;
-    padding: 0 5px;
+    margin: 2px 5px;
+    padding: 2px 5px;
     cursor: pointer;
   }
 
   &__input {
     width: 50px;
     margin: 0 0 0 5px;
+    padding: 2px;
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
       -webkit-appearance: none;
@@ -251,6 +253,7 @@ $deviceBorderWhite: border(#fff);
   display: flex;
   flex-wrap: wrap;
   width: 400px;
+  margin: 12px 0 0 0;
 
   &-wrapper {
     margin: 10px 10px 0;
@@ -282,10 +285,27 @@ $deviceBorderWhite: border(#fff);
 .buttons-container {
   display: flex;
   flex-wrap: nowrap;
-  height: 50px;
+  // height: 50px;
+
+  &-document {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 125px;
+
+    .button {
+      margin: 2px;
+      padding: 3px;
+    }
+
+    .project-name-input {
+      padding: 2px;
+      margin: 2px;
+      width: 115px;
+    }
+  }
 }
 
-.buttons-setcion {
+.buttons-section {
   position: relative;
   margin: 0 5px 0 0;
 
@@ -293,7 +313,7 @@ $deviceBorderWhite: border(#fff);
     content: '';
     position: absolute;
     width: 1px;
-    height: 65px;
+    height: 85px;
     background: gray;
     top: 10px;
     right: 0;
@@ -317,13 +337,15 @@ $deviceBorderWhite: border(#fff);
 .buttons-font-size-wrapper {
   display: flex;
   flex-direction: column;
+  margin: 12px 0 0 0;
 }
 
 .displaying-checkboxes {
-  width: 220px;
+  // width: 220px;
   margin: 6px;
   display: flex;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
+  flex-direction: column;
   align-content: space-between;
 }
 
@@ -341,16 +363,32 @@ $deviceBorderWhite: border(#fff);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-right: 5px;
+  margin: 12px 5px 0 0;
+  width: 115px;
 
   .button {
     padding: 3px;
+    margin: 2px;
+    text-align: center;
     cursor: pointer;
   }
 }
 
 .buttons-print {
   display: flex;
+  flex-direction: column;
+  margin-top: 14px;
+  width: 105px;
+
+  .button {
+    margin: 2px 6px 2px 2px;
+    padding: 2px;
+    cursor: pointer;
+  }
+
+  .displaying-checkbox {
+    margin: 4px 6px 8px 2px;
+  }
 }
 
 .upload-button {
@@ -365,6 +403,10 @@ $deviceBorderWhite: border(#fff);
 
 .upload-file-input {
   display: none;
+}
+
+.lengths {
+  margin: 5px 10px 0;
 }
 
 .devices {
@@ -683,7 +725,7 @@ $deviceBorderWhite: border(#fff);
     bottom: 30px;
   }
   .rulers-wrapper {
-    order: 11;
+    order: -1;
     margin-top: 5px;
   }
 }

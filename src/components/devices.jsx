@@ -18,7 +18,7 @@ export default function Devices(props) {
   let count = 1;
 
   const devicesClasses = useMemo(
-    () => getClasses(`devices numeration ${borderColor}`, settings.display),
+    () => getClasses(`devices ${borderColor}`, settings.display),
     [settings.display, borderColor]
   );
 
