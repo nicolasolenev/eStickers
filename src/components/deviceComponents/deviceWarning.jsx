@@ -12,8 +12,6 @@ export default function DeviceWarning({ group, device, handler, index }) {
   const [text, setText] = useState(device.warning.text);
   const textareaRef = useRef();
 
-  // console.log(getDeviceTotalWidth(device));
-
   useEffect(() => {
     const currentHeight = textareaRef.current.clientHeight;
 
