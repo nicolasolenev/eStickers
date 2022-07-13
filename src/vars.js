@@ -54,7 +54,7 @@ export function createSingleDevice(theme) {
     },
     warning: {
       backgroundColor: '#E7E6E6',
-      textColor: 'ED7D31',
+      textColor: '000',
       text: '',
       isActive: false,
       height: '29px',

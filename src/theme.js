@@ -85,12 +85,12 @@ export const defaultColors = [
 
 export const defaultWarningColors = [
   ['#E7E6E6', '#000000'],
-  ['#E7E6E6', '#BE0711'],
   ['#E7E6E6', '#0070C1'],
   ['#E7E6E6', '#ED7D31'],
-  ['#BE0711', '#ffffff'],
-  ['#ED7D31', '#ffffff'],
+  ['#E7E6E6', '#BE0711'],
   ['#0070C1', '#ffffff'],
+  ['#ED7D31', '#ffffff'],
+  ['#BE0711', '#ffffff'],
 ];
 
 export default THEME;

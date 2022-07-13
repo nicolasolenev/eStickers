@@ -221,7 +221,7 @@ export default function ButtonsTop({ devicesRef }) {
             <div className="buttons-font-size-wrapper">
               <button
                 className=""
-                style={{ width: '17px', margin: '2px 10px 2px 0px' }}
+                style={{ width: '17px', margin: '2px 0px' }}
                 onClick={() => {
                   dispatch(setFontSize({ fontSize: settings.fontSize + 1 }));
                 }}
@@ -233,7 +233,7 @@ export default function ButtonsTop({ devicesRef }) {
 
               <button
                 className=""
-                style={{ width: '17px', margin: '2px 10px 2px 0px' }}
+                style={{ width: '17px', margin: '2px 0px' }}
                 onClick={() => {
                   if (settings.fontSize > 7)
                     dispatch(setFontSize({ fontSize: settings.fontSize - 1 }));
@@ -245,12 +245,12 @@ export default function ButtonsTop({ devicesRef }) {
           </div>
         </section>
 
-        <section className="buttons-section">
+        {/* <section className="buttons-section">
           <div className="buttons-title">Лист</div>
           <div className="buttons-container">
             <PaperFormat />
           </div>
-        </section>
+        </section> */}
 
         <section className="buttons-section">
           <div className="buttons-title">Печать</div>
@@ -265,8 +265,13 @@ export default function ButtonsTop({ devicesRef }) {
           </div>
         </section>
       </div>
+
       <Palette />
-      <Lengths />
+
+      <div className="paper-options">
+        <PaperFormat />
+        <Lengths />
+      </div>
     </>
   );
 }

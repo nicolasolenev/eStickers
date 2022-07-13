@@ -46,7 +46,7 @@ export default function Devices(props) {
         }}
         ref={devicesRef}
       >
-        {devices.groups.map((group) => {
+        {devices.groups.map((group, index) => {
           const moduleId = count;
 
           count =
@@ -58,6 +58,7 @@ export default function Devices(props) {
           return (
             <Group
               key={group.devices[0].id}
+              index={index}
               group={group}
               moduleId={moduleId}
             />

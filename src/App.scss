@@ -1,5 +1,5 @@
 @function border($color) {
-  @return 0.1mm solid $color;
+  @return 1px solid $color;
 }
 
 $deviceBorderBlack: border(#000);
@@ -10,6 +10,7 @@ $deviceBorderWhite: border(#fff);
     .device__group,
     .group-devices .device:first-child {
       border-left: $deviceBorderBlack;
+      border-right: $deviceBorderBlack;
     }
   }
   .group-devices {
@@ -17,11 +18,11 @@ $deviceBorderWhite: border(#fff);
   }
   .device__group {
     border-right: $deviceBorderBlack;
+    border-left: $deviceBorderBlack;
     border-top: $deviceBorderBlack;
   }
   .device {
     border: $deviceBorderBlack;
-    border-left: none;
     border-top: none;
   }
   .device__module:last-child {
@@ -31,7 +32,7 @@ $deviceBorderWhite: border(#fff);
     border-top: $deviceBorderBlack;
   }
   .device__warning {
-    // border: $deviceBorderBlack;
+    border: $deviceBorderBlack;
     border-bottom: none;
     &-hide {
       border: none;
@@ -83,11 +84,12 @@ $deviceBorderWhite: border(#fff);
   }
   .device__group {
     border-right: $deviceBorderWhite;
+    border-left: $deviceBorderWhite;
     border-top: $deviceBorderWhite;
   }
   .device {
     border: $deviceBorderWhite;
-    border-left: none;
+    // border-left: none;
     border-top: none;
   }
   .device__module:last-child {
@@ -163,11 +165,13 @@ $deviceBorderWhite: border(#fff);
 }
 
 .paper-format {
-  margin: 0 5px 0 0;
-  width: 150px;
+  margin: 0 15px 0 0;
+  // width: 150px;
+  display: flex;
+  align-items: center;
 
   &__field {
-    margin: 14px 0 5px 0;
+    margin: 0 15px 0 0;
   }
 
   &__button {
@@ -193,7 +197,7 @@ $deviceBorderWhite: border(#fff);
   margin-right: 10px;
   padding: 4px;
   background: #fbedcb;
-  border-bottom: 1px dashed gray;
+  // border-bottom: 1px dashed gray;
   &__value {
     padding: 0 3px;
   }
@@ -230,33 +234,53 @@ $deviceBorderWhite: border(#fff);
   border-left: none;
   margin-bottom: 10px;
   font-size: inherit;
+  margin-left: -1px;
+  &:first-child .rulers-wrapper {
+    margin-left: 0;
+  }
 }
 
 .warning-wrapper {
   display: flex;
   font-size: inherit;
+  // width: 100%;
+  // margin-left: -0.1mm;
 }
 
 .group-devices {
   display: flex;
   flex-wrap: nowrap;
   font-size: inherit;
+  // margin-left: -0.1mm;
+  // margin-left: -1px;
+  width: 100%;
+
+  .device:first-child {
+    margin-left: 0;
+  }
 }
 
 .rulers-wrapper {
   display: flex;
-  margin: 20px 0 4mm 0;
+  margin: 20px 0 4mm 0px;
+
+  .rulers:first-child {
+    .ruler {
+      margin-left: 0;
+    }
+  }
 }
 
 .buttons-top {
   // margin-bottom: 10px;
   display: flex;
   flex-wrap: wrap;
-  width: 400px;
+  width: 410px;
   margin: 12px 0 0 0;
 
   &-wrapper {
     margin: 10px 10px 0;
+    padding: 0 0 5px 0;
     display: flex;
     flex-wrap: nowrap;
   }
@@ -291,11 +315,11 @@ $deviceBorderWhite: border(#fff);
     flex-wrap: wrap;
     justify-content: center;
     width: 125px;
-    margin-right: 3px;
 
     .button {
       margin: 2px;
       padding: 3px;
+      cursor: pointer;
     }
 
     .project-name-input {
@@ -308,7 +332,7 @@ $deviceBorderWhite: border(#fff);
 
 .buttons-section {
   position: relative;
-  margin: 0 5px 0 0;
+  margin: 0 20px 0 0;
 
   &:after {
     content: '';
@@ -317,7 +341,7 @@ $deviceBorderWhite: border(#fff);
     height: 85px;
     background: rgba(128, 128, 128, 0.578);
     top: 10px;
-    right: 0;
+    right: -10px;
   }
 
   &:last-child {
@@ -331,7 +355,7 @@ $deviceBorderWhite: border(#fff);
 .buttons-title {
   text-align: center;
   text-decoration: underline;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   font-size: 9pt;
 }
 
@@ -343,7 +367,7 @@ $deviceBorderWhite: border(#fff);
 
 .displaying-checkboxes {
   // width: 220px;
-  margin: 6px;
+  margin: 0 0 0 10px;
   display: flex;
   // flex-wrap: wrap;
   flex-direction: column;
@@ -357,6 +381,7 @@ $deviceBorderWhite: border(#fff);
 
   &-input {
     margin-right: 2px;
+    cursor: pointer;
   }
 }
 
@@ -364,7 +389,7 @@ $deviceBorderWhite: border(#fff);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin: 12px 5px 0 0;
+  margin: 12px 0 0 0;
   width: 115px;
 
   .button {
@@ -379,10 +404,10 @@ $deviceBorderWhite: border(#fff);
   display: flex;
   flex-direction: column;
   margin-top: 14px;
-  width: 105px;
+  width: 115px;
 
   .button {
-    margin: 2px 6px 2px 2px;
+    margin: 2px;
     padding: 2px;
     cursor: pointer;
   }
@@ -407,7 +432,7 @@ $deviceBorderWhite: border(#fff);
 }
 
 .lengths {
-  margin: 5px 10px 0;
+  margin: 2px 10px 0 10px;
 }
 
 .devices {
@@ -448,9 +473,9 @@ $deviceBorderWhite: border(#fff);
   }
 
   &__ruler {
-    border-bottom: 0.1mm solid gray;
-    border-left: 0.1mm solid gray;
-    border-right: 0.1mm solid gray;
+    border-bottom: 1px solid gray;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
     text-align: center;
     position: absolute;
     bottom: 35px;
@@ -458,7 +483,7 @@ $deviceBorderWhite: border(#fff);
     color: gray;
     &-height {
       position: absolute;
-      border-bottom: 0.1mm solid gray;
+      border-bottom: 1px solid gray;
       bottom: 72px;
       left: 0;
       width: 20px;
@@ -472,7 +497,7 @@ $deviceBorderWhite: border(#fff);
   &__height-ruler {
     position: absolute;
     // height: 20mm;
-    border-bottom: 0.1mm solid gray;
+    border-bottom: 1px solid gray;
     bottom: 72px;
     left: 0;
     transform: rotate(-90deg);
@@ -499,6 +524,10 @@ $deviceBorderWhite: border(#fff);
   justify-content: flex-end;
   position: relative;
   font-size: inherit;
+  margin-left: -1px;
+  &:first-child {
+    // margin-left: 0;
+  }
 
   &__group,
   &__point,
@@ -519,6 +548,9 @@ $deviceBorderWhite: border(#fff);
     height: 25px;
     display: none;
     font-size: inherit;
+    // margin-left: -1px;
+    width: 100%;
+
     textarea {
       width: 100%;
       background-color: transparent;
@@ -618,11 +650,15 @@ $deviceBorderWhite: border(#fff);
     text-align: center;
     padding: 5px;
     font-weight: 700;
-    color: #eb8044;
+    color: #000;
     font-size: inherit;
     border-radius: 5px 5px 0 0;
     order: -2;
     position: relative;
+    margin-left: -1px;
+    &:first-child {
+      margin-left: 0;
+    }
     &:hover {
       .device__warning-btn {
         display: block;
@@ -662,9 +698,19 @@ $deviceBorderWhite: border(#fff);
   }
 }
 
+.group-wrapper:first-child {
+  .device__group,
+  .group-devices .device:first-child,
+  .group-devices,
+  .warning-wrapper,
+  .warning-wrapper .device__warning:first-child {
+    // margin-left: 0;
+  }
+}
+
 .point-circle {
   display: inline-block;
-  border: 0.1mm solid #000;
+  border: 1px solid #000;
   border-radius: 50%;
   width: 10px;
   height: 10px;
@@ -678,7 +724,7 @@ $deviceBorderWhite: border(#fff);
   align-items: flex-start;
 
   .group-wrapper {
-    margin-bottom: 9px;
+    margin-bottom: 2px;
   }
 
   .group-devices {
@@ -687,7 +733,7 @@ $deviceBorderWhite: border(#fff);
 
   .device {
     justify-content: flex-start;
-    margin: 0;
+    // margin: 0;
   }
   .device__group {
     order: 1;
@@ -728,6 +774,9 @@ $deviceBorderWhite: border(#fff);
   .rulers-wrapper {
     order: -1;
     margin-top: 5px;
+  }
+  .devices__add-btn {
+    margin-bottom: 0;
   }
 }
 
@@ -799,20 +848,23 @@ $deviceBorderWhite: border(#fff);
 .rulers {
   left: 0px;
   bottom: -22px;
-  width: 101%;
+  // width: 100%;
   display: flex;
+  // margin-left: -1px;
 }
 
 .ruler {
   position: relative;
   border: none;
-  border-bottom: 0.1mm solid gray;
+  border-bottom: 1px solid gray;
   text-align: center;
   color: gray;
+  // margin-left: -1px;
+  // width: 100%;
   &:before {
     content: '';
     position: absolute;
-    left: -0.1mm;
+    left: 0px;
     bottom: -6px;
     background: gray;
     width: 1px;
@@ -870,25 +922,16 @@ $deviceBorderWhite: border(#fff);
       display: flex;
       flex-direction: column;
       align-items: center;
-      &-btn {
-        padding: 3px 5px;
-        background: url(../public/img/onerog.png);
-        background-position: center;
-        background-size: cover;
-        width: 150px;
-        height: 84px;
-        border: transparent;
-        cursor: pointer;
-      }
     }
   }
 
   &__title {
-    margin: 0px 0px 2px 5px;
+    margin: 0px 0px 2px 0px;
   }
 
   &__radiobuttons {
     // margin: 0px 0px 0px 5px;
+    justify-content: center;
     display: flex;
   }
 
@@ -937,6 +980,7 @@ $deviceBorderWhite: border(#fff);
   &__colors {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     // margin: 10px 0;
 
     &-warnings {
@@ -950,7 +994,7 @@ $deviceBorderWhite: border(#fff);
     width: 20px;
     height: 20px;
     margin: 2px;
-    border: 0.1mm solid gray;
+    border: 1px solid gray;
     border-radius: 50%;
     -webkit-box-shadow: 0px 0px 7px 1px rgba(34, 60, 80, 0.15);
     -moz-box-shadow: 0px 0px 7px 1px rgba(34, 60, 80, 0.15);
@@ -959,8 +1003,11 @@ $deviceBorderWhite: border(#fff);
     overflow: hidden;
 
     &_warning {
-      height: 20px;
-      width: 9.5px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
     }
   }
 
@@ -971,22 +1018,15 @@ $deviceBorderWhite: border(#fff);
     display: flex;
     flex-wrap: wrap;
   }
-
-  &__border-colors {
-    // margin-top: 10px;
-    // display: flex;
-    // align-items: center;
-
-    &_colors {
-      margin: 0;
-      width: 50px;
-      justify-content: space-between;
-    }
-  }
 }
 
 .theme {
-  width: 152px;
+  width: 162px;
+}
+
+.paper-options {
+  display: flex;
+  margin: 5px 20px 0;
 }
 
 .selected {
@@ -1100,6 +1140,7 @@ input.modal__input {
   color: #000;
   position: relative;
   align-self: center;
+  margin-top: -7px;
 
   &:before {
     content: 'Подписи';

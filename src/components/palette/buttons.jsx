@@ -6,6 +6,8 @@ import { changeColor } from '../../store/devicesSlice';
 import { defaultColors, defaultWarningColors } from '../../theme';
 import Radiobuttons from './radiobuttons';
 
+const letterInWarningColor = ['T', 'i', 'W', 'A', 'i', 'W', 'A'];
+
 export default function Buttons({ setColor }) {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
@@ -59,14 +61,19 @@ export default function Buttons({ setColor }) {
             ></div>
           ))}
 
-          {selectedColors().map((color, id) => (
-            <div
-              key={id + color}
-              id={color}
-              className="palette__color"
-              style={{ background: `${color}` }}
-            ></div>
-          ))}
+          {selectedColors().map((color, id) => {
+            if (!defaultColors.includes(color)) {
+              return (
+                <div
+                  key={id + color}
+                  id={color}
+                  className="palette__color"
+                  style={{ background: `${color}` }}
+                ></div>
+              );
+            }
+            return null;
+          })}
         </div>
       </div>
 
@@ -96,22 +103,22 @@ export default function Buttons({ setColor }) {
             >
               <div
                 className="palette__color_warning"
-                style={{ background: `${item[0]}` }}
-              ></div>
-              <div
+                style={{ background: `${item[0]}`, color: `${item[1]}` }}
+              >
+                {letterInWarningColor[i]}
+              </div>
+              {/* <div
                 className="palette__color_warning"
                 style={{ background: `${item[1]}` }}
-              ></div>
+              ></div> */}
             </div>
           ))}
         </div>
       </div>
 
       <div className="palette__colors-wrapper">
-        <div className="palette__title palette__border-colors_title">
-          Цвет рамок:
-        </div>
-        <div className="palette__colors palette__border-colors_colors">
+        <div className="palette__title">Цвет рамок:</div>
+        <div className="palette__colors">
           <div
             className="palette__color"
             style={{ background: `#000` }}

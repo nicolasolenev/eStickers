@@ -27,7 +27,7 @@ export default function Ruler(props) {
     <div
       className="ruler"
       style={{
-        width: `${deviceWidth}mm`,
+        width: `calc(${deviceWidth}mm)`,
       }}
     >
       <input
