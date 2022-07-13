@@ -14,11 +14,8 @@ export default function Device({ device, groupId, moduleId, index }) {
   const devices = useSelector((state) => state.devices);
   const deviceWidth = useMemo(() => {
     const width = getDeviceTotalWidth(device);
-    // return index === 0 ? `calc(${width}mm)` : `calc(${width}mm + 1px)`;
     return `calc(${width}mm + 1px)`;
   }, [device]);
-
-  // console.log(deviceWidth);
 
   const deviceInputHandler = useCallback(
     function (e, key) {
@@ -42,9 +39,7 @@ export default function Device({ device, groupId, moduleId, index }) {
           : 'device'
       }
       style={{
-        // width: `calc(${deviceWidth}mm + 1px)`,
         width: `${deviceWidth}`,
-        // width: `${deviceWidth}mm`,
       }}
     >
       <DevicePoint device={device} groupId={groupId} dispatch={dispatch} />
