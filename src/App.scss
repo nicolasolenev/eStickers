@@ -176,6 +176,7 @@ $deviceBorderWhite: border(#fff);
   margin-right: 10px;
   padding: 4px;
   background: #fbedcb;
+  border: 1px gray dotted;
 
   &__value {
     padding: 0 3px;
@@ -500,7 +501,6 @@ $deviceBorderWhite: border(#fff);
   }
 
   &__switch {
-    // height: 25px;
     display: none;
     font-size: inherit;
     &-input {
