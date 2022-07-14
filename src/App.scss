@@ -281,6 +281,7 @@ $deviceBorderWhite: border(#fff);
 .buttons-container {
   display: flex;
   flex-wrap: nowrap;
+  position: relative;
 
   &-document {
     flex-wrap: wrap;
@@ -332,8 +333,39 @@ $deviceBorderWhite: border(#fff);
 
 .buttons-font-size-wrapper {
   display: flex;
-  flex-direction: column;
-  margin: 12px 0 0 0;
+  // margin: 12px 0 0 0;
+  position: absolute;
+  bottom: 3px;
+  right: 0;
+
+  .font-up,
+  .font-down {
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 1px solid gray;
+    border-radius: 3px;
+    width: 21px;
+    height: 21px;
+    cursor: pointer;
+
+    &:hover {
+      border-color: rgb(96, 96, 96);
+      background-color: #e0e0e0;
+    }
+  }
+
+  .font-up {
+    background-image: url(./images/font-buttons/font-up.svg);
+  }
+
+  .font-down {
+    background-image: url(./images/font-buttons/font-down.svg);
+  }
+
+  .font-number {
+    font-size: 9pt;
+    padding: 5px 5px 0;
+  }
 }
 
 .displaying-checkboxes {

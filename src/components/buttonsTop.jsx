@@ -207,27 +207,21 @@ export default function ButtonsTop({ devicesRef }) {
 
             <div className="buttons-font-size-wrapper">
               <button
-                className=""
-                style={{ width: '17px', margin: '2px 0px' }}
-                onClick={() => {
-                  dispatch(setFontSize({ fontSize: settings.fontSize + 1 }));
-                }}
-              >
-                +
-              </button>
-
-              <span>{settings.fontSize}pt</span>
-
-              <button
-                className=""
-                style={{ width: '17px', margin: '2px 0px' }}
+                className="font-down"
                 onClick={() => {
                   if (settings.fontSize > 7)
                     dispatch(setFontSize({ fontSize: settings.fontSize - 1 }));
                 }}
-              >
-                -
-              </button>
+              />
+
+              <span className="font-number">{settings.fontSize}pt</span>
+
+              <button
+                className="font-up"
+                onClick={() => {
+                  dispatch(setFontSize({ fontSize: settings.fontSize + 1 }));
+                }}
+              />
             </div>
           </div>
         </section>
