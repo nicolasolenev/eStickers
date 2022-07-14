@@ -591,8 +591,8 @@ $deviceBorderWhite: border(#fff);
       margin-left: 0;
     }
     &:hover {
-      .device__warning-btn {
-        display: block;
+      .device__warning-btn-wrapper {
+        opacity: 1;
       }
     }
 
