@@ -29,10 +29,10 @@ export const defaultColors = [
 export const defaultWarningColors = [
   ['#E7E6E6', '#000000'],
   ['#E7E6E6', '#0070C1'],
-  ['#E7E6E6', '#ED7D31'],
+  ['#E7E6E6', '#e85800'],
   ['#E7E6E6', '#BE0711'],
   ['#0070C1', '#ffffff'],
-  ['#ED7D31', '#ffffff'],
+  ['#e85800', '#ffffff'],
   ['#BE0711', '#ffffff'],
 ];
 
