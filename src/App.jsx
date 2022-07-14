@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Devices from './components/devices';
 import ButtonsTop from './components/buttonsTop';
+import Hint from './components/hint';
 import ModalSaveProject from './components/modalSaveProject';
 import IsNeedSaveModal from './components/isNeedSaveModal';
 import {
@@ -73,6 +74,8 @@ export default function App() {
       <div className="wrapper">
         <Devices devicesRef={devicesRef} />
       </div>
+
+      <Hint />
 
       {modal.type === 'saving' && <ModalSaveProject />}
       {modal.type === 'isNeedSave' && <IsNeedSaveModal />}

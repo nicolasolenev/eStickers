@@ -947,6 +947,64 @@ $deviceBorderWhite: border(#fff);
 //   }
 // }
 
+.hint {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 1;
+
+  &__button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    font-size: 14pt;
+    background: #b2d4982e;
+    padding: 4px;
+    color: #3a8b3bab;
+    cursor: pointer;
+  }
+
+  &__window {
+    position: fixed;
+    bottom: 20px;
+    right: -550px;
+    background: #f2ffe9;
+    color: #2b2d2bf2;
+    border-radius: 10px;
+    padding: 10px;
+    transition: ease-in-out 0.2s;
+
+    &-active {
+      right: 52px;
+    }
+
+    &-tail {
+      background: url(./images/tail.svg);
+      background-repeat: no-repeat;
+      background-size: cover;
+      position: absolute;
+      bottom: -4px;
+      right: -13px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &__title {
+    font-size: 10pt;
+    margin: 0 0 10px 15px;
+    font-weight: bold;
+  }
+
+  &__li {
+    font-size: 10pt;
+    list-style-type: circle;
+    padding: 3px 0;
+    margin-left: 13px;
+  }
+}
+
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
   color: #c6c6c6;

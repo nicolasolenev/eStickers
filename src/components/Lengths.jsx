@@ -14,11 +14,10 @@ export default function Lengths() {
       <div className="total-height">
         Длина аппаратов:
         <div className="total-height__block">
-          общая:
-          <span className="total-height__value">{devicesWidth} мм</span>
+          общая –<span className="total-height__value">{devicesWidth} мм</span>
         </div>
         <div className="total-height__block">
-          выделенных:
+          выделенных –
           <span className="total-height__value">{selectedDevicesWidth} мм</span>
         </div>
       </div>
@@ -26,7 +25,7 @@ export default function Lengths() {
       <div className="total-height">
         Высота:
         <div className="total-height__block">
-          полей:
+          полей –
           <span className="total-height__value">
             {settings.devicesHeight.fields < 2
               ? 0
@@ -35,13 +34,13 @@ export default function Lengths() {
           </span>
         </div>
         <div className="total-height__block">
-          примечаний:
+          примечаний –
           <span className="total-height__value">
             {settings.devicesHeight.warnings} мм
           </span>
         </div>
         <div className="total-height__block">
-          нумерация:
+          нумерация –
           <span className="total-height__value">
             {settings.devicesHeight.modules} мм
           </span>
