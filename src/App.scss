@@ -614,17 +614,24 @@ $deviceBorderWhite: border(#fff);
     }
 
     &-btn-wrapper {
-      display: flex;
       position: absolute;
-      top: -18px;
-      left: calc(50% - 30px);
-      padding: 0 0 3px 0;
+      top: -22px;
+      left: calc(50% - 10px);
+      opacity: 0;
+
+      &:hover {
+        opacity: 1;
+      }
     }
 
     &-btn {
-      width: 60px;
-      display: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: transparent;
       cursor: pointer;
+      font-size: 18px;
+      color: #7c7c7c;
     }
   }
 }
@@ -680,7 +687,7 @@ $deviceBorderWhite: border(#fff);
   }
   .device__warning-btn-wrapper {
     top: auto;
-    bottom: -20px;
+    bottom: -22px;
   }
   .rulers {
     bottom: -56px;
