@@ -211,7 +211,7 @@ $deviceBorderWhite: border(#fff);
   display: flex;
   flex-direction: column;
   border-left: none;
-  margin-bottom: 10px;
+  margin-bottom: 2px;
   font-size: inherit;
   margin-left: -1px;
 
@@ -238,7 +238,7 @@ $deviceBorderWhite: border(#fff);
 
 .rulers-wrapper {
   display: flex;
-  margin: 20px 0 4mm 0px;
+  margin: 10px 0;
 
   .rulers:first-child {
     .ruler {
@@ -406,7 +406,7 @@ $deviceBorderWhite: border(#fff);
   align-items: flex-end;
   position: relative;
   background: #fff;
-  padding: 10mm 5mm 20px 5mm;
+  padding: 10mm 5mm;
   margin: 7px 10px;
   &:hover {
     .rulers {
@@ -436,10 +436,11 @@ $deviceBorderWhite: border(#fff);
     content: '';
     position: absolute;
     right: -1px;
-    bottom: -6px;
+    top: -5px;
     background: gray;
     width: 1px;
     height: 10px;
+    z-index: 1;
   }
 }
 
@@ -644,7 +645,7 @@ $deviceBorderWhite: border(#fff);
   align-items: flex-start;
 
   .group-wrapper {
-    margin-bottom: 2px;
+    margin-bottom: 0px;
   }
 
   .group-devices {
@@ -675,7 +676,7 @@ $deviceBorderWhite: border(#fff);
   .warning-wrapper {
     order: 10;
     border-radius: 0 0 5px 5px;
-    margin-bottom: 6mm;
+    margin-bottom: 6px;
   }
   .device__warning-btn-wrapper {
     top: auto;
@@ -683,6 +684,9 @@ $deviceBorderWhite: border(#fff);
   }
   .rulers {
     bottom: -56px;
+  }
+  .ruler__input {
+    top: -17px;
   }
   .devices__add {
     margin-bottom: 35px;
@@ -698,7 +702,7 @@ $deviceBorderWhite: border(#fff);
     margin-bottom: 0;
   }
   .addDeviceBefore {
-    top: -60px;
+    top: -40px;
   }
 }
 
@@ -750,7 +754,7 @@ $deviceBorderWhite: border(#fff);
 .ruler {
   position: relative;
   border: none;
-  border-bottom: 1px solid gray;
+  border-top: 1px solid gray;
   text-align: center;
   color: gray;
 
@@ -758,10 +762,11 @@ $deviceBorderWhite: border(#fff);
     content: '';
     position: absolute;
     left: 0px;
-    bottom: -6px;
+    top: -5px;
     background: gray;
     width: 1px;
     height: 10px;
+    z-index: 1;
   }
 
   &__input {
@@ -769,11 +774,23 @@ $deviceBorderWhite: border(#fff);
     text-align: center;
     color: gray;
     width: 70%;
+    left: 0;
+    position: absolute;
+    padding-top: 1px;
+    margin: 1px 15%;
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
       -webkit-appearance: none;
       margin: 0;
     }
+  }
+
+  &__red-line {
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background: transparent;
+    top: -2px;
   }
 }
 
@@ -843,6 +860,7 @@ $deviceBorderWhite: border(#fff);
 
     &-default {
       width: 384px;
+      height: 50px;
       display: flex;
       justify-content: flex-start;
     }
@@ -883,12 +901,12 @@ $deviceBorderWhite: border(#fff);
   margin: 5px 20px 0;
 }
 
-.selected {
-  .device__id {
-    color: red;
-    font-weight: 700;
-  }
-}
+// .selected {
+//   .device__id {
+//     color: red;
+//     font-weight: 700;
+//   }
+// }
 
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
