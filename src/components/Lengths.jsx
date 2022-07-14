@@ -28,7 +28,10 @@ export default function Lengths() {
         <div className="total-height__block">
           полей:
           <span className="total-height__value">
-            {settings.devicesHeight.fields} мм
+            {settings.devicesHeight.fields < 2
+              ? 0
+              : settings.devicesHeight.fields}{' '}
+            мм
           </span>
         </div>
         <div className="total-height__block">
@@ -38,7 +41,7 @@ export default function Lengths() {
           </span>
         </div>
         <div className="total-height__block">
-          циферок:
+          нумерация:
           <span className="total-height__value">
             {settings.devicesHeight.modules} мм
           </span>

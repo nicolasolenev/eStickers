@@ -43,9 +43,9 @@ export default function DeviceMultilineInput({
           ? {
               background: `${device.backgroundColor}`,
               color: `${device.textColor}`,
-              height: `${getMaxInputHeight(devices.groups, type) + 17}px`,
+              height: `${getMaxInputHeight(devices.groups, type) + 10}px`,
             }
-          : { height: `${getMaxInputHeight(devices.groups, type) + 17}px` }
+          : { height: `${getMaxInputHeight(devices.groups, type) + 10}px` }
       }
     >
       <TextareaAutosize

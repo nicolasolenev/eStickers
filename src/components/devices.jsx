@@ -24,7 +24,10 @@ export default function Devices({ devicesRef }) {
   useEffect(() => {
     const heights = getHeights(devicesRef, DpMM);
 
-    if (settings.devicesHeight.fields !== heights.fields) {
+    if (
+      settings.devicesHeight.fields !== heights.fields ||
+      settings.devicesHeight.warnings !== heights.warnings
+    ) {
       dispatch(setDevicesHeight({ heights }));
     }
   });

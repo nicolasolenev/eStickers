@@ -470,7 +470,7 @@ $deviceBorderWhite: border(#fff);
   &__point,
   &__switch,
   &__description {
-    padding: 7px 3px;
+    padding: 4px 3px;
     text-align: center;
     width: 100%;
   }
@@ -500,7 +500,7 @@ $deviceBorderWhite: border(#fff);
   }
 
   &__switch {
-    height: 25px;
+    // height: 25px;
     display: none;
     font-size: inherit;
     &-input {
