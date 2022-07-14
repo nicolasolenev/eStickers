@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { updateSelected } from '../../store/devicesSlice';
 
-export default function ModuleId({ groupId, deviceId, id, moduleId }) {
+export default function ModuleId({ groupId, deviceId, id }) {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
 

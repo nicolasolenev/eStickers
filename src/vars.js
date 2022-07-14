@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 
 export const defaultSettingsState = {
   projectName: 'Стикеры',
-  devicesHeight: null,
+  devicesHeight: {},
   fontSize: 8,
   paperWidth: 297,
   usersTheme: {},

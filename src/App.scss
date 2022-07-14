@@ -180,6 +180,11 @@ $deviceBorderWhite: border(#fff);
   &__value {
     padding: 0 3px;
   }
+
+  &__block {
+    display: inline-block;
+    padding: 0 5px;
+  }
 }
 
 .print {
@@ -211,7 +216,7 @@ $deviceBorderWhite: border(#fff);
   display: flex;
   flex-direction: column;
   border-left: none;
-  margin-bottom: 2px;
+  margin-bottom: 40px;
   font-size: inherit;
   margin-left: -1px;
 
@@ -651,14 +656,9 @@ $deviceBorderWhite: border(#fff);
 .sequence {
   align-items: flex-start;
 
-  .group-wrapper {
-    margin-bottom: 0px;
-  }
-
   .group-devices {
     border-top: none;
   }
-
   .device {
     justify-content: flex-start;
   }
@@ -679,11 +679,10 @@ $deviceBorderWhite: border(#fff);
     border-radius: 0 0 5px 5px;
     border-top: none;
   }
-
   .warning-wrapper {
     order: 10;
     border-radius: 0 0 5px 5px;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
   .device__warning-btn-wrapper {
     top: auto;

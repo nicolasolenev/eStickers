@@ -3,16 +3,15 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Group from './group';
 import AddDeviceButton from './devicesComponents/addDeviceButton';
-import { getClasses, getDpMM } from '../functions';
+import { getClasses, getDpMM, getHeights } from '../functions';
 import { setDevicesHeight } from '../store/settingsSlice';
 
 const DpMM = getDpMM();
 
-export default function Devices(props) {
+export default function Devices({ devicesRef }) {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
   const devices = useSelector((state) => state.devices);
-  const { devicesRef } = props;
   const borderColor = settings.palette.borderColor;
 
   let count = 1;
@@ -23,16 +22,10 @@ export default function Devices(props) {
   );
 
   useEffect(() => {
-    const heightPixels = [...devicesRef.current.firstChild.children]
-      .slice(1, 3)
-      .map((el) => el.offsetHeight)
-      .reduce((sum, h) => sum + h, 0);
+    const heights = getHeights(devicesRef, DpMM);
 
-    const heightMm = heightPixels / DpMM.h;
-    const height = Math.round(heightMm * 10) / 10;
-
-    if (settings.devicesHeight !== height) {
-      dispatch(setDevicesHeight({ height }));
+    if (settings.devicesHeight.fields !== heights.fields) {
+      dispatch(setDevicesHeight({ heights }));
     }
   });
 

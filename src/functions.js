@@ -134,6 +134,35 @@ export function getDevicesWidth(groups) {
   return Math.round(width * 10) / 10;
 }
 
+export function getSelectedDevicesWidth(devices) {
+  const width = devices.selected
+    .map((item) => {
+      const device = findDevice(devices.groups, item.groupId, item.deviceId);
+      return device.modules.width;
+    })
+    .reduce((sum, width) => sum + Number(width), 0);
+
+  return Math.round(width * 10) / 10;
+}
+
+export function getHeights(ref, dpMM) {
+  const rows = [...ref.current.firstChild.children].slice(0, 3);
+  const [warning, group, device] = rows;
+  const module = device.firstChild.lastChild.firstChild.lastChild;
+
+  const heightsMm = [warning, group, device, module].map(
+    (row) => row.offsetHeight / dpMM.h
+  );
+
+  const heights = heightsMm.map((height) => Math.round(height * 10) / 10);
+
+  return {
+    warnings: Math.round(heights[0] * 10) / 10,
+    fields: Math.round((heights[1] + heights[2] - heights[3]) * 10) / 10,
+    modules: Math.round(heights[3] * 10) / 10,
+  };
+}
+
 export function getMaxInputHeight(groups, type) {
   let maxHeight = 12;
 
