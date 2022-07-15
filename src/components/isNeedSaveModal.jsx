@@ -27,7 +27,7 @@ export default function IsNeedSaveModal() {
 
   return (
     <Modal
-      title="Хотите сохранить текущий проект?"
+      title="Сохранить текущий проект?"
       onCancel={onCancel}
       onSubmit={onSubmit}
     />
