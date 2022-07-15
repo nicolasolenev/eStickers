@@ -8,19 +8,21 @@ import Ruler from './deviceComponents/ruler';
 import { getGroupWidth } from '../functions';
 import { updateDeviceText } from '../store/devicesSlice';
 
-export default function Group({ group, moduleId }) {
+export default function Group({ group, moduleId, index }) {
   const dispatch = useDispatch();
+  const groupIndex = index;
   let count = moduleId;
 
   return (
     <div
       className="group-wrapper"
-      style={{ width: `${getGroupWidth(group)}mm` }}
+      style={{ width: `calc(${getGroupWidth(group)}mm + 1px)` }}
     >
       <div className="warning-wrapper">
         {group.devices.map((device) => (
           <DeviceWarning
             key={device.id}
+            index={index}
             device={device}
             group={group}
             handler={(e) => {
@@ -65,8 +67,10 @@ export default function Group({ group, moduleId }) {
           count = count + device.modules.module.length;
           return (
             <Device
+              index={index}
               key={device.id}
               groupId={group.id}
+              groupIndex={groupIndex}
               moduleId={moduleId}
               device={device}
             />

@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { setModuleWidth } from '../../store/devicesSlice';
 
 export default function Ruler(props) {
   const dispatch = useDispatch();
   const { device, groupId } = props;
-  const deviceId = device.id;
+  const devices = useSelector((state) => state.devices);
   const [width, setWidth] = useState();
+  const deviceId = device.id;
   const deviceWidth = Number(device.modules.width).toFixed(1);
+  const selectedDevicesIds = devices.selected.map((item) => item.deviceId);
 
   function saveWidth(e) {
     const width = Number(e.target.value).toFixed(1);
@@ -27,7 +29,7 @@ export default function Ruler(props) {
     <div
       className="ruler"
       style={{
-        width: `${deviceWidth}mm`,
+        width: `calc(${deviceWidth}mm)`,
       }}
     >
       <input
@@ -58,6 +60,14 @@ export default function Ruler(props) {
           }
         }}
       />
+      <div
+        className="ruler__red-line"
+        style={{
+          background: `${
+            selectedDevicesIds.includes(deviceId) ? '#e30000' : 'transparent'
+          }`,
+        }}
+      ></div>
     </div>
   );
 }

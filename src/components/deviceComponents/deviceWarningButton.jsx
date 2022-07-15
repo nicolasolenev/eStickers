@@ -13,7 +13,7 @@ export default function DeviceWarningButton({
   return (
     <div className="device__warning-btn-wrapper">
       <button
-        className="device__hover-btns-btn device__warning-btn"
+        className="device__warning-btn"
         onClick={() => {
           if (device.warning.isActive) {
             setText('');
@@ -38,7 +38,7 @@ export default function DeviceWarningButton({
           dispatch(toggleWarning({ deviceId: device.id, groupId }));
         }}
       >
-        {device.warning.isActive ? 'x warn' : 'add warn'}
+        {device.warning.isActive ? '×' : '+'}
       </button>
     </div>
   );

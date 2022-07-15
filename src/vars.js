@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 
 export const defaultSettingsState = {
   projectName: 'Стикеры',
-  devicesHeight: null,
+  devicesHeight: {},
   fontSize: 8,
   paperWidth: 297,
   usersTheme: {},
@@ -54,7 +54,7 @@ export function createSingleDevice(theme) {
     },
     warning: {
       backgroundColor: '#E7E6E6',
-      textColor: 'ED7D31',
+      textColor: '000',
       text: '',
       isActive: false,
       height: '29px',
@@ -92,6 +92,6 @@ export const themes = [
   { value: '', label: 'Пользовательская' },
   { value: 'gray', label: 'Серая' },
   { value: 'random-gradient', label: 'Случайная градиентная' },
-  // { value: 'colored', label: 'Цветная' },
-  // { value: 'coloredWhiteText', label: 'Цветная, белый текст' },
+  { value: 'random-light', label: 'Случайная светлая' },
+  { value: 'random-dark', label: 'Случайная тёмная' },
 ];

@@ -6,7 +6,7 @@ import DeviceWarningButton from './deviceWarningButton';
 import { getDeviceTotalWidth, getMaxInputHeight } from '../../functions';
 import { setHeight } from '../../store/devicesSlice';
 
-export default function DeviceWarning({ group, device, handler }) {
+export default function DeviceWarning({ group, device, handler, index }) {
   const dispatch = useDispatch();
   const devices = useSelector((state) => state.devices);
   const [text, setText] = useState(device.warning.text);
@@ -36,10 +36,12 @@ export default function DeviceWarning({ group, device, handler }) {
       }
       style={{
         background: `${
-          device.warning.isActive ? device.warning.backgroundColor : '#fff'
+          device.warning.isActive
+            ? device.warning.backgroundColor
+            : 'transparent'
         }`,
         color: `${device.warning.textColor}`,
-        width: `${getDeviceTotalWidth(device)}mm`,
+        width: `calc(${getDeviceTotalWidth(device)}mm + 1px)`,
         height: `${getMaxInputHeight(devices.groups, 'warning') + 7}px`,
       }}
     >

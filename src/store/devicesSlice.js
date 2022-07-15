@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 
 import { findGroup, findDevice, getDevices } from '../functions';
-import { createGroup } from '../vars';
+import { createGroup, createSingleDevice } from '../vars';
 import storage from '../storage';
 import THEME from '../theme';
 
@@ -31,15 +31,15 @@ export const devicesSlice = createSlice({
       state.groups.push(createGroup(theme));
     },
 
-    addGroupAfterSelected: (state, action) => {
-      const { theme } = action.payload;
+    addDeviceBefore: (state, action) => {
+      const { theme, groupIndex, index } = action.payload;
+      const group = state.groups[groupIndex];
 
-      state.selected.forEach((item) => {
-        const index = state.groups.findIndex(
-          (group) => group.id === item.groupId
-        );
-        state.groups.splice(index + 1, 0, createGroup(theme));
-      });
+      if (index === 0) {
+        group.devices.unshift(createSingleDevice(theme));
+      } else {
+        group.devices.splice(index, 0, createSingleDevice(theme));
+      }
     },
 
     updateSelected: (state, action) => {
@@ -445,7 +445,7 @@ export const devicesSlice = createSlice({
 
 export const {
   addGroup,
-  addGroupAfterSelected,
+  addDeviceBefore,
   setGroups,
   updateSelected,
   deleteSelectedDevices,

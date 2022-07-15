@@ -3,36 +3,32 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Group from './group';
 import AddDeviceButton from './devicesComponents/addDeviceButton';
-import { getClasses, getDpMM } from '../functions';
+import { getClasses, getDpMM, getHeights } from '../functions';
 import { setDevicesHeight } from '../store/settingsSlice';
 
 const DpMM = getDpMM();
 
-export default function Devices(props) {
+export default function Devices({ devicesRef }) {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
   const devices = useSelector((state) => state.devices);
-  const { devicesRef } = props;
   const borderColor = settings.palette.borderColor;
 
   let count = 1;
 
   const devicesClasses = useMemo(
-    () => getClasses(`devices numeration ${borderColor}`, settings.display),
+    () => getClasses(`devices ${borderColor}`, settings.display),
     [settings.display, borderColor]
   );
 
   useEffect(() => {
-    const heightPixels = [...devicesRef.current.firstChild.children]
-      .slice(1, 3)
-      .map((el) => el.offsetHeight)
-      .reduce((sum, h) => sum + h, 0);
+    const heights = getHeights(devicesRef, DpMM);
 
-    const heightMm = heightPixels / DpMM.h;
-    const height = Math.round(heightMm * 10) / 10;
-
-    if (settings.devicesHeight !== height) {
-      dispatch(setDevicesHeight({ height }));
+    if (
+      settings.devicesHeight.fields !== heights.fields ||
+      settings.devicesHeight.warnings !== heights.warnings
+    ) {
+      dispatch(setDevicesHeight({ heights }));
     }
   });
 
@@ -46,7 +42,7 @@ export default function Devices(props) {
         }}
         ref={devicesRef}
       >
-        {devices.groups.map((group) => {
+        {devices.groups.map((group, index) => {
           const moduleId = count;
 
           count =
@@ -58,6 +54,7 @@ export default function Devices(props) {
           return (
             <Group
               key={group.devices[0].id}
+              index={index}
               group={group}
               moduleId={moduleId}
             />

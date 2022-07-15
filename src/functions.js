@@ -30,7 +30,7 @@ export function windowListenerHandler(
     combineGroups,
     splitGroups,
     toggleVisability,
-    addGroupAfterSelected,
+    addDeviceBefore,
   }
 ) {
   const deleteKeyCombination =
@@ -63,7 +63,7 @@ export function windowListenerHandler(
   ) {
     dispatch(splitDevices());
     dispatch(pushState({ groups: devices.groups, settings }));
-  } else if (e.code === 'KeyA' && e.ctrlKey && devices.selected.length) {
+  } else if (e.code === 'KeyA' && e.shiftKey && devices.selected.length) {
     dispatch(combineDevices());
     dispatch(pushState({ groups: devices.groups, settings }));
   } else if (
@@ -77,14 +77,14 @@ export function windowListenerHandler(
     if (!settings.display.groups) {
       dispatch(toggleVisability('groups'));
     }
-  } else if (e.code === 'KeyS' && e.ctrlKey && devices.selected.length) {
+  } else if (e.code === 'KeyS' && e.shiftKey && devices.selected.length) {
     dispatch(combineGroups());
     dispatch(pushState({ groups: devices.groups, settings }));
     if (!settings.display.groups) {
       dispatch(toggleVisability('groups'));
     }
   } else if (e.code === 'KeyN' && e.ctrlKey && devices.selected.length) {
-    dispatch(addGroupAfterSelected({ theme: settings.palette.theme }));
+    dispatch(addDeviceBefore({ theme: settings.palette.theme }));
     dispatch(pushState({ groups: devices.groups, settings }));
   }
 }
@@ -132,6 +132,35 @@ export function getDevicesWidth(groups) {
     .reduce((sum, width) => sum + Number(width), 0);
 
   return Math.round(width * 10) / 10;
+}
+
+export function getSelectedDevicesWidth(devices) {
+  const width = devices.selected
+    .map((item) => {
+      const device = findDevice(devices.groups, item.groupId, item.deviceId);
+      return device.modules.width;
+    })
+    .reduce((sum, width) => sum + Number(width), 0);
+
+  return Math.round(width * 10) / 10;
+}
+
+export function getHeights(ref, dpMM) {
+  const rows = [...ref.current.firstChild.children].slice(0, 3);
+  const [warning, group, device] = rows;
+  const module = device.firstChild.lastChild.firstChild.lastChild;
+
+  const heightsMm = [warning, group, device, module].map(
+    (row) => row.offsetHeight / dpMM.h
+  );
+
+  const heights = heightsMm.map((height) => Math.round(height * 10) / 10);
+
+  return {
+    warnings: Math.round(heights[0] * 10) / 10,
+    fields: Math.round((heights[1] + heights[2] - heights[3]) * 10) / 10,
+    modules: Math.round(heights[3] * 10) / 10,
+  };
 }
 
 export function getMaxInputHeight(groups, type) {

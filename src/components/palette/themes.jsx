@@ -15,6 +15,25 @@ import {
   applyRandomColors,
 } from '../../store/devicesSlice';
 
+const customStyles = {
+  menu: (provided, state) => ({
+    ...provided,
+    marginTop: '2px',
+  }),
+
+  indicatorsContainer: (provided, state) => ({
+    height: '25px',
+    overflow: 'hidden',
+    display: 'flex',
+    alignItems: 'center',
+  }),
+
+  control: (provided) => ({
+    ...provided,
+    minHeight: '25x',
+  }),
+};
+
 export default function Themes() {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
@@ -32,15 +51,29 @@ export default function Themes() {
       <div className="theme">
         Тема:
         <Select
+          styles={customStyles}
           value={defaultValue}
           options={themes}
           onChange={(theme) => {
             dispatch(setPaletteValue({ theme: theme.value }));
 
             if (settings.palette.theme === '' && theme.value !== '') {
-              if (theme.value === 'random-gradient') {
-                const colors = getRandomGradientColors(devices.groups.length);
-                dispatch(applyRandomColors({ colors }));
+              if (
+                ['random-gradient', 'random-light', 'random-dark'].includes(
+                  theme.value
+                )
+              ) {
+                const colors =
+                  theme.value === 'random-gradient'
+                    ? getRandomGradientColors(devices.groups.length)
+                    : generateCoupleColors(devices.groups.length);
+
+                dispatch(
+                  applyRandomColors({
+                    colors,
+                    inversion: theme.value === 'random-dark',
+                  })
+                );
                 dispatch(setPaletteValue({ theme: '' }));
               } else {
                 const usersTheme = getUsersTheme(devices.groups);
@@ -52,7 +85,11 @@ export default function Themes() {
                 dispatch(applyUsersTheme({ theme: settings.usersTheme }));
               }
             } else {
-              if (theme.value === 'random-gradient') {
+              if (
+                ['random-gradient', 'random-light', 'random-dark'].includes(
+                  theme.value
+                )
+              ) {
                 const colors = getRandomGradientColors(devices.groups.length);
                 dispatch(applyRandomColors({ colors }));
                 dispatch(setPaletteValue({ theme: '' }));
@@ -63,31 +100,6 @@ export default function Themes() {
           }}
           isSearchable={false}
         />
-      </div>
-      <div className="random-colors">
-        Случайные цвета для групп с несколькими аппаратами (светлый фон):
-        <button
-          className="random-colors-btn"
-          onClick={() => {
-            const colors = generateCoupleColors(devices.groups.length);
-
-            dispatch(applyRandomColors({ colors }));
-            dispatch(setPaletteValue({ theme: '' }));
-          }}
-        />
-        Случайные цвета для групп с несколькими аппаратами (темный фон):
-        <button
-          style={{ padding: '2px 10px', margin: '5px 0 0 0' }}
-          className="button"
-          onClick={() => {
-            const colors = generateCoupleColors(devices.groups.length);
-
-            dispatch(applyRandomColors({ colors, inversion: true }));
-            dispatch(setPaletteValue({ theme: '' }));
-          }}
-        >
-          Click
-        </button>
       </div>
     </div>
   );

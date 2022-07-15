@@ -45,8 +45,8 @@ export const settingsSlice = createSlice({
     },
 
     setDevicesHeight: (state, action) => {
-      const height = action.payload.height;
-      state.devicesHeight = height;
+      const heights = action.payload.heights;
+      state.devicesHeight = Object.assign({}, heights);
     },
   },
 });

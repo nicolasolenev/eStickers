@@ -13,7 +13,7 @@ export default function ProjectName() {
   }, [settings.projectName]);
 
   return (
-    <div>
+    <>
       Название документа:
       <input
         type="text"
@@ -24,6 +24,6 @@ export default function ProjectName() {
           dispatch(setProjectName(value));
         }}
       />
-    </div>
+    </>
   );
 }
