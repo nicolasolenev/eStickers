@@ -70,9 +70,9 @@ export default function ButtonsTop({ devicesRef }) {
           <ButtonCaption />
           <div className="displaying-checkboxes">
             <ButtonVisability fieldName="groups" text="Группы" />
-            <ButtonVisability fieldName="descriptions" text="Название" />
-            <ButtonVisability fieldName="modulesName" text="Полюса" />
-            <ButtonVisability fieldName="points" text="Норм. положение" />
+            <ButtonVisability fieldName="descriptions" text="Названия" />
+            <ButtonVisability fieldName="modulesName" text="Полюсы" />
+            <ButtonVisability fieldName="points" text="Норм. положения" />
             <ButtonVisability fieldName="switches" text="Обознач. на схеме" />
           </div>
         </div>
