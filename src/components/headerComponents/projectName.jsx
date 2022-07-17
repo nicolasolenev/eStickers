@@ -14,7 +14,7 @@ export default function ProjectName() {
 
   return (
     <>
-      Название документа:
+      Название проекта:
       <input
         type="text"
         className="project-name-input"

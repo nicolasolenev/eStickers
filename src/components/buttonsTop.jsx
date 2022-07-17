@@ -69,7 +69,7 @@ export default function ButtonsTop({ devicesRef }) {
     <>
       <div className="buttons-top-wrapper buttons-wrapper">
         <section className="buttons-section">
-          <div className="buttons-title">Документ</div>
+          <div className="buttons-title">Проект</div>
           <div className="buttons-container buttons-container-document">
             <ProjectName />
             <StartNewProject />
@@ -107,15 +107,15 @@ export default function ButtonsTop({ devicesRef }) {
         </section>
 
         <section className="buttons-section">
-          <div className="buttons-title">Отображение</div>
+          <div className="buttons-title">Показать</div>
           <div className="buttons-container">
             <ButtonCaption />
             <div className="displaying-checkboxes">
               <ButtonVisability fieldName="groups" text="Группы" />
-              <ButtonVisability fieldName="points" text="Норм. положение" />
+              <ButtonVisability fieldName="points" text="Норм. положения" />
               <ButtonVisability fieldName="switches" text="Обознач. на схеме" />
-              <ButtonVisability fieldName="descriptions" text="Название" />
-              <ButtonVisability fieldName="modulesName" text="Полюса" />
+              <ButtonVisability fieldName="descriptions" text="Названия" />
+              <ButtonVisability fieldName="modulesName" text="Полюсы" />
             </div>
           </div>
         </section>
@@ -230,10 +230,10 @@ export default function ButtonsTop({ devicesRef }) {
           <div className="buttons-title">Печать</div>
           <div className="buttons-container">
             <div className="buttons-print">
-              <ButtonVisability fieldName="numeration" text="Печать модулей" />
+              <ButtonVisability fieldName="numeration" text="Печатать номера модулей" />
 
               <button className="button" onClick={handlePrint}>
-                Печать
+                Печатать
               </button>
             </div>
           </div>

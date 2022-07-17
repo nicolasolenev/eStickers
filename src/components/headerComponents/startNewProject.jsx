@@ -15,7 +15,7 @@ export default function StartNewProject() {
         }}
         className="button"
       >
-        Начать новый проект
+        Новый проект
       </button>
     </>
   );

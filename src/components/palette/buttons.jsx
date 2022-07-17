@@ -77,7 +77,7 @@ export default function Buttons({ setColor }) {
       </div>
 
       <div className="palette__colors-wrapper">
-        <div className="palette__title">Примечания выделенных аппаратов:</div>
+        <div className="palette__title">Цвет примечаний для выделенных устройств</div>
         <div className="palette__colors palette__colors-warnings">
           {defaultWarningColors.map((item, i) => (
             <div
@@ -99,7 +99,7 @@ export default function Buttons({ setColor }) {
       </div>
 
       <div className="palette__colors-wrapper">
-        <div className="palette__title">Цвет рамок:</div>
+        <div className="palette__title">Цвет границ</div>
         <div className="palette__colors">
           <div
             className="palette__color"

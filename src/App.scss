@@ -261,7 +261,7 @@ $deviceBorderWhite: border(#fff);
 
   &-wrapper {
     margin: 10px 10px 0;
-    padding: 0 0 5px 0;
+    padding: 0 0 10px 0;
     display: flex;
     flex-wrap: nowrap;
   }
@@ -326,7 +326,7 @@ $deviceBorderWhite: border(#fff);
 
 .buttons-title {
   text-align: center;
-  text-decoration: underline;
+  font-weight: bold;
   margin-bottom: 5px;
   font-size: 9pt;
 }
@@ -837,6 +837,7 @@ $deviceBorderWhite: border(#fff);
   display: flex;
   border-top: 1px dashed rgba(128, 128, 128, 0.578);
   margin: 0 10px;
+  padding-top: 10px;
 
   &__settings {
     display: flex;
@@ -940,12 +941,12 @@ $deviceBorderWhite: border(#fff);
   margin: 5px 20px 0;
 }
 
-// .selected {
-//   .device__id {
+ .selected {
+   .device__id {
 //     color: red;
-//     font-weight: 700;
-//   }
-// }
+     font-weight: 700;
+   }
+ }
 
 .hint {
   position: fixed;

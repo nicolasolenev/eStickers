@@ -29,14 +29,14 @@ export default function Modal({ title, onCancel, onSubmit, children }) {
             className="modal__button modal__button_submit"
             onClick={onSubmit}
           >
-            Save
+            Сохранить
           </button>
 
           <button
             className="modal__button modal__button_cancel"
             onClick={onCancel}
           >
-            Cancel
+            Не сохранять
           </button>
         </div>
       </div>
