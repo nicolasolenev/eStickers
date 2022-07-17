@@ -40,7 +40,7 @@ export default function Lengths() {
           </span>
         </div>
         <div className="total-height__block">
-          нумерация –
+          модулей –
           <span className="total-height__value">
             {settings.devicesHeight.modules} мм
           </span>
