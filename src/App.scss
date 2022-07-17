@@ -941,12 +941,12 @@ $deviceBorderWhite: border(#fff);
   margin: 5px 20px 0;
 }
 
- .selected {
-   .device__id {
-//     color: red;
-     font-weight: 700;
-   }
- }
+.selected {
+  .device__id {
+    //     color: red;
+    font-weight: 700;
+  }
+}
 
 .hint {
   position: fixed;
@@ -969,7 +969,7 @@ $deviceBorderWhite: border(#fff);
   &__window {
     position: fixed;
     bottom: 20px;
-    right: -550px;
+    right: -100%;
     background: #f2ffe9;
     color: #2b2d2bf2;
     border-radius: 10px;
