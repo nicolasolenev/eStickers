@@ -1,6 +1,10 @@
-import style from './Home.module.scss';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+import localization from './localization';
+import Localization from './components/localization';
+import style from './Home.module.scss';
 import sample1 from './images/sample/sample1.webp';
 import sample2 from './images/sample/sample2.webp';
 import sample3 from './images/sample/sample3.webp';
@@ -10,6 +14,9 @@ import samplePhoto from './images/sample/samplePhoto1.webp';
 const samples = [sample1, sample2, sample3, sample4, samplePhoto];
 
 export default function Home() {
+  const settings = useSelector((state) => state.settings);
+  const lang = settings.localization;
+
   return (
     <div className={style.wrapper}>
       <header className={style.header}>
@@ -18,17 +25,14 @@ export default function Home() {
         </div>
       </header>
 
+      <Localization />
+
       <main className={style.main}>
         <div className={style.mainWrapper}>
-          <div className={style.mainText}>
-            {' '}
-            Приложение поможет Вам быстро и качественно создать наклейки-подписи
-            в электрические щиты
-          </div>
+          <div className={style.mainText}>{localization.home.title[lang]}</div>
 
           <div className={style.mainText}>
-            {' '}
-            Примеры созданных в Electrical Stickers наклеек:
+            {localization.home.example[lang]}:
           </div>
 
           <div className={style.samples}>
@@ -45,7 +49,7 @@ export default function Home() {
 
           <div className={style.linkWrapper}>
             <Link className={style.link} to="/constructor">
-              Перейти в конструктор
+              {localization.home.linkToConstructor[lang]}
             </Link>
           </div>
         </div>

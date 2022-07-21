@@ -7,6 +7,7 @@ export const defaultSettingsState = {
   devicesHeight: {},
   fontSize: 8,
   paperWidth: 297,
+  localization: 'ru',
   usersTheme: {},
   display: {
     sequence: false,

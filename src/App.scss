@@ -1113,7 +1113,7 @@ input.modal__input {
   margin-top: -7px;
 
   &:before {
-    content: 'Подписи';
+    content: '';
     position: absolute;
     bottom: 3px;
     right: 0;
@@ -1123,6 +1123,14 @@ input.modal__input {
     justify-content: center;
     z-index: 3;
     pointer-events: none;
+  }
+
+  &-ru:before {
+    content: 'Подписи';
+  }
+
+  &-en:before {
+    content: 'Signatures';
   }
 
   &-checkbox {

@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { setProjectName } from '../../store/settingsSlice';
+import localization from '../../localization';
 
 export default function ProjectName() {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
+  const lang = settings.localization;
   const [value, setValue] = useState(settings.projectName);
 
   useEffect(() => {
@@ -14,7 +16,7 @@ export default function ProjectName() {
 
   return (
     <>
-      Название проекта:
+      {localization.controls.project.inputLabel[lang]}:
       <input
         type="text"
         className="project-name-input"
