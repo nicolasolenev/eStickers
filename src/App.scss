@@ -145,7 +145,7 @@ $deviceBorderWhite: border(#fff);
 }
 
 .paper-format {
-  margin: 0 15px 0 0;
+  margin: 0 10px 0 0;
   display: flex;
   align-items: center;
 
@@ -253,18 +253,18 @@ $deviceBorderWhite: border(#fff);
   }
 }
 
+.controls {
+  margin: 10px 10px 0;
+  padding: 0 0 10px 0;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
 .buttons-top {
   display: flex;
   flex-wrap: wrap;
   width: 410px;
   margin: 12px 0 0 0;
-
-  &-wrapper {
-    margin: 10px 10px 0;
-    padding: 0 0 10px 0;
-    display: flex;
-    flex-wrap: nowrap;
-  }
 
   .button {
     padding: 3px;
@@ -291,13 +291,14 @@ $deviceBorderWhite: border(#fff);
     .button {
       margin: 2px;
       padding: 3px;
+      width: 100%;
       cursor: pointer;
     }
 
     .project-name-input {
       padding: 2px;
       margin: 2px;
-      width: 115px;
+      width: 100%;
     }
   }
 }
@@ -405,11 +406,12 @@ $deviceBorderWhite: border(#fff);
   display: flex;
   flex-direction: column;
   margin-top: 14px;
-  width: 115px;
+  width: 160px;
 
   .button {
     margin: 2px;
     padding: 2px;
+    width: 50%;
     cursor: pointer;
   }
 
@@ -429,7 +431,13 @@ $deviceBorderWhite: border(#fff);
 }
 
 .upload-file-input {
-  display: none;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  line-height: 0;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
 }
 
 .lengths {
@@ -583,9 +591,8 @@ $deviceBorderWhite: border(#fff);
   &__id {
     width: 100%;
     padding: 3px;
-    color: gray;
-    font-size: 8pt;
-    display: none;
+    color: inherit;
+    font-size: inherit;
     cursor: pointer;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -742,13 +749,6 @@ $deviceBorderWhite: border(#fff);
   .addDeviceBefore {
     top: -40px;
     bottom: auto;
-  }
-}
-
-.numeration {
-  .device__id {
-    display: block;
-    color: inherit;
   }
 }
 

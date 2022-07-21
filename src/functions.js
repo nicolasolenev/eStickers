@@ -325,3 +325,11 @@ export function getDpMM() {
 
   return { h: r.width, v: r.height };
 }
+
+export function getPageStyle(pageWidth) {
+  return `
+    @page {
+    size: auto ${pageWidth}mm;
+    }
+    `;
+}

@@ -3,10 +3,13 @@ import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Devices from './components/devices';
-import ButtonsTop from './components/buttonsTop';
+import Palette from './components/palette/palette';
+import PaperFormat from './components/paperFormat';
+import Lengths from './components/Lengths';
+import Controls from './components/controls';
 import Hint from './components/hint';
-import ModalSaveProject from './components/modalSaveProject';
-import IsNeedSaveModal from './components/isNeedSaveModal';
+import ModalSaveProject from './components/modal/modalSaveProject';
+import IsNeedSaveModal from './components/modal/isNeedSaveModal';
 import {
   deleteSelectedDevices,
   setGroups,
@@ -69,7 +72,13 @@ export default function App() {
 
   return (
     <>
-      <ButtonsTop devicesRef={devicesRef} />
+      <Controls devicesRef={devicesRef} />
+      <Palette />
+
+      <div className="paper-options">
+        <PaperFormat />
+        <Lengths />
+      </div>
 
       <div className="wrapper">
         <Devices devicesRef={devicesRef} />

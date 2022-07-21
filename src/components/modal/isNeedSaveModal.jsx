@@ -2,10 +2,10 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import Modal from './modal';
-import { setModal } from '../store/modalSlice';
-import { setGroups } from '../store/devicesSlice';
-import { setSettings } from '../store/settingsSlice';
-import { defaultSettingsState } from '../vars';
+import { setModal } from '../../store/modalSlice';
+import { setGroups } from '../../store/devicesSlice';
+import { setSettings } from '../../store/settingsSlice';
+import { defaultSettingsState } from '../../vars';
 
 export default function IsNeedSaveModal() {
   const dispatch = useDispatch();

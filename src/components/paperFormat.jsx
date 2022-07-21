@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setPaperWidth } from '../../store/settingsSlice';
+import { setPaperWidth } from '../store/settingsSlice';
 import { PaperFormatButotns } from './paperFormatButtons';
 
 export default function PaperFormat() {

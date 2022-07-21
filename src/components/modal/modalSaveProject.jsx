@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { saveProjectToFile } from '../fs';
-import { setModal } from '../store/modalSlice';
-import { setGroups } from '../store/devicesSlice';
-import { setSettings, setProjectName } from '../store/settingsSlice';
-import { defaultSettingsState } from '../vars';
+import { saveProjectToFile } from '../../fs';
+import { setModal } from '../../store/modalSlice';
+import { setGroups } from '../../store/devicesSlice';
+import { setSettings, setProjectName } from '../../store/settingsSlice';
+import { defaultSettingsState } from '../../vars';
 
 import Modal from './modal';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setModal } from '../store/modalSlice';
+import { setModal } from '../../store/modalSlice';
 
 const modalRoot = document.getElementById('modalRoot');
 

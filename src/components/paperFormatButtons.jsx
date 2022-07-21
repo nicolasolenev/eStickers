@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { setPaperWidth } from '../../store/settingsSlice';
+import { setPaperWidth } from '../store/settingsSlice';
 
 export function PaperFormatButotns({ setWidth }) {
   const dispatch = useDispatch();
