@@ -835,6 +835,7 @@ $deviceBorderWhite: border(#fff);
 
 .palette {
   display: flex;
+  align-items: flex-start;
   border-top: 1px dashed rgba(128, 128, 128, 0.578);
   margin: 0 10px;
   padding-top: 10px;
@@ -850,6 +851,10 @@ $deviceBorderWhite: border(#fff);
       justify-content: space-between;
       height: 53px;
       margin-right: 10px;
+      z-index: 2;
+      position: fixed;
+      top: 0;
+      right: 0;
     }
 
     .random-colors {
@@ -930,6 +935,12 @@ $deviceBorderWhite: border(#fff);
       font-weight: 700;
     }
   }
+
+  &__colorpicker-button {
+    margin: 20px 10px 0;
+    padding: 2px;
+    cursor: pointer;
+  }
 }
 
 .theme {
@@ -970,6 +981,7 @@ $deviceBorderWhite: border(#fff);
     position: fixed;
     bottom: 20px;
     right: -100%;
+    max-width: 600px;
     background: #f2ffe9;
     color: #2b2d2bf2;
     border-radius: 10px;
