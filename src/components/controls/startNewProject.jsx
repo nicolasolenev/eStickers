@@ -1,13 +1,10 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { setModal } from '../../store/modalSlice';
-import localization from '../../localization';
 
 export default function StartNewProject() {
   const dispatch = useDispatch();
-  const settings = useSelector((state) => state.settings);
-  const lang = settings.localization;
 
   return (
     <>
@@ -18,7 +15,7 @@ export default function StartNewProject() {
         }}
         className="button"
       >
-        {localization.controls.project.button[lang]}
+        Новый проект
       </button>
     </>
   );

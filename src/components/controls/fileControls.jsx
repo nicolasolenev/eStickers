@@ -1,18 +1,15 @@
-import React, { useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 
 import ControlLayout from './controlLayout';
 import { setModal } from '../../store/modalSlice';
 import { readProject } from '../../fs';
 import { setGroups } from '../../store/devicesSlice';
 import { setSettings } from '../../store/settingsSlice';
-import localization from '../../localization';
 
 export default function FileControls() {
   const dispatch = useDispatch();
   const uploadRef = useRef();
-  const settings = useSelector((state) => state.settings);
-  const lang = settings.localization;
 
   const onClickSave = () => {
     dispatch(setModal({ type: 'saving' }));
@@ -27,14 +24,14 @@ export default function FileControls() {
   };
 
   return (
-    <ControlLayout name={localization.controls.file.title[lang]}>
+    <ControlLayout name="Файл">
       <div className="buttons-file">
         <button className="button" onClick={onClickSave}>
-          {localization.controls.file.buttonSave[lang]}
+          Сохранить в файл
         </button>
 
         <button className="button" onClick={onClickUpload}>
-          {localization.controls.file.buttonLoad[lang]}
+          Загрузить из файла
         </button>
 
         <input

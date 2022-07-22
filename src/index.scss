@@ -13,14 +13,3 @@ body {
     overflow: hidden;
   }
 }
-
-.localization {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-
-  &__button {
-    padding: 2px 3px;
-    cursor: pointer;
-  }
-}

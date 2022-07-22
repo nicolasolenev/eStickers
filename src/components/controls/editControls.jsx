@@ -17,12 +17,10 @@ import {
 import { pushState, popState } from '../../store/historySlice';
 import { combineGroups, splitGroups } from '../../store/devicesSlice';
 import { deleteSelectedDevices } from '../../store/devicesSlice';
-import localization from '../../localization';
 
 export default function EditControls() {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
-  const lang = settings.localization;
   const devices = useSelector((state) => state.devices);
   const history = useSelector((state) => state.history);
   const isDisabled = devices.selected.length === 0;
@@ -46,17 +44,17 @@ export default function EditControls() {
   };
 
   return (
-    <ControlLayout name={localization.controls.edit.title[lang]}>
+    <ControlLayout name="Редактировать">
       <div className="buttons-top">
         <Button
-          value={localization.controls.edit.button.cancel[lang]}
+          value="Отменить"
           tip="Ctrl + Z"
           isDisabled={history.length === 0}
           onClickHandler={onCancelClickHandler}
         />
 
         <Button
-          value={localization.controls.edit.button.combine[lang]}
+          value="Объединить"
           tip="Shift + A"
           isDisabled={isDisabled}
           onClickHandler={() =>
@@ -68,7 +66,7 @@ export default function EditControls() {
         />
 
         <Button
-          value={localization.controls.edit.button.split[lang]}
+          value="Разделить"
           tip="Ctrl + Shift + A"
           isDisabled={isDisabled}
           onClickHandler={() =>
@@ -80,7 +78,7 @@ export default function EditControls() {
         />
 
         <Button
-          value={localization.controls.edit.button.group[lang]}
+          value="Сгруппировать"
           tip="Shift + S"
           isDisabled={isDisabled}
           onClickHandler={() =>
@@ -95,7 +93,7 @@ export default function EditControls() {
         />
 
         <Button
-          value={localization.controls.edit.button.ungroup[lang]}
+          value="Разгруппировать"
           tip="Ctrl + Shift + S"
           isDisabled={isDisabled}
           onClickHandler={() =>
@@ -107,7 +105,7 @@ export default function EditControls() {
         />
 
         <Button
-          value={localization.controls.edit.button.delete[lang]}
+          value="Удалить"
           tip="Shift + Delete"
           isDisabled={isDisabled}
           onClickHandler={() =>
@@ -119,7 +117,7 @@ export default function EditControls() {
         />
 
         <Button
-          value={localization.controls.edit.button.unselect[lang]}
+          value="Отменить выделение"
           tip="Escape"
           isDisabled={isDisabled}
           onClickHandler={() => onClickHandler([clearSelected()])}

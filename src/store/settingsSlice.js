@@ -48,10 +48,6 @@ export const settingsSlice = createSlice({
       const heights = action.payload.heights;
       state.devicesHeight = Object.assign({}, heights);
     },
-
-    setLocalization: (state) => {
-      state.localization = state.localization === 'ru' ? 'en' : 'ru';
-    },
   },
 });
 
@@ -64,7 +60,6 @@ export const {
   setUsersTheme,
   setDevicesHeight,
   setFontSize,
-  setLocalization,
 } = settingsSlice.actions;
 
 export default settingsSlice.reducer;

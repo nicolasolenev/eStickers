@@ -5,11 +5,9 @@ import { useReactToPrint } from 'react-to-print';
 import ControlLayout from './controlLayout';
 import ButtonVisability from './buttonVisability';
 import { getPageStyle } from '../../functions';
-import localization from '../../localization';
 
 export default function PrintControls({ devicesRef }) {
   const settings = useSelector((state) => state.settings);
-  const lang = settings.localization;
 
   const handlePrint = useReactToPrint({
     content: () => devicesRef.current,
@@ -17,15 +15,15 @@ export default function PrintControls({ devicesRef }) {
   });
 
   return (
-    <ControlLayout name={localization.controls.print.title[lang]}>
+    <ControlLayout name="Печать">
       <div className="buttons-print">
         <ButtonVisability
           fieldName="numeration"
-          text={localization.controls.print.checkbox[lang]}
+          text="Печатать номера модулей"
         />
 
         <button className="button" onClick={handlePrint}>
-          {localization.controls.print.title[lang]}
+          Печатать
         </button>
       </div>
     </ControlLayout>
