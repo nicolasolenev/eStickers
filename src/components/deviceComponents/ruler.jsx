@@ -35,6 +35,7 @@ export default function Ruler(props) {
       <input
         className="ruler__input"
         type="number"
+        inputMode="decimal"
         placeholder={10}
         step={0.1}
         value={width ?? deviceWidth}

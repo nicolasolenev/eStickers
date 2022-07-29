@@ -839,6 +839,8 @@ $deviceBorderWhite: border(#fff);
   border-top: 1px dashed rgba(128, 128, 128, 0.578);
   margin: 0 10px;
   padding-top: 10px;
+  max-width: 1070px;
+  position: relative;
 
   &__settings {
     display: flex;
@@ -852,9 +854,9 @@ $deviceBorderWhite: border(#fff);
       height: 53px;
       margin-right: 10px;
       z-index: 2;
-      position: fixed;
-      top: 0;
-      right: 0;
+      position: absolute;
+      top: -120px;
+      right: 5px;
     }
 
     .random-colors {
