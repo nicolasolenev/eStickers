@@ -77,7 +77,7 @@ export default function App() {
 
       <div className="paper-options">
         <PaperFormat />
-        <Lengths />
+        {/* <Lengths /> */}
       </div>
 
       <div className="wrapper">

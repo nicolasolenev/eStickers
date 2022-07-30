@@ -6,7 +6,7 @@ import DeviceWarningButton from './deviceWarningButton';
 import { getDeviceTotalWidth, getMaxInputHeight } from '../../functions';
 import { setHeight } from '../../store/devicesSlice';
 
-export default function DeviceWarning({ group, device, handler, index }) {
+export default function DeviceWarning({ group, device, handler, dinId }) {
   const dispatch = useDispatch();
   const devices = useSelector((state) => state.devices);
   const [text, setText] = useState(device.warning.text);
@@ -22,6 +22,7 @@ export default function DeviceWarning({ group, device, handler, index }) {
           deviceId: device.id,
           groupId: group.id,
           type: 'warning',
+          dinId,
         })
       );
     }
@@ -42,7 +43,7 @@ export default function DeviceWarning({ group, device, handler, index }) {
         }`,
         color: `${device.warning.textColor}`,
         width: `calc(${getDeviceTotalWidth(device)}mm + 1px)`,
-        height: `${getMaxInputHeight(devices.groups, 'warning') + 7}px`,
+        height: `${getMaxInputHeight(devices.groups[dinId], 'warning') + 7}px`,
       }}
     >
       <DeviceWarningButton
@@ -50,6 +51,7 @@ export default function DeviceWarning({ group, device, handler, index }) {
         groupId={group.id}
         setText={setText}
         setHeight={setHeight}
+        dinId={dinId}
       />
 
       <TextareaAutosize
@@ -71,6 +73,7 @@ export default function DeviceWarning({ group, device, handler, index }) {
                 deviceId: device.id,
                 groupId: group.id,
                 type: 'warning',
+                dinId,
               })
             );
           }

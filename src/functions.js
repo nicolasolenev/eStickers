@@ -137,7 +137,7 @@ export function getDevicesWidth(groups) {
 export function getSelectedDevicesWidth(devices) {
   const width = devices.selected
     .map((item) => {
-      const device = findDevice(devices.groups, item.groupId, item.deviceId);
+      const device = findDevice(devices.groups[0], item.groupId, item.deviceId);
       return device.modules.width;
     })
     .reduce((sum, width) => sum + Number(width), 0);
@@ -146,7 +146,7 @@ export function getSelectedDevicesWidth(devices) {
 }
 
 export function getHeights(ref, dpMM) {
-  const rows = [...ref.current.firstChild.children].slice(0, 3);
+  const rows = [...ref.current.firstChild.firstChild.children].slice(0, 3);
   const [warning, group, device] = rows;
   const module = device.firstChild.lastChild.firstChild.lastChild;
 

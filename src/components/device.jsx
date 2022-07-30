@@ -15,6 +15,7 @@ export default function Device({
   moduleId,
   index,
   groupIndex,
+  dinId,
 }) {
   const dispatch = useDispatch();
   const deviceId = device.id;
@@ -33,6 +34,7 @@ export default function Device({
           groupId,
           text: e.target.value,
           key,
+          dinId,
         })
       );
     },
@@ -67,7 +69,12 @@ export default function Device({
           +
         </button>
       </div>
-      <DevicePoint device={device} groupId={groupId} dispatch={dispatch} />
+      <DevicePoint
+        device={device}
+        groupId={groupId}
+        dispatch={dispatch}
+        dinId={dinId}
+      />
 
       <DeviceField
         name="switch"
@@ -82,6 +89,7 @@ export default function Device({
         groupId={groupId}
         handler={deviceInputHandler}
         placeholder="Название"
+        dinId={dinId}
       />
 
       <Modules
@@ -89,6 +97,7 @@ export default function Device({
         groupId={groupId}
         deviceId={device.id}
         moduleId={moduleId}
+        dinId={dinId}
       />
     </div>
   );

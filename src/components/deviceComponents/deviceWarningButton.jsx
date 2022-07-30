@@ -7,6 +7,7 @@ export default function DeviceWarningButton({
   groupId,
   setText,
   setHeight,
+  dinId,
 }) {
   const dispatch = useDispatch();
 
@@ -23,6 +24,7 @@ export default function DeviceWarningButton({
                 deviceId: device.id,
                 groupId,
                 type: 'warning',
+                dinId,
               })
             );
 
@@ -32,10 +34,11 @@ export default function DeviceWarningButton({
                 groupId,
                 text: '',
                 key: 'warning',
+                dinId,
               })
             );
           }
-          dispatch(toggleWarning({ deviceId: device.id, groupId }));
+          dispatch(toggleWarning({ deviceId: device.id, groupId, dinId }));
         }}
       >
         {device.warning.isActive ? '×' : '+'}

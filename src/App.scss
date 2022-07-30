@@ -449,11 +449,14 @@ $deviceBorderWhite: border(#fff);
   flex-shrink: 0;
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
+  // align-items: flex-end;
+  flex-direction: column;
   position: relative;
   background: #fff;
   padding: 10mm 5mm;
   margin: 7px 10px;
+  align-items: flex-start;
+
   &:hover {
     .rulers {
       display: flex;
@@ -461,6 +464,11 @@ $deviceBorderWhite: border(#fff);
     .devices__add {
       display: flex;
     }
+  }
+
+  &__din {
+    display: flex;
+    flex-wrap: wrap;
   }
 
   &__add {
@@ -690,6 +698,10 @@ $deviceBorderWhite: border(#fff);
   &_active {
     background-color: #000;
   }
+}
+
+.add_din_btn {
+  padding: 3px 5px;
 }
 
 .sequence {

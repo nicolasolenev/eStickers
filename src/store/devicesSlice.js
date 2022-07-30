@@ -11,7 +11,10 @@ const loadedGroups = storage.get()?.devices;
 const isLoadedStateNotEmpty = loadedGroups?.length;
 
 const initialState = {
-  groups: isLoadedStateNotEmpty ? loadedGroups : [createGroup()],
+  // groups: isLoadedStateNotEmpty
+  //   ? loadedGroups
+  //   : [[createGroup()], [createGroup()], [createGroup()]],
+  groups: [[createGroup()]],
   selected: [],
 };
 
@@ -27,13 +30,13 @@ export const devicesSlice = createSlice({
     },
 
     addGroup: (state, action) => {
-      const { theme } = action.payload;
-      state.groups.push(createGroup(theme));
+      const { theme, dinId } = action.payload;
+      state.groups[dinId].push(createGroup(theme));
     },
 
     addDeviceBefore: (state, action) => {
-      const { theme, groupIndex, index } = action.payload;
-      const group = state.groups[groupIndex];
+      const { theme, groupIndex, index, dinId } = action.payload;
+      const group = state.groups[dinId][groupIndex];
 
       if (index === 0) {
         group.devices.unshift(createSingleDevice(theme));
@@ -43,12 +46,12 @@ export const devicesSlice = createSlice({
     },
 
     updateSelected: (state, action) => {
-      const { groupId, deviceId, shift } = action.payload;
+      const { groupId, deviceId, dinId, shift } = action.payload;
       const isSelectedNotEmpty = state.selected.length;
 
       if (shift && isSelectedNotEmpty) {
         const deviceAndGroupIds = [].concat(
-          ...state.groups.map((group) => {
+          ...state.groups[dinId].map((group) => {
             const groupId = group.id;
             const backgroundColor = group.backgroundColor;
             const textColor = group.textColor;
@@ -59,6 +62,7 @@ export const devicesSlice = createSlice({
                 deviceId: device.id,
                 backgroundColor,
                 textColor,
+                dinId,
               };
             });
           })
@@ -97,7 +101,7 @@ export const devicesSlice = createSlice({
             (item) => item.deviceId !== deviceId
           );
         } else {
-          const group = findGroup(state.groups, groupId);
+          const group = findGroup(state.groups[dinId], groupId);
 
           const backgroundColor = group.backgroundColor;
           const textColor = group.textColor;
@@ -105,6 +109,7 @@ export const devicesSlice = createSlice({
           state.selected.push({
             deviceId,
             groupId,
+            dinId,
             backgroundColor,
             textColor,
           });
@@ -114,58 +119,67 @@ export const devicesSlice = createSlice({
 
     deleteSelectedDevices: (state) => {
       state.selected.forEach((item) => {
-        state.groups = state.groups.map((group) => {
-          if (group.id === item.groupId) {
-            return Object.assign({}, group, {
-              devices: group.devices.filter(
-                (device) => device.id !== item.deviceId
-              ),
-            });
-          }
-          return group;
-        });
+        state.groups.forEach((groups, id) => {
+          state.groups[id] = state.groups[id].map((group) => {
+            if (group.id === item.groupId) {
+              return Object.assign({}, group, {
+                devices: group.devices.filter(
+                  (device) => device.id !== item.deviceId
+                ),
+              });
+            }
+            return group;
+          });
 
-        state.groups = state.groups.filter((group) => group.devices.length > 0);
+          state.groups[id] = state.groups[id].filter(
+            (group) => group.devices.length > 0
+          );
+        });
       });
 
       state.selected = [];
     },
 
     combineGroups: (state) => {
-      const combinedGroupIndex = state.groups
+      const combinedGroupDinId = state.selected[0].dinId;
+
+      const combinedGroupIndex = state.groups[combinedGroupDinId]
         .map((group) => group.id)
         .indexOf(state.selected[0].groupId);
 
-      const devices = getDevices(state.groups);
+      const devices = getDevices(state.groups[combinedGroupDinId]);
 
       state.selected.slice(1).forEach((item) => {
         if (
-          !state.groups[combinedGroupIndex].devices
+          !state.groups[combinedGroupDinId][combinedGroupIndex].devices
             .map((device) => device.id)
             .includes(item.deviceId)
         ) {
-          state.groups[combinedGroupIndex].devices.push(
+          state.groups[combinedGroupDinId][combinedGroupIndex].devices.push(
             devices.find((device) => device.id === item.deviceId)
           );
         }
       });
 
       state.selected.slice(1).forEach((item) => {
-        const combinedGroupIndex = state.groups
+        const dinId = item.dinId;
+        console.log(dinId);
+
+        const combinedGroupIndex = state.groups[dinId]
           .map((group) => group.id)
           .indexOf(state.selected[0].groupId);
 
-        if (state.groups[combinedGroupIndex].id !== item.groupId) {
-          const groupIndex = state.groups
+        if (state.groups[dinId][combinedGroupIndex].id !== item.groupId) {
+          const groupIndex = state.groups[dinId]
             .map((group) => group.id)
             .indexOf(item.groupId);
 
-          if (state.groups[groupIndex].devices.length <= 1) {
-            state.groups = state.groups.filter(
-              (group) => group.id !== state.groups[groupIndex].id
+          if (state.groups[dinId][groupIndex].devices.length <= 1) {
+            state.groups[dinId] = state.groups[dinId].filter(
+              (group) => group.id !== state.groups[dinId][groupIndex].id
             );
           } else
-            state.groups[groupIndex].devices = state.groups[
+            state.groups[dinId][groupIndex].devices = state.groups[dinId][
               groupIndex
             ].devices.filter(
               (device) =>
@@ -179,34 +193,44 @@ export const devicesSlice = createSlice({
 
     splitGroups: (state) => {
       const selected = state.selected.map((item) => item.groupId);
+      const dinId = state.selected[0].dinId;
       const selectedGroups = new Set(selected);
       selectedGroups.forEach((groupId) => {
-        const groupIndex = state.groups
+        const groupIndex = state.groups[dinId]
           .map((group) => group.id)
           .indexOf(groupId);
 
-        const devices = state.groups[groupIndex].devices;
+        const devices = state.groups[dinId][groupIndex].devices;
 
         const splitedGroups = devices.map((device) => {
-          return Object.assign({}, state.groups[groupIndex], {
+          return Object.assign({}, state.groups[dinId][groupIndex], {
             devices: [device],
             id: nanoid(),
           });
         });
 
-        state.groups.splice(groupIndex, 1, ...splitedGroups);
+        state.groups[dinId].splice(groupIndex, 1, ...splitedGroups);
       });
 
       state.selected = [];
     },
 
     combineDevices: (state) => {
-      const { groupId, deviceId } = state.selected[0];
-      const group = findGroup(state.groups, groupId);
-      const combinedDevice = findDevice(state.groups, groupId, deviceId, group);
+      const { groupId, deviceId, dinId } = state.selected[0];
+      const group = findGroup(state.groups[dinId], groupId);
+      const combinedDevice = findDevice(
+        state.groups[dinId],
+        groupId,
+        deviceId,
+        group
+      );
 
       state.selected.slice(1).forEach((item) => {
-        const device = findDevice(state.groups, item.groupId, item.deviceId);
+        const device = findDevice(
+          state.groups[item.dinId],
+          item.groupId,
+          item.deviceId
+        );
         const modules = device.modules;
 
         combinedDevice.modules.module.push(...modules.module);
@@ -224,10 +248,13 @@ export const devicesSlice = createSlice({
 
       state.selected.slice(1).forEach((item) => {
         if (item.groupId !== state.selected[0].groupId) {
-          const group = findGroup(state.groups, item.groupId);
+          const group = findGroup(state.groups[item.dinId], item.groupId);
 
           if (group.devices.length <= 1) {
-            state.groups.splice(state.groups.indexOf(group), 1);
+            state.groups[item.dinId].splice(
+              state.groups[dinId].indexOf(group),
+              1
+            );
           } else {
             group.devices.splice(
               group.devices.findIndex((device) => device.id === item.deviceId),
@@ -247,7 +274,7 @@ export const devicesSlice = createSlice({
 
     splitDevices: (state) => {
       state.selected.forEach((item) => {
-        const group = findGroup(state.groups, item.groupId);
+        const group = findGroup(state.groups[item.dinId], item.groupId);
         const device = findDevice(
           state.groups,
           item.groupId,
@@ -315,8 +342,8 @@ export const devicesSlice = createSlice({
     },
 
     toggleDeviceNormallyOn: (state, action) => {
-      const { deviceId, groupId } = action.payload;
-      const device = findDevice(state.groups, groupId, deviceId);
+      const { deviceId, groupId, dinId } = action.payload;
+      const device = findDevice(state.groups[dinId], groupId, deviceId);
 
       if (device.normallyOn.isVisible && device.normallyOn.value) {
         device.normallyOn.value = false;
@@ -333,40 +360,40 @@ export const devicesSlice = createSlice({
     },
 
     updateDeviceText: (state, action) => {
-      const { deviceId, groupId, text, key } = action.payload;
+      const { deviceId, groupId, text, key, dinId } = action.payload;
 
       if (key === 'group') {
-        const group = findGroup(state.groups, groupId);
+        const group = findGroup(state.groups[dinId], groupId);
         group.text = text;
       } else {
-        const device = findDevice(state.groups, groupId, deviceId);
+        const device = findDevice(state.groups[dinId], groupId, deviceId);
 
         device[key].text = text;
       }
     },
 
     setHeight: (state, action) => {
-      const { currentHeight, deviceId, groupId, type } = action.payload;
+      const { currentHeight, deviceId, groupId, type, dinId } = action.payload;
 
       if (type === 'group') {
-        const group = findGroup(state.groups, groupId);
+        const group = findGroup(state.groups[dinId], groupId);
         group.height = currentHeight;
       } else {
-        const device = findDevice(state.groups, groupId, deviceId);
+        const device = findDevice(state.groups[dinId], groupId, deviceId);
         device[type].height = currentHeight;
       }
     },
 
     toggleWarning: (state, action) => {
-      const { deviceId, groupId } = action.payload;
-      const device = findDevice(state.groups, groupId, deviceId);
+      const { deviceId, groupId, dinId } = action.payload;
+      const device = findDevice(state.groups[dinId], groupId, deviceId);
       device.warning.text = '';
       device.warning.isActive = !device.warning.isActive;
     },
 
     setModuleText: (state, action) => {
-      const { text, groupId, deviceId, moduleId } = action.payload;
-      const device = findDevice(state.groups, groupId, deviceId);
+      const { text, groupId, deviceId, moduleId, dinId } = action.payload;
+      const device = findDevice(state.groups[dinId], groupId, deviceId);
       const module = device.modules.module.find(
         (module) => module.id === moduleId
       );
@@ -428,17 +455,23 @@ export const devicesSlice = createSlice({
     applyRandomColors: (state, action) => {
       const { colors, inversion } = action.payload;
 
-      state.groups.forEach((group, index) => {
-        if (group.devices.length > 1) {
-          if (inversion) {
-            group.backgroundColor = colors[index].textColor;
-            group.textColor = colors[index].backgroundColor;
-          } else {
-            group.backgroundColor = colors[index].backgroundColor;
-            group.textColor = colors[index].textColor;
+      state.groups.forEach((groups) => {
+        groups.forEach((group, index) => {
+          if (group.devices.length > 1) {
+            if (inversion) {
+              group.backgroundColor = colors[index].textColor;
+              group.textColor = colors[index].backgroundColor;
+            } else {
+              group.backgroundColor = colors[index].backgroundColor;
+              group.textColor = colors[index].textColor;
+            }
           }
-        }
+        });
       });
+    },
+
+    addRow: (state) => {
+      state.groups.push([createGroup()]);
     },
   },
 });
@@ -464,6 +497,7 @@ export const {
   applyTheme,
   applyUsersTheme,
   applyRandomColors,
+  addRow,
 } = devicesSlice.actions;
 
 export default devicesSlice.reducer;

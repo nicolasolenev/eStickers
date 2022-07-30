@@ -6,7 +6,7 @@ import { getDevicesWidth, getSelectedDevicesWidth } from '../functions';
 export default function Lengths() {
   const devices = useSelector((state) => state.devices);
   const settings = useSelector((state) => state.settings);
-  const devicesWidth = getDevicesWidth(devices.groups);
+  const devicesWidth = getDevicesWidth(devices.groups[0]);
   const selectedDevicesWidth = getSelectedDevicesWidth(devices);
 
   return (

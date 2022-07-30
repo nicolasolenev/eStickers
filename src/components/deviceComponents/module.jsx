@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import ModuleId from './moduleId';
 import { setModuleText } from '../../store/devicesSlice';
 
-export default function Module({ id, module, groupId, deviceId }) {
+export default function Module({ id, module, groupId, deviceId, dinId }) {
   const dispatch = useDispatch();
   const [text, setText] = useState(module.text);
 
@@ -15,6 +15,7 @@ export default function Module({ id, module, groupId, deviceId }) {
         deviceId,
         groupId,
         moduleId: module.id,
+        dinId,
       })
     );
 
@@ -38,6 +39,7 @@ export default function Module({ id, module, groupId, deviceId }) {
         deviceId={deviceId}
         moduleId={module.id}
         id={id}
+        dinId={dinId}
       />
     </div>
   );

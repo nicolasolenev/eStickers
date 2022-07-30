@@ -8,7 +8,7 @@ import Ruler from './deviceComponents/ruler';
 import { getGroupWidth } from '../functions';
 import { updateDeviceText } from '../store/devicesSlice';
 
-export default function Group({ group, moduleId, index }) {
+export default function Group({ group, moduleId, index, dinId }) {
   const dispatch = useDispatch();
   const groupIndex = index;
   let count = moduleId;
@@ -25,6 +25,7 @@ export default function Group({ group, moduleId, index }) {
             index={index}
             device={device}
             group={group}
+            dinId={dinId}
             handler={(e) => {
               dispatch(
                 updateDeviceText({
@@ -32,6 +33,7 @@ export default function Group({ group, moduleId, index }) {
                   groupId: group.id,
                   text: e.target.value,
                   key: 'warning',
+                  dinId,
                 })
               );
             }}
@@ -43,6 +45,7 @@ export default function Group({ group, moduleId, index }) {
         type="group"
         device={group}
         groupId={group.id}
+        dinId={dinId}
         placeholder="Группа"
         handler={(e) => {
           dispatch(
@@ -50,6 +53,7 @@ export default function Group({ group, moduleId, index }) {
               groupId: group.id,
               text: e.target.value,
               key: 'group',
+              dinId,
             })
           );
         }}
@@ -73,6 +77,7 @@ export default function Group({ group, moduleId, index }) {
               groupIndex={groupIndex}
               moduleId={moduleId}
               device={device}
+              dinId={dinId}
             />
           );
         })}
@@ -81,7 +86,7 @@ export default function Group({ group, moduleId, index }) {
       <div className="rulers-wrapper">
         {group.devices.map((device) => (
           <div key={device.id} className="rulers">
-            <Ruler device={device} groupId={group.id} />
+            <Ruler device={device} groupId={group.id} dinId={dinId} />
           </div>
         ))}
       </div>

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { updateSelected } from '../../store/devicesSlice';
 
-export default function ModuleId({ groupId, deviceId, id }) {
+export default function ModuleId({ groupId, deviceId, id, dinId }) {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
 
@@ -12,7 +12,7 @@ export default function ModuleId({ groupId, deviceId, id }) {
     if (e.shiftKey) {
       shift = true;
     }
-    dispatch(updateSelected({ groupId, deviceId, shift }));
+    dispatch(updateSelected({ groupId, deviceId, shift, dinId }));
   };
 
   return (

@@ -5,6 +5,7 @@ import Group from './group';
 import AddDeviceButton from './devicesComponents/addDeviceButton';
 import { getClasses, getDpMM, getHeights } from '../functions';
 import { setDevicesHeight } from '../store/settingsSlice';
+import { addRow } from '../store/devicesSlice';
 
 const DpMM = getDpMM();
 
@@ -14,22 +15,19 @@ export default function Devices({ devicesRef }) {
   const devices = useSelector((state) => state.devices);
   const borderColor = settings.palette.borderColor;
 
-  let count = 1;
-
   const devicesClasses = useMemo(
     () => getClasses(`devices ${borderColor}`, settings.display),
     [settings.display, borderColor]
   );
 
   useEffect(() => {
-    const heights = getHeights(devicesRef, DpMM);
-
-    if (
-      settings.devicesHeight.fields !== heights.fields ||
-      settings.devicesHeight.warnings !== heights.warnings
-    ) {
-      dispatch(setDevicesHeight({ heights }));
-    }
+    // const heights = getHeights(devicesRef, DpMM);
+    // if (
+    //   settings.devicesHeight.fields !== heights.fields ||
+    //   settings.devicesHeight.warnings !== heights.warnings
+    // ) {
+    //   dispatch(setDevicesHeight({ heights }));
+    // }
   });
 
   return (
@@ -42,26 +40,68 @@ export default function Devices({ devicesRef }) {
         }}
         ref={devicesRef}
       >
-        {devices.groups.map((group, index) => {
-          const moduleId = count;
-
-          count =
-            count +
-            group.devices
-              .map((device) => device.modules.module.length)
-              .reduce((sum, current) => sum + current, 0);
+        {devices.groups.map((groups, id) => {
+          let count = 1;
 
           return (
-            <Group
-              key={group.devices[0].id}
-              index={index}
-              group={group}
-              moduleId={moduleId}
-            />
+            <div className="devices__din" id={id} key={id}>
+              {groups.map((group, index) => {
+                const moduleId = count;
+
+                count =
+                  count +
+                  group.devices
+                    .map((device) => device.modules.module.length)
+                    .reduce((sum, current) => sum + current, 0);
+
+                return (
+                  <Group
+                    key={group.devices[0].id}
+                    index={index}
+                    group={group}
+                    moduleId={moduleId}
+                    dinId={id}
+                  />
+                );
+              })}
+
+              <AddDeviceButton dinId={id} />
+            </div>
           );
         })}
 
-        <AddDeviceButton />
+        <button
+          className="add_din_btn"
+          onClick={() => {
+            dispatch(addRow());
+          }}
+        >
+          Add DIN
+        </button>
+
+        {/* <div className="devices__din" id="1">
+          {devices.groups.map((group, index) => {
+            const moduleId = count;
+
+            count =
+              count +
+              group.devices
+                .map((device) => device.modules.module.length)
+                .reduce((sum, current) => sum + current, 0);
+
+            return (
+              <Group
+                key={group.devices[0].id}
+                index={index}
+                group={group}
+                moduleId={moduleId}
+                dinId={2}
+              />
+            );
+          })}
+
+          <AddDeviceButton />
+        </div> */}
       </div>
     </div>
   );

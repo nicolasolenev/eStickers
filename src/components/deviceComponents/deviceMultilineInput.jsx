@@ -8,6 +8,7 @@ import { setHeight } from '../../store/devicesSlice';
 export default function DeviceMultilineInput({
   device,
   groupId,
+  dinId,
   handler,
   type,
   placeholder,
@@ -22,15 +23,15 @@ export default function DeviceMultilineInput({
 
     if (type !== 'group' && currentHeight !== device[type].height) {
       dispatch(
-        setHeight({ currentHeight, deviceId: device.id, groupId, type })
+        setHeight({ currentHeight, deviceId: device.id, groupId, type, dinId })
       );
     } else if (
       type === 'group' &&
       currentHeight !==
-        devices.groups.find((group) => group.id === groupId).height
+        devices.groups[dinId].find((group) => group.id === groupId).height
     ) {
       dispatch(
-        setHeight({ currentHeight, deviceId: device.id, groupId, type })
+        setHeight({ currentHeight, deviceId: device.id, groupId, type, dinId })
       );
     }
   });
@@ -43,9 +44,15 @@ export default function DeviceMultilineInput({
           ? {
               background: `${device.backgroundColor}`,
               color: `${device.textColor}`,
-              height: `${getMaxInputHeight(devices.groups, type) + 10}px`,
+              height: `${
+                getMaxInputHeight(devices.groups[dinId], type) + 10
+              }px`,
             }
-          : { height: `${getMaxInputHeight(devices.groups, type) + 10}px` }
+          : {
+              height: `${
+                getMaxInputHeight(devices.groups[dinId], type) + 10
+              }px`,
+            }
       }
     >
       <TextareaAutosize
@@ -62,15 +69,27 @@ export default function DeviceMultilineInput({
 
           if (type !== 'group' && currentHeight !== device[type].height) {
             dispatch(
-              setHeight({ currentHeight, deviceId: device.id, groupId, type })
+              setHeight({
+                currentHeight,
+                deviceId: device.id,
+                groupId,
+                type,
+                dinId,
+              })
             );
           } else if (
             type === 'group' &&
             currentHeight !==
-              devices.groups.find((group) => group.id === groupId).height
+              devices.groups[dinId].find((group) => group.id === groupId).height
           ) {
             dispatch(
-              setHeight({ currentHeight, deviceId: device.id, groupId, type })
+              setHeight({
+                currentHeight,
+                deviceId: device.id,
+                groupId,
+                type,
+                dinId,
+              })
             );
           }
 
@@ -81,7 +100,8 @@ export default function DeviceMultilineInput({
             handler(e, type);
           } else if (
             type === 'group' &&
-            devices.groups.find((group) => group.id === groupId).text !== text
+            devices.groups[dinId].find((group) => group.id === groupId).text !==
+              text
           ) {
             handler(e, type);
           }
