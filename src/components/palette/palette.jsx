@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { ChromePicker } from 'react-color';
+import Draggable from 'react-draggable';
 
 import { setPaletteValue } from '../../store/settingsSlice';
 import { changeColor } from '../../store/devicesSlice';
@@ -35,17 +36,20 @@ export default function Palette() {
         Color Picker
       </button>
 
-      <div
-        className="palette__settings palette__settings-picker"
-        style={{ display: isOpen ? 'block' : 'none' }}
-      >
-        <ChromePicker
-          color={color}
-          onChange={(color) => {
-            handleChange(color);
-          }}
-        />
-      </div>
+      <Draggable handle=".handle">
+        <div
+          className="palette__settings-picker"
+          style={{ display: isOpen ? 'block' : 'none' }}
+        >
+          <ChromePicker
+            color={color}
+            onChange={(color) => {
+              handleChange(color);
+            }}
+          />
+          <div className="palette__settings-picker-dragggagle handle"></div>
+        </div>
+      </Draggable>
 
       <Themes />
     </div>

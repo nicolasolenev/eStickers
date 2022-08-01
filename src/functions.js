@@ -110,7 +110,13 @@ export function createGroup(theme) {
 }
 
 export function getDevices(groups) {
-  const devices = [].concat(...groups.map((group) => group.devices));
+  const devices = [];
+
+  groups.forEach((groups) => {
+    console.log('group');
+    console.log(...groups.map((group) => group.devices));
+    devices.push(...groups.map((group) => group.devices));
+  });
 
   return devices;
 }
