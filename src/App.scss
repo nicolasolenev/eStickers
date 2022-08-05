@@ -1235,6 +1235,9 @@ input.modal__input {
   body {
     background: #fff;
   }
+  .devices {
+    box-shadow: none !important;
+  }
   .devices__add,
   .rulers-wrapper,
   .device__id-hide {
@@ -1265,11 +1268,13 @@ input.modal__input {
     color: transparent !important;
     opacity: 0 !important;
   }
-
   input::placeholder,
   textarea::placeholder {
     color: transparent !important;
     opacity: 0 !important;
+  }
+  .add_din_btn {
+    display: none !important;
   }
 }
 
