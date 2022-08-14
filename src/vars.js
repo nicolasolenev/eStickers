@@ -20,7 +20,7 @@ export const defaultSettingsState = {
   palette: {
     theme: 'gray',
     type: 'backgroundColor',
-    borderColor: 'white',
+    borderColor: 'black',
     checked: {
       warning: false,
       group: true,

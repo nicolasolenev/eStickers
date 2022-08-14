@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import ModuleId from './moduleId';
 import { setModuleText } from '../../store/devicesSlice';
 
-export default function Module({ id, module, groupId, deviceId, dinId }) {
+export default function Module({ moduleId }) {
   const dispatch = useDispatch();
+  const module = useSelector((state) => state.modulesNew.modules[moduleId]);
   const [text, setText] = useState(module.text);
 
-  const inputHandler = (e) =>
-    dispatch(
-      setModuleText({
-        text: e.target.value,
-        deviceId,
-        groupId,
-        moduleId: module.id,
-        dinId,
-      })
-    );
+  const inputHandler = (e) => null;
+  // dispatch(
+  //   setModuleText({
+  //     text: e.target.value,
+  //     deviceId,
+  //     groupId,
+  //     moduleId: module.id,
+  //     dinId,
+  //   })
+  // );
 
   return (
     <div className="device__module" style={{ width: `${module.width}mm` }}>
@@ -34,13 +35,7 @@ export default function Module({ id, module, groupId, deviceId, dinId }) {
         onBlur={inputHandler}
       />
 
-      <ModuleId
-        groupId={groupId}
-        deviceId={deviceId}
-        moduleId={module.id}
-        id={id}
-        dinId={dinId}
-      />
+      <ModuleId index={module.index} />
     </div>
   );
 }

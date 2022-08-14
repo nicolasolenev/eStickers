@@ -1,6 +1,7 @@
 import './App.scss';
 import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { nanoid } from 'nanoid';
 
 import Devices from './components/devices';
 import Palette from './components/palette/palette';
@@ -66,14 +67,14 @@ export default function App() {
   });
 
   useEffect(() => {
-    window.addEventListener('unload', onUnloadHandler);
-    return () => window.removeEventListener('unload', onUnloadHandler);
+    // window.addEventListener('unload', onUnloadHandler);
+    // return () => window.removeEventListener('unload', onUnloadHandler);
   });
 
   return (
     <>
       <Controls devicesRef={devicesRef} />
-      <Palette />
+      {/* <Palette /> */}
 
       <div className="paper-options">
         <PaperFormat />

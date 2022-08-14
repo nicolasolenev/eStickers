@@ -6,21 +6,27 @@ import AddDeviceButton from './devicesComponents/addDeviceButton';
 import { getClasses, getDpMM, getHeights } from '../functions';
 import { setDevicesHeight } from '../store/settingsSlice';
 import { addRow } from '../store/devicesSlice';
+import { addDin } from '../store/dinsSliceNew';
 
 const DpMM = getDpMM();
 
 export default function Devices({ devicesRef }) {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
-  const devices = useSelector((state) => state.devices);
+  // const devices = useSelector((state) => state.devices);
   const borderColor = settings.palette.borderColor;
+  console.log(borderColor);
 
   const devicesClasses = useMemo(
     () => getClasses(`devices ${borderColor}`, settings.display),
     [settings.display, borderColor]
   );
 
+  const dins = useSelector((state) => state.dinsNew.dins);
+
   useEffect(() => {
+    // console.log(dins);
+    // console.log(Object.entries(dins));
     // const heights = getHeights(devicesRef, DpMM);
     // if (
     //   settings.devicesHeight.fields !== heights.fields ||
@@ -40,7 +46,7 @@ export default function Devices({ devicesRef }) {
         }}
         ref={devicesRef}
       >
-        {devices.groups.map((groups, id) => {
+        {/* {devices.groups.map((groups, id) => {
           let count = 1;
 
           return (
@@ -68,12 +74,25 @@ export default function Devices({ devicesRef }) {
               <AddDeviceButton dinId={id} />
             </div>
           );
+        })} */}
+
+        {Object.entries(dins).map(([id, groupsId]) => {
+          return (
+            <div className="devices__din" key={id}>
+              {groupsId.map((groupId) => {
+                return <Group key={groupId} dinId={id} groupId={groupId} />;
+              })}
+
+              <AddDeviceButton dinId={id} />
+            </div>
+          );
         })}
 
         <button
           className="add_din_btn"
           onClick={() => {
-            dispatch(addRow());
+            // dispatch(addRow());
+            dispatch(addDin());
           }}
         >
           Add DIN

@@ -6,47 +6,47 @@ import DeviceWarningButton from './deviceWarningButton';
 import { getDeviceTotalWidth, getMaxInputHeight } from '../../functions';
 import { setHeight } from '../../store/devicesSlice';
 
-export default function DeviceWarning({ group, device, handler, dinId }) {
-  const dispatch = useDispatch();
-  const devices = useSelector((state) => state.devices);
-  const [text, setText] = useState(device.warning.text);
-  const textareaRef = useRef();
+export default function DeviceWarning({ deviceId, handler }) {
+  // const dispatch = useDispatch();
+  // const devices = useSelector((state) => state.devices);
+  // const [text, setText] = useState(device.warning.text);
+  // const textareaRef = useRef();
 
-  useEffect(() => {
-    const currentHeight = textareaRef.current.clientHeight;
+  // useEffect(() => {
+  //   const currentHeight = textareaRef.current.clientHeight;
 
-    if (currentHeight !== device['warning'].height) {
-      dispatch(
-        setHeight({
-          currentHeight,
-          deviceId: device.id,
-          groupId: group.id,
-          type: 'warning',
-          dinId,
-        })
-      );
-    }
-  });
+  //   if (currentHeight !== device['warning'].height) {
+  //     dispatch(
+  //       setHeight({
+  //         currentHeight,
+  //         deviceId: device.id,
+  //         groupId: group.id,
+  //         type: 'warning',
+  //         dinId,
+  //       })
+  //     );
+  //   }
+  // });
 
   return (
     <div
-      className={
-        device.warning.isActive
-          ? 'device__warning'
-          : 'device__warning device__warning-hide'
-      }
-      style={{
-        background: `${
-          device.warning.isActive
-            ? device.warning.backgroundColor
-            : 'transparent'
-        }`,
-        color: `${device.warning.textColor}`,
-        width: `calc(${getDeviceTotalWidth(device)}mm + 1px)`,
-        height: `${getMaxInputHeight(devices.groups[dinId], 'warning') + 7}px`,
-      }}
+    // className={
+    //   device.warning.isActive
+    //     ? 'device__warning'
+    //     : 'device__warning device__warning-hide'
+    // }
+    // style={{
+    //   background: `${
+    //     device.warning.isActive
+    //       ? device.warning.backgroundColor
+    //       : 'transparent'
+    //   }`,
+    //   color: `${device.warning.textColor}`,
+    //   width: `calc(${getDeviceTotalWidth(device)}mm + 1px)`,
+    //   height: `${getMaxInputHeight(devices.groups[dinId], 'warning') + 7}px`,
+    // }}
     >
-      <DeviceWarningButton
+      {/* <DeviceWarningButton
         device={device}
         groupId={group.id}
         setText={setText}
@@ -85,7 +85,8 @@ export default function DeviceWarning({ group, device, handler, dinId }) {
             handler(e, 'warning');
           }
         }}
-      />
+      /> */}
+      Hello
     </div>
   );
 }

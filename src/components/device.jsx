@@ -9,50 +9,44 @@ import { updateDeviceText, addDeviceBefore } from '../store/devicesSlice';
 import { pushState } from '../store/historySlice';
 import { getDeviceTotalWidth } from '../functions';
 
-export default function Device({
-  device,
-  groupId,
-  moduleId,
-  index,
-  groupIndex,
-  dinId,
-}) {
+export default function Device({ deviceId }) {
   const dispatch = useDispatch();
-  const deviceId = device.id;
-  const devices = useSelector((state) => state.devices);
+  const device = useSelector((state) => state.devicesNew.devices[deviceId]);
   const settings = useSelector((state) => state.settings);
-  const deviceWidth = useMemo(() => {
-    const width = getDeviceTotalWidth(device);
-    return `calc(${width}mm + 1px)`;
-  }, [device]);
 
-  const deviceInputHandler = useCallback(
-    function (e, key) {
-      dispatch(
-        updateDeviceText({
-          deviceId,
-          groupId,
-          text: e.target.value,
-          key,
-          dinId,
-        })
-      );
-    },
-    [deviceId, groupId, dispatch]
-  );
+  // const deviceWidth = useMemo(() => {
+  //   const width = getDeviceTotalWidth(device);
+  //   return `calc(${width}mm + 1px)`;
+  // }, [device]);
+
+  // const deviceInputHandler = useCallback(
+  //   function (e, key) {
+  //     dispatch(
+  //       updateDeviceText({
+  //         deviceId,
+  //         groupId,
+  //         text: e.target.value,
+  //         key,
+  //         dinId,
+  //       })
+  //     );
+  //   },
+  //   [deviceId, groupId, dispatch]
+  // );
 
   return (
     <div
-      className={
-        devices.selected.map((item) => item.deviceId).includes(deviceId)
-          ? 'device selected'
-          : 'device'
-      }
-      style={{
-        width: `${deviceWidth}`,
-      }}
+      // className={
+      //   devices.selected.map((item) => item.deviceId).includes(deviceId)
+      //     ? 'device selected'
+      //     : 'device'
+      // }
+      className={'device'}
+      // style={{
+      //   width: `${deviceWidth}`,
+      // }}
     >
-      <div className="addDeviceBefore">
+      {/* <div className="addDeviceBefore">
         <button
           className="addDeviceBefore-btn"
           onClick={() => {
@@ -68,37 +62,26 @@ export default function Device({
         >
           +
         </button>
-      </div>
-      <DevicePoint
-        device={device}
-        groupId={groupId}
-        dispatch={dispatch}
-        dinId={dinId}
-      />
+      </div> */}
+      <DevicePoint deviceId={deviceId} />
 
       <DeviceField
         name="switch"
         placeholder="QF1"
         device={device}
-        handler={deviceInputHandler}
+        // handler={deviceInputHandler}
       />
 
-      <DeviceMultilineInput
+      {/* <DeviceMultilineInput
         type="description"
         device={device}
         groupId={groupId}
         handler={deviceInputHandler}
         placeholder="Название"
         dinId={dinId}
-      />
+      /> */}
 
-      <Modules
-        device={device}
-        groupId={groupId}
-        deviceId={device.id}
-        moduleId={moduleId}
-        dinId={dinId}
-      />
+      <Modules deviceId={deviceId} />
     </div>
   );
 }

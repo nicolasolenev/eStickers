@@ -1,35 +1,32 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import DeviceMultilineInput from './deviceComponents/deviceMultilineInput';
 import Device from './device';
-import DeviceWarning from './deviceComponents/deviceWarning';
+// import DeviceWarning from './deviceComponents/deviceWarning';
 import Ruler from './deviceComponents/ruler';
 import { getGroupWidth } from '../functions';
 import { updateDeviceText } from '../store/devicesSlice';
 
-export default function Group({ group, moduleId, index, dinId }) {
+export default function Group({ dinId, groupId }) {
   const dispatch = useDispatch();
-  const groupIndex = index;
-  let count = moduleId;
+
+  const group = useSelector((state) => state.groupsNew.groups[groupId]);
 
   return (
     <div
       className="group-wrapper"
-      style={{ width: `calc(${getGroupWidth(group)}mm + 1px)` }}
+      // style={{ width: `calc(${getGroupWidth(group)}mm + 1px)` }}
     >
-      <div className="warning-wrapper">
-        {group.devices.map((device) => (
+      {/* <div className="warning-wrapper">
+        {group.map((deviceId) => (
           <DeviceWarning
-            key={device.id}
-            index={index}
-            device={device}
-            group={group}
-            dinId={dinId}
+            key={deviceId}
+            deviceId={deviceId}
             handler={(e) => {
               dispatch(
                 updateDeviceText({
-                  deviceId: device.id,
+                  deviceId: deviceId,
                   groupId: group.id,
                   text: e.target.value,
                   key: 'warning',
@@ -39,24 +36,12 @@ export default function Group({ group, moduleId, index, dinId }) {
             }}
           />
         ))}
-      </div>
+      </div> */}
 
       <DeviceMultilineInput
+        deviceId={groupId}
         type="group"
-        device={group}
-        groupId={group.id}
-        dinId={dinId}
         placeholder="Группа"
-        handler={(e) => {
-          dispatch(
-            updateDeviceText({
-              groupId: group.id,
-              text: e.target.value,
-              key: 'group',
-              dinId,
-            })
-          );
-        }}
       />
 
       <div
@@ -66,30 +51,18 @@ export default function Group({ group, moduleId, index, dinId }) {
           color: `${group.textColor}`,
         }}
       >
-        {group.devices.map((device, index) => {
-          const moduleId = count;
-          count = count + device.modules.module.length;
-          return (
-            <Device
-              index={index}
-              key={device.id}
-              groupId={group.id}
-              groupIndex={groupIndex}
-              moduleId={moduleId}
-              device={device}
-              dinId={dinId}
-            />
-          );
+        {group.devices.map((deviceId) => {
+          return <Device key={deviceId} deviceId={deviceId} />;
         })}
       </div>
 
-      <div className="rulers-wrapper">
-        {group.devices.map((device) => (
-          <div key={device.id} className="rulers">
-            <Ruler device={device} groupId={group.id} dinId={dinId} />
+      {/* <div className="rulers-wrapper">
+        {group.map((deviceId) => (
+          <div key={deviceId} className="rulers">
+            <Ruler deviceId={deviceId} groupId={group.id} dinId={dinId} />
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }
