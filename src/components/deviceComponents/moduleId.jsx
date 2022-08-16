@@ -1,18 +1,20 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { updateSelected } from '../../store/devicesSlice';
+import { updateSelected } from '../../store/devicesSliceNew';
 
-export default function ModuleId({ index }) {
+export default function ModuleId({ index, deviceId, dinId }) {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
+  const dins = useSelector((state) => state.dinsNew.dins);
+  const groups = useSelector((state) => state.groupsNew.groups);
 
   const onClickHandler = (e) => {
     let shift = false;
     if (e.shiftKey) {
       shift = true;
     }
-    // dispatch(updateSelected({ groupId, deviceId, shift, dinId }));
+    dispatch(updateSelected({ deviceId, shift, dins, groups }));
   };
 
   return (

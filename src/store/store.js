@@ -11,7 +11,7 @@ import dinsNewReducer from './dinsSliceNew';
 
 export const store = configureStore({
   reducer: {
-    devices: devicesReducer,
+    // devices: devicesReducer,
     settings: settingsReducer,
     history: historyReducer,
     modal: modalReducer,

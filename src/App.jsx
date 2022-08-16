@@ -25,6 +25,7 @@ import { setSettings, toggleVisability } from './store/settingsSlice';
 import { popState, pushState } from './store/historySlice';
 import { windowListenerHandler } from './functions';
 import storage from './storage';
+import defaultState from './defaultStates';
 
 export default function App() {
   const dispatch = useDispatch();
@@ -32,39 +33,39 @@ export default function App() {
   const devices = useSelector((state) => state.devices);
   const history = useSelector((state) => state.history);
   const modal = useSelector((state) => state.modal);
-  const selected = settings.selected;
+  // const selected = settings.selected;
   const devicesRef = useRef();
 
-  const onKeydownHandler = (e) =>
-    windowListenerHandler(e, {
-      dispatch,
-      selected,
-      deleteSelectedDevices,
-      clearSelected,
-      history,
-      setGroups,
-      setSettings,
-      popState,
-      pushState,
-      groups: devices.groups,
-      settings,
-      devices,
-      combineDevices,
-      splitDevices,
-      combineGroups,
-      splitGroups,
-      toggleVisability,
-      addDeviceBefore,
-    });
+  // const onKeydownHandler = (e) =>
+  //   windowListenerHandler(e, {
+  //     dispatch,
+  //     selected,
+  //     deleteSelectedDevices,
+  //     clearSelected,
+  //     history,
+  //     setGroups,
+  //     setSettings,
+  //     popState,
+  //     pushState,
+  //     groups: devices.groups,
+  //     settings,
+  //     devices,
+  //     combineDevices,
+  //     splitDevices,
+  //     combineGroups,
+  //     splitGroups,
+  //     toggleVisability,
+  //     addDeviceBefore,
+  //   });
 
-  const onUnloadHandler = () => {
-    storage.save({ devices: devices.groups, settings });
-  };
+  // const onUnloadHandler = () => {
+  //   storage.save({ devices: devices.groups, settings });
+  // };
 
-  useEffect(() => {
-    window.addEventListener('keydown', onKeydownHandler);
-    return () => window.removeEventListener('keydown', onKeydownHandler);
-  });
+  // useEffect(() => {
+  //   window.addEventListener('keydown', onKeydownHandler);
+  //   return () => window.removeEventListener('keydown', onKeydownHandler);
+  // });
 
   useEffect(() => {
     // window.addEventListener('unload', onUnloadHandler);
@@ -76,19 +77,19 @@ export default function App() {
       <Controls devicesRef={devicesRef} />
       {/* <Palette /> */}
 
-      <div className="paper-options">
+      {/* <div className="paper-options">
         <PaperFormat />
-        {/* <Lengths /> */}
-      </div>
+        <Lengths />
+      </div> */}
 
       <div className="wrapper">
         <Devices devicesRef={devicesRef} />
       </div>
 
-      <Hint />
+      {/* <Hint /> */}
 
-      {modal.type === 'saving' && <ModalSaveProject />}
-      {modal.type === 'isNeedSave' && <IsNeedSaveModal />}
+      {/* {modal.type === 'saving' && <ModalSaveProject />}
+      {modal.type === 'isNeedSave' && <IsNeedSaveModal />} */}
     </>
   );
 }

@@ -1,25 +1,24 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setModuleWidth } from '../../store/devicesSlice';
+import { setDeviceWidth } from '../../store/devicesSliceNew';
 
-export default function Ruler(props) {
+export default function Ruler({ deviceId, groupId, dinId }) {
   const dispatch = useDispatch();
-  const { device, groupId } = props;
-  const devices = useSelector((state) => state.devices);
   const [width, setWidth] = useState();
-  const deviceId = device.id;
-  const deviceWidth = Number(device.modules.width).toFixed(1);
-  const selectedDevicesIds = devices.selected.map((item) => item.deviceId);
+  const selectedDevicesIds = useSelector((state) => state.devicesNew.selected);
+  const devices = useSelector((state) => state.devicesNew.devices);
+  const device = devices[deviceId];
+
+  const deviceWidth = device.width;
 
   function saveWidth(e) {
     const width = Number(e.target.value).toFixed(1);
 
     dispatch(
-      setModuleWidth({
+      setDeviceWidth({
         width,
         deviceId,
-        groupId,
       })
     );
     setWidth(null);

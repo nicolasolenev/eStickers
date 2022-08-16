@@ -1,19 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { nanoid } from 'nanoid';
+
+import defaultState, { defaultDin } from '../defaultStates';
 
 const initialState = {
-  dins: {
-    // 1: [1],
-    // 2: [2],
-  },
+  dins: defaultState.dins,
 };
 
 export const dinsSlice = createSlice({
-  name: 'modules',
+  name: 'dins',
   initialState,
   reducers: {
-    addDin: (state) => {
-      state.dins[nanoid()] = [];
+    addDin: (state, action) => {
+      const { id } = action.payload;
+
+      state.dins[id] = { ...defaultDin, groups: [] };
     },
 
     deleteDin: (state, action) => {
@@ -23,13 +23,26 @@ export const dinsSlice = createSlice({
     },
 
     addGroupAtDin: (state, action) => {
-      const { dinId, groupId } = action.payload;
+      const { id, dinId } = action.payload;
 
-      state.dins[dinId].push(groupId);
+      state.dins[dinId].groups.push(id);
+    },
+
+    setHeight: (state, action) => {
+      const { type, height, dinId } = action.payload;
+      state.dins[dinId][type] = height;
+    },
+
+    deleteGroupIds: (state, action) => {
+      const { groupIds, dinId } = action.payload;
+      state.dins[dinId].groups = state.dins[dinId].groups.filter(
+        (id) => !groupIds.includes(id)
+      );
     },
   },
 });
 
-export const { addDin, deleteDin, addGroupAtDin } = dinsSlice.actions;
+export const { addDin, deleteDin, addGroupAtDin, setHeight, deleteGroupIds } =
+  dinsSlice.actions;
 
 export default dinsSlice.reducer;

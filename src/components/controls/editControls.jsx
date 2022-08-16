@@ -12,16 +12,17 @@ import {
   setGroups,
   splitDevices,
   clearSelected,
-  combineDevices,
 } from '../../store/devicesSlice';
+import { combineDevices } from '../../store/devicesSliceNew';
 import { pushState, popState } from '../../store/historySlice';
 import { combineGroups, splitGroups } from '../../store/devicesSlice';
 import { deleteSelectedDevices } from '../../store/devicesSlice';
+import { deleteGroupIds } from '../../store/dinsSliceNew';
 
 export default function EditControls() {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
-  const devices = useSelector((state) => state.devices);
+  const devices = useSelector((state) => state.devicesNew);
   const history = useSelector((state) => state.history);
   const isDisabled = devices.selected.length === 0;
 
@@ -46,12 +47,12 @@ export default function EditControls() {
   return (
     <ControlLayout name="Редактировать">
       <div className="buttons-top">
-        <Button
+        {/* <Button
           value="Отменить"
           tip="Ctrl + Z"
           isDisabled={history.length === 0}
           onClickHandler={onCancelClickHandler}
-        />
+        /> */}
 
         <Button
           value="Объединить"
@@ -59,13 +60,14 @@ export default function EditControls() {
           isDisabled={isDisabled}
           onClickHandler={() =>
             onClickHandler([
+              deleteGroupIds(),
               combineDevices(),
-              pushState({ groups: devices.groups, settings }),
+              // pushState({ groups: devices.groups, settings }),
             ])
           }
         />
 
-        <Button
+        {/* <Button
           value="Разделить"
           tip="Ctrl + Shift + A"
           isDisabled={isDisabled}
@@ -75,9 +77,9 @@ export default function EditControls() {
               pushState({ groups: devices.groups, settings }),
             ])
           }
-        />
+        /> */}
 
-        <Button
+        {/* <Button
           value="Сгруппировать"
           tip="Shift + S"
           isDisabled={isDisabled}
@@ -90,9 +92,9 @@ export default function EditControls() {
               true
             )
           }
-        />
+        /> */}
 
-        <Button
+        {/* <Button
           value="Разгруппировать"
           tip="Ctrl + Shift + S"
           isDisabled={isDisabled}
@@ -102,9 +104,9 @@ export default function EditControls() {
               true
             )
           }
-        />
+        /> */}
 
-        <Button
+        {/* <Button
           value="Удалить"
           tip="Shift + Delete"
           isDisabled={isDisabled}
@@ -114,14 +116,14 @@ export default function EditControls() {
               pushState({ groups: devices.groups, settings }),
             ])
           }
-        />
+        /> */}
 
-        <Button
+        {/* <Button
           value="Отменить выделение"
           tip="Escape"
           isDisabled={isDisabled}
           onClickHandler={() => onClickHandler([clearSelected()])}
-        />
+        /> */}
       </div>
 
       <div className="buttons-font-size-wrapper">

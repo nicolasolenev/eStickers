@@ -1,33 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import defaultState, { defaultGroup } from '../defaultStates';
+
 const initialState = {
-  groups: {
-    // 1: [1, 2],
-    // 2: [3],
-    // 1: {
-    //   text: '',
-    //   height: '29px',
-    //   backgroundColor: 'gray',
-    //   textColor: 'black',
-    //   devices: [],
-    // },
-  },
+  groups: defaultState.groups,
 };
 
 export const groupsSlice = createSlice({
-  name: 'modules',
+  name: 'groups',
   initialState,
   reducers: {
     addGroup: (state, action) => {
-      const { groupId, deviceId } = action.payload;
+      const { id, dinId } = action.payload;
 
-      state.groups[groupId] = {
-        text: '',
-        height: '29px',
-        backgroundColor: 'gray',
-        textColor: 'black',
-        devices: [deviceId],
-      };
+      state.groups[id] = { ...defaultGroup, devices: [id], dinId };
     },
 
     deleteGroup: (state, action) => {
@@ -35,9 +21,22 @@ export const groupsSlice = createSlice({
 
       delete state.groups[groupId];
     },
+
+    setGroupInputHeight: (state, action) => {
+      const { currentHeight, groupId } = action.payload;
+
+      state.groups[groupId].height = currentHeight;
+    },
+
+    updateGroupText: (state, action) => {
+      const { groupId, text } = action.payload;
+
+      state.groups[groupId].text = text;
+    },
   },
 });
 
-export const { addGroup, deleteGroup } = groupsSlice.actions;
+export const { addGroup, deleteGroup, setGroupInputHeight, updateGroupText } =
+  groupsSlice.actions;
 
 export default groupsSlice.reducer;

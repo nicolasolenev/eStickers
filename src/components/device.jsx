@@ -2,37 +2,36 @@ import React, { useMemo, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import DevicePoint from './deviceComponents/devicePoint';
-import DeviceMultilineInput from './deviceComponents/deviceMultilineInput';
+import DeviceMultilineDescription from './deviceComponents/DeviceMultilineDescription';
 import DeviceField from './deviceComponents/deviceField';
 import Modules from './deviceComponents/modules';
-import { updateDeviceText, addDeviceBefore } from '../store/devicesSlice';
+// import { updateDeviceText, addDeviceBefore } from '../store/devicesSlice';
+import { updateDeviceText } from '../store/devicesSliceNew';
 import { pushState } from '../store/historySlice';
 import { getDeviceTotalWidth } from '../functions';
 
-export default function Device({ deviceId }) {
+export default function Device({ deviceId, dinId }) {
   const dispatch = useDispatch();
   const device = useSelector((state) => state.devicesNew.devices[deviceId]);
   const settings = useSelector((state) => state.settings);
 
-  // const deviceWidth = useMemo(() => {
-  //   const width = getDeviceTotalWidth(device);
-  //   return `calc(${width}mm + 1px)`;
-  // }, [device]);
+  const deviceWidth = useMemo(() => {
+    const width = device.width;
+    return `calc(${width}mm + 1px)`;
+  }, [device]);
 
-  // const deviceInputHandler = useCallback(
-  //   function (e, key) {
-  //     dispatch(
-  //       updateDeviceText({
-  //         deviceId,
-  //         groupId,
-  //         text: e.target.value,
-  //         key,
-  //         dinId,
-  //       })
-  //     );
-  //   },
-  //   [deviceId, groupId, dispatch]
-  // );
+  const deviceInputHandler = useCallback(
+    function (e) {
+      dispatch(
+        updateDeviceText({
+          deviceId,
+          text: e.target.value,
+          type: 'switch',
+        })
+      );
+    },
+    [deviceId, dispatch]
+  );
 
   return (
     <div
@@ -42,9 +41,10 @@ export default function Device({ deviceId }) {
       //     : 'device'
       // }
       className={'device'}
-      // style={{
-      //   width: `${deviceWidth}`,
-      // }}
+      style={{
+        width: `${deviceWidth}`,
+        // width: `calc(18mm + 1px)`,
+      }}
     >
       {/* <div className="addDeviceBefore">
         <button
@@ -69,19 +69,13 @@ export default function Device({ deviceId }) {
         name="switch"
         placeholder="QF1"
         device={device}
-        // handler={deviceInputHandler}
+        deviceId={deviceId}
+        handler={deviceInputHandler}
       />
 
-      {/* <DeviceMultilineInput
-        type="description"
-        device={device}
-        groupId={groupId}
-        handler={deviceInputHandler}
-        placeholder="Название"
-        dinId={dinId}
-      /> */}
+      <DeviceMultilineDescription deviceId={deviceId} dinId={dinId} />
 
-      <Modules deviceId={deviceId} />
+      <Modules deviceId={deviceId} dinId={dinId} />
     </div>
   );
 }
