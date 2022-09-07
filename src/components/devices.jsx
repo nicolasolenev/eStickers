@@ -19,7 +19,8 @@ export default function Devices({ devicesRef }) {
     [settings.display, borderColor]
   );
 
-  const dins = useSelector((state) => state.dinsNew.dins);
+  // const dins = useSelector((state) => state.dinsNew.dins);
+  const dins = useSelector((state) => state.main.dins);
 
   useEffect(() => {
     // const heights = getHeights(devicesRef, DpMM);

@@ -170,12 +170,14 @@ export function getHeights(ref, dpMM) {
   };
 }
 
-export function getMaxInputHeight(items, dinId, type, deviceId, currentHeight) {
+export function getMaxInputHeight(dinId, type, currentHeight, main, deviceId) {
   console.log('getMaxInputHeight');
-  const filteredItems = Object.entries(items)
-    .filter(([key, value]) => value.dinId === dinId && key !== deviceId)
-    .map(([key, value]) => value);
-
+  const groupsIds = main.dins[dinId].groups;
+  const devicesIds = groupsIds
+    .map((id) => main.groups[id].devices)
+    .flat()
+    .filter((id) => id !== deviceId);
+  const filteredItems = devicesIds.map((id) => main.devices[id]);
   const heights = filteredItems.map((item) => item[type].height);
 
   const maxHeight = Math.max(...heights, currentHeight);
@@ -183,11 +185,10 @@ export function getMaxInputHeight(items, dinId, type, deviceId, currentHeight) {
   return maxHeight;
 }
 
-export function getMaxGroupHeight(groups, dinId, groupId, currentHeight) {
+export function getMaxGroupHeight(dinId, currentHeight, main, groupId) {
   console.log('getMaxInputGroup');
-  const filteredItems = Object.entries(groups)
-    .filter(([key, value]) => value.dinId === dinId && key !== groupId)
-    .map(([key, value]) => value);
+  const groupIds = main.dins[dinId].groups.filter((id) => id !== groupId);
+  const filteredItems = groupIds.map((id) => main.groups[id]);
 
   const heights = filteredItems.map((item) => item.height);
 

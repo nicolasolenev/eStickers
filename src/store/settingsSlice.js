@@ -37,7 +37,7 @@ export const settingsSlice = createSlice({
     },
 
     setSettings: (state, action) => {
-      const { settings } = action.payload;
+      const { settings } = action.payload.settings;
 
       for (let key in settings) {
         state[key] = settings[key];

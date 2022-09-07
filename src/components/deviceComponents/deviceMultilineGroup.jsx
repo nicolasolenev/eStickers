@@ -1,23 +1,50 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import TextareaAutosize from 'react-autosize-textarea';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getMaxGroupHeight } from '../../functions';
 import {
+  setHeight,
   setGroupInputHeight,
   updateGroupText,
-} from '../../store/groupsSliceNew';
-import { setHeight } from '../../store/dinsSliceNew';
+} from '../../store/mainSlice';
 
 export default function DeviceMultilineGroup({ groupId, dinId }) {
   const dispatch = useDispatch();
 
-  const din = useSelector((state) => state.dinsNew.dins[dinId]);
-  const groups = useSelector((state) => state.groupsNew.groups);
+  const din = useSelector((state) => state.main.dins[dinId]);
+  const settings = useSelector((state) => state.settings);
+  const groups = useSelector((state) => state.main.groups);
+  const main = useSelector((state) => state.main);
   const group = groups[groupId];
 
   const [text, setText] = useState(group.text);
   const textareaRef = useRef();
+
+  const fontSize = settings.fontSize;
+
+  useEffect(() => {
+    console.log('change fontSize');
+    dispatch(
+      setGroupInputHeight({
+        currentHeight: textareaRef.current.clientHeight,
+        groupId,
+      })
+    );
+
+    dispatch(
+      setHeight({
+        type: 'groupHeight',
+        height: getMaxGroupHeight(
+          dinId,
+          textareaRef.current.clientHeight,
+          main,
+          groupId
+        ),
+        dinId,
+      })
+    );
+  }, [fontSize]);
 
   return (
     <div
@@ -46,12 +73,7 @@ export default function DeviceMultilineGroup({ groupId, dinId }) {
             dispatch(
               setHeight({
                 type: 'groupHeight',
-                height: getMaxGroupHeight(
-                  groups,
-                  dinId,
-                  groupId,
-                  currentHeight
-                ),
+                height: getMaxGroupHeight(dinId, currentHeight, main, groupId),
                 dinId,
               })
             );

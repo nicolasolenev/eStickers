@@ -1,13 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { addNewGroup } from '../../addDevicesFns';
+import { addGroup } from '../../store/mainSlice';
 
 export const AddGroupBtn = ({ dinId }) => {
   const dispatch = useDispatch();
 
   const addHandler = () => {
-    addNewGroup(dispatch, dinId);
+    dispatch(addGroup({ dinId }));
   };
 
   return (

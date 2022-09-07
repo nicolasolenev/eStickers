@@ -11,8 +11,10 @@ import { updateDeviceText } from '../store/devicesSlice';
 export default function Group({ dinId, groupId }) {
   const dispatch = useDispatch();
 
-  const group = useSelector((state) => state.groupsNew.groups[groupId]);
-  const devices = useSelector((state) => state.devicesNew.devices);
+  const group = useSelector((state) => state.main.groups[groupId]);
+  const devices = useSelector((state) => state.main.devices);
+  // const group = useSelector((state) => state.groupsNew.groups[groupId]);
+  // const devices = useSelector((state) => state.devicesNew.devices);
 
   return (
     <div
@@ -36,7 +38,14 @@ export default function Group({ dinId, groupId }) {
         }}
       >
         {group.devices.map((deviceId) => {
-          return <Device key={deviceId} deviceId={deviceId} dinId={dinId} />;
+          return (
+            <Device
+              key={deviceId}
+              deviceId={deviceId}
+              groupId={groupId}
+              dinId={dinId}
+            />
+          );
         })}
       </div>
 

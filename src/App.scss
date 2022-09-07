@@ -469,6 +469,7 @@ $deviceBorderWhite: border(#fff);
   &__din {
     display: flex;
     flex-wrap: wrap;
+    font-size: inherit;
   }
 
   &__add {

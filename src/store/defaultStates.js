@@ -26,7 +26,7 @@ export const defaultDevice = {
     isActive: false,
     height: defaultMultilineHeight,
   },
-  width: 18,
+  width: '18.0',
 };
 
 export const defaultGroup = {
@@ -48,15 +48,15 @@ const defaultState = {
   },
 
   groups: {
-    [defaultId]: { ...defaultGroup, devices: [defaultId], dinId: defaultId },
+    [defaultId]: { ...defaultGroup, devices: [defaultId] },
   },
 
   devices: {
-    [defaultId]: { ...defaultDevice, modules: [defaultId], dinId: defaultId },
+    [defaultId]: { ...defaultDevice, modules: [defaultId] },
   },
 
   modules: {
-    [defaultId]: { ...defaultModule, index: 1, dinId: defaultId },
+    [defaultId]: { ...defaultModule, index: 1 },
   },
 };
 

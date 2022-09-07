@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
+import mainReducer from './mainSlice';
 import devicesReducer from './devicesSlice';
 import settingsReducer from './settingsSlice';
 import historyReducer from './historySlice';
@@ -20,5 +21,7 @@ export const store = configureStore({
     devicesNew: devicesNewReducer,
     groupsNew: groupsNewReducer,
     dinsNew: dinsNewReducer,
+
+    main: mainReducer,
   },
 });

@@ -1,22 +1,51 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import TextareaAutosize from 'react-autosize-textarea';
 import { useSelector, useDispatch } from 'react-redux';
 
 import DeviceWarningBtn from './deviceWarningBtn';
 import { getDeviceTotalWidth, getMaxInputHeight } from '../../functions';
 import {
+  setHeight,
   setDeviceInputHeight,
   updateDeviceText,
-} from '../../store/devicesSliceNew';
-import { setHeight } from '../../store/dinsSliceNew';
+} from '../../store/mainSlice';
 
 export default function DeviceWarning({ deviceId, dinId }) {
   const dispatch = useDispatch();
-  const din = useSelector((state) => state.dinsNew.dins[dinId]);
-  const devices = useSelector((state) => state.devicesNew.devices);
+  const din = useSelector((state) => state.main.dins[dinId]);
+  const settings = useSelector((state) => state.settings);
+  const devices = useSelector((state) => state.main.devices);
+  const main = useSelector((state) => state.main);
   const device = devices[deviceId];
   const [text, setText] = useState(device.warning.text);
   const textareaRef = useRef();
+
+  const fontSize = settings.fontSize;
+
+  useEffect(() => {
+    console.log('change fontSize');
+    dispatch(
+      setDeviceInputHeight({
+        type: 'warning',
+        currentHeight: textareaRef.current.clientHeight,
+        deviceId,
+      })
+    );
+
+    dispatch(
+      setHeight({
+        type: 'warningHeight',
+        height: getMaxInputHeight(
+          dinId,
+          'warning',
+          textareaRef.current.clientHeight,
+          main,
+          deviceId
+        ),
+        dinId,
+      })
+    );
+  }, [fontSize]);
 
   return (
     <div
@@ -57,11 +86,11 @@ export default function DeviceWarning({ deviceId, dinId }) {
               setHeight({
                 type: 'warningHeight',
                 height: getMaxInputHeight(
-                  devices,
                   dinId,
                   'warning',
-                  deviceId,
-                  currentHeight
+                  currentHeight,
+                  main,
+                  deviceId
                 ),
                 dinId,
               })

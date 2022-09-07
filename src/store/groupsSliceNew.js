@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import defaultState, { defaultGroup } from '../defaultStates';
+import defaultState, { defaultGroup } from './defaultStates';
 
 const initialState = {
   groups: defaultState.groups,

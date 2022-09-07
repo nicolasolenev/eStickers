@@ -25,11 +25,12 @@ import { setSettings, toggleVisability } from './store/settingsSlice';
 import { popState, pushState } from './store/historySlice';
 import { windowListenerHandler } from './functions';
 import storage from './storage';
-import defaultState from './defaultStates';
+import defaultState from './store/defaultStates';
 
 export default function App() {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
+  const main = useSelector((state) => state.main);
   const devices = useSelector((state) => state.devices);
   const history = useSelector((state) => state.history);
   const modal = useSelector((state) => state.modal);
@@ -58,9 +59,9 @@ export default function App() {
   //     addDeviceBefore,
   //   });
 
-  // const onUnloadHandler = () => {
-  //   storage.save({ devices: devices.groups, settings });
-  // };
+  const onUnloadHandler = () => {
+    storage.save({ main, settings });
+  };
 
   // useEffect(() => {
   //   window.addEventListener('keydown', onKeydownHandler);
@@ -68,8 +69,8 @@ export default function App() {
   // });
 
   useEffect(() => {
-    // window.addEventListener('unload', onUnloadHandler);
-    // return () => window.removeEventListener('unload', onUnloadHandler);
+    window.addEventListener('unload', onUnloadHandler);
+    return () => window.removeEventListener('unload', onUnloadHandler);
   });
 
   return (

@@ -1,23 +1,52 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect, useMemo } from 'react';
 import TextareaAutosize from 'react-autosize-textarea';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getMaxInputHeight } from '../../functions';
 import {
+  setHeight,
   setDeviceInputHeight,
   updateDeviceText,
-} from '../../store/devicesSliceNew';
-import { setHeight } from '../../store/dinsSliceNew';
+} from '../../store/mainSlice';
 
 export default function DeviceMultilineDescription({ deviceId, dinId }) {
   const dispatch = useDispatch();
 
-  const din = useSelector((state) => state.dinsNew.dins[dinId]);
-  const devices = useSelector((state) => state.devicesNew.devices);
+  const din = useSelector((state) => state.main.dins[dinId]);
+  const settings = useSelector((state) => state.settings);
+  const devices = useSelector((state) => state.main.devices);
+  const main = useSelector((state) => state.main);
   const device = devices[deviceId];
 
   const [text, setText] = useState(device.description.text);
   const textareaRef = useRef();
+
+  const fontSize = settings.fontSize;
+
+  useEffect(() => {
+    console.log('change fontSize');
+    dispatch(
+      setDeviceInputHeight({
+        type: 'description',
+        currentHeight: textareaRef.current.clientHeight,
+        deviceId,
+      })
+    );
+
+    dispatch(
+      setHeight({
+        type: 'descriptionHeight',
+        height: getMaxInputHeight(
+          dinId,
+          'description',
+          textareaRef.current.clientHeight,
+          main,
+          deviceId
+        ),
+        dinId,
+      })
+    );
+  }, [fontSize]);
 
   return (
     <div
@@ -50,11 +79,11 @@ export default function DeviceMultilineDescription({ deviceId, dinId }) {
               setHeight({
                 type: 'descriptionHeight',
                 height: getMaxInputHeight(
-                  devices,
                   dinId,
                   'description',
-                  deviceId,
-                  currentHeight
+                  currentHeight,
+                  main,
+                  deviceId
                 ),
                 dinId,
               })

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import defaultState, { defaultModule } from '../defaultStates';
+import defaultState, { defaultModule } from './defaultStates';
 
 const initialState = {
   modules: defaultState.modules,
@@ -21,9 +21,7 @@ export const modulesSlice = createSlice({
 
       const index = filteredModules.length + 1;
 
-      const newModule = { ...defaultModule, index, dinId };
-
-      state.modules[id] = newModule;
+      state.modules[id] = { ...defaultModule, index, dinId };
     },
 
     deleteModule: (state, action) => {

@@ -8,23 +8,28 @@ import {
   setSettings,
   setFontSize,
 } from '../../store/settingsSlice';
+
 import {
-  setGroups,
+  combineDevices,
   splitDevices,
+  deleteSelectedDevices,
   clearSelected,
-} from '../../store/devicesSlice';
-import { combineDevices } from '../../store/devicesSliceNew';
+  combineGroups,
+  splitGroups,
+  setDevices,
+  // correctHeights,
+} from '../../store/mainSlice';
+
 import { pushState, popState } from '../../store/historySlice';
-import { combineGroups, splitGroups } from '../../store/devicesSlice';
-import { deleteSelectedDevices } from '../../store/devicesSlice';
-import { deleteGroupIds } from '../../store/dinsSliceNew';
 
 export default function EditControls() {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings);
-  const devices = useSelector((state) => state.devicesNew);
+  const devices = useSelector((state) => state.main);
   const history = useSelector((state) => state.history);
-  const isDisabled = devices.selected.length === 0;
+  const isDisabledUnary = devices.selected.length === 0;
+  const isDisabledMultiple = devices.selected.length < 2;
+  const historyState = { devices, settings };
 
   const onClickHandler = (actions, isGroupsVisability) => {
     actions.forEach((action) => dispatch(action));
@@ -36,102 +41,84 @@ export default function EditControls() {
   const onCancelClickHandler = () => {
     const prevState = history[history.length - 1];
     if (prevState) {
-      const groups = prevState.groups;
+      const devices = prevState.devices;
       const settings = prevState.settings;
-      dispatch(setGroups({ groups }));
-      dispatch(setSettings(settings));
-      dispatch(popState({ groups, settings }));
+      dispatch(setDevices({ devices }));
+      dispatch(setSettings({ settings }));
+      dispatch(popState());
     }
   };
 
   return (
     <ControlLayout name="Редактировать">
       <div className="buttons-top">
-        {/* <Button
+        <Button
           value="Отменить"
           tip="Ctrl + Z"
           isDisabled={history.length === 0}
           onClickHandler={onCancelClickHandler}
-        /> */}
+        />
 
         <Button
           value="Объединить"
           tip="Shift + A"
-          isDisabled={isDisabled}
+          isDisabled={isDisabledMultiple}
           onClickHandler={() =>
-            onClickHandler([
-              deleteGroupIds(),
-              combineDevices(),
-              // pushState({ groups: devices.groups, settings }),
-            ])
+            onClickHandler([combineDevices(), pushState(historyState)])
           }
         />
 
-        {/* <Button
+        <Button
           value="Разделить"
           tip="Ctrl + Shift + A"
-          isDisabled={isDisabled}
+          isDisabled={isDisabledUnary}
           onClickHandler={() =>
-            onClickHandler([
-              splitDevices(),
-              pushState({ groups: devices.groups, settings }),
-            ])
+            onClickHandler([splitDevices(), pushState(historyState)])
           }
-        /> */}
+        />
 
-        {/* <Button
+        <Button
           value="Сгруппировать"
           tip="Shift + S"
-          isDisabled={isDisabled}
+          isDisabled={isDisabledMultiple}
           onClickHandler={() =>
-            onClickHandler(
-              [
-                combineGroups(),
-                pushState({ groups: devices.groups, settings }),
-              ],
-              true
-            )
+            onClickHandler([combineGroups(), pushState(historyState)], true)
           }
-        /> */}
+        />
 
-        {/* <Button
+        <Button
           value="Разгруппировать"
           tip="Ctrl + Shift + S"
-          isDisabled={isDisabled}
+          isDisabled={isDisabledUnary}
           onClickHandler={() =>
-            onClickHandler(
-              [splitGroups(), pushState({ groups: devices.groups, settings })],
-              true
-            )
+            onClickHandler([splitGroups(), pushState(historyState)], true)
           }
-        /> */}
+        />
 
-        {/* <Button
+        <Button
           value="Удалить"
           tip="Shift + Delete"
-          isDisabled={isDisabled}
+          isDisabled={isDisabledUnary}
           onClickHandler={() =>
-            onClickHandler([
-              deleteSelectedDevices(),
-              pushState({ groups: devices.groups, settings }),
-            ])
+            onClickHandler([deleteSelectedDevices(), pushState(historyState)])
           }
-        /> */}
+        />
 
-        {/* <Button
+        <Button
           value="Отменить выделение"
           tip="Escape"
-          isDisabled={isDisabled}
+          isDisabled={isDisabledUnary}
           onClickHandler={() => onClickHandler([clearSelected()])}
-        /> */}
+        />
       </div>
 
       <div className="buttons-font-size-wrapper">
         <button
           className="font-down"
+          disabled={settings.fontSize <= 7}
           onClick={() => {
-            if (settings.fontSize > 7)
-              dispatch(setFontSize({ fontSize: settings.fontSize - 1 }));
+            dispatch(setFontSize({ fontSize: settings.fontSize - 1 }));
+            // dispatch(correctHeights({ delta: -4 }));
           }}
         />
 
@@ -139,8 +126,10 @@ export default function EditControls() {
 
         <button
           className="font-up"
+          disabled={settings.fontSize >= 12}
           onClick={() => {
             dispatch(setFontSize({ fontSize: settings.fontSize + 1 }));
+            // dispatch(correctHeights({ delta: 4 }));
           }}
         />
       </div>

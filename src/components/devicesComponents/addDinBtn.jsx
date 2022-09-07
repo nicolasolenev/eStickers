@@ -3,7 +3,8 @@ import { useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
 
 import { addNewGroup } from '../../addDevicesFns';
-import { addDin } from '../../store/dinsSliceNew';
+// import { addDin } from '../../store/dinsSliceNew';
+import { addDin } from '../../store/mainSlice';
 
 export const AddDinBtn = () => {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ export const AddDinBtn = () => {
     const id = nanoid();
 
     dispatch(addDin({ id }));
-    addNewGroup(dispatch, id);
+    // addNewGroup(dispatch, id);
   };
 
   return (

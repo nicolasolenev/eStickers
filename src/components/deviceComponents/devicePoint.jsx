@@ -1,11 +1,11 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleDeviceNormallyOn } from '../../store/devicesSliceNew';
+import { toggleDeviceNormallyOn } from '../../store/mainSlice';
 
 export default function DevicePoint({ deviceId }) {
   const dispatch = useDispatch();
 
-  const device = useSelector((state) => state.devicesNew.devices[deviceId]);
+  const device = useSelector((state) => state.main.devices[deviceId]);
 
   const pointHandler = () => {
     dispatch(

@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setDeviceWidth } from '../../store/devicesSliceNew';
+import { setDeviceWidth } from '../../store/mainSlice';
+import { getSelectedDevicesId } from '../../store/helpers';
 
 export default function Ruler({ deviceId, groupId, dinId }) {
   const dispatch = useDispatch();
   const [width, setWidth] = useState();
-  const selectedDevicesIds = useSelector((state) => state.devicesNew.selected);
-  const devices = useSelector((state) => state.devicesNew.devices);
+  const selectedDevices = useSelector((state) => state.main.selected);
+  const devices = useSelector((state) => state.main.devices);
+  // const selectedDevicesIds = useSelector((state) => state.devicesNew.selected);
+  // const devices = useSelector((state) => state.devicesNew.devices);
   const device = devices[deviceId];
 
   const deviceWidth = device.width;
@@ -64,7 +67,9 @@ export default function Ruler({ deviceId, groupId, dinId }) {
         className="ruler__red-line"
         style={{
           background: `${
-            selectedDevicesIds.includes(deviceId) ? '#e30000' : 'transparent'
+            getSelectedDevicesId(selectedDevices).includes(deviceId)
+              ? '#e30000'
+              : 'transparent'
           }`,
         }}
       ></div>

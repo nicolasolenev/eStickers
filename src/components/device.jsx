@@ -10,9 +10,10 @@ import { updateDeviceText } from '../store/devicesSliceNew';
 import { pushState } from '../store/historySlice';
 import { getDeviceTotalWidth } from '../functions';
 
-export default function Device({ deviceId, dinId }) {
+export default function Device({ deviceId, dinId, groupId }) {
   const dispatch = useDispatch();
-  const device = useSelector((state) => state.devicesNew.devices[deviceId]);
+  const device = useSelector((state) => state.main.devices[deviceId]);
+  // const device = useSelector((state) => state.devicesNew.devices[deviceId]);
   const settings = useSelector((state) => state.settings);
 
   const deviceWidth = useMemo(() => {
@@ -75,7 +76,7 @@ export default function Device({ deviceId, dinId }) {
 
       <DeviceMultilineDescription deviceId={deviceId} dinId={dinId} />
 
-      <Modules deviceId={deviceId} dinId={dinId} />
+      <Modules deviceId={deviceId} groupId={groupId} dinId={dinId} />
     </div>
   );
 }

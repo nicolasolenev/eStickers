@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import defaultState, { defaultDin } from '../defaultStates';
+import defaultState, { defaultDin } from './defaultStates';
 
 const initialState = {
   dins: defaultState.dins,
@@ -28,17 +28,17 @@ export const dinsSlice = createSlice({
       state.dins[dinId].groups.push(id);
     },
 
-    setHeight: (state, action) => {
-      const { type, height, dinId } = action.payload;
-      state.dins[dinId][type] = height;
-    },
+    // setHeight: (state, action) => {
+    //   const { type, height, dinId } = action.payload;
+    //   state.dins[dinId][type] = height;
+    // },
 
-    deleteGroupIds: (state, action) => {
-      const { groupIds, dinId } = action.payload;
-      state.dins[dinId].groups = state.dins[dinId].groups.filter(
-        (id) => !groupIds.includes(id)
-      );
-    },
+    // deleteGroupIds: (state, action) => {
+    //   const { groupIds, dinId } = action.payload;
+    //   state.dins[dinId].groups = state.dins[dinId].groups.filter(
+    //     (id) => !groupIds.includes(id)
+    //   );
+    // },
   },
 });
 

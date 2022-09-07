@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import ModuleId from './moduleId';
 import { setModuleText } from '../../store/modulesSliceNew';
 
-export default function Module({ moduleId, deviceId, dinId }) {
+export default function Module({ moduleId, deviceId, groupId, dinId }) {
   const dispatch = useDispatch();
-  const module = useSelector((state) => state.modulesNew.modules[moduleId]);
+  const module = useSelector((state) => state.main.modules[moduleId]);
+  // const module = useSelector((state) => state.modulesNew.modules[moduleId]);
   const [text, setText] = useState(module.text);
 
   const inputHandler = (e) =>
@@ -32,7 +33,12 @@ export default function Module({ moduleId, deviceId, dinId }) {
         onBlur={inputHandler}
       />
 
-      <ModuleId index={module.index} deviceId={deviceId} dinId={dinId} />
+      <ModuleId
+        index={module.index}
+        deviceId={deviceId}
+        groupId={groupId}
+        dinId={dinId}
+      />
     </div>
   );
 }

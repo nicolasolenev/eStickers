@@ -1,16 +1,19 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  setHeight,
   setDeviceInputHeight,
   updateDeviceText,
-} from '../../store/devicesSliceNew';
-import { toggleWarning } from '../../store/devicesSliceNew';
-import { setHeight } from '../../store/dinsSliceNew';
+  toggleWarning,
+} from '../../store/mainSlice';
+
 import { getMaxInputHeight } from '../../functions';
 
 export default function DeviceWarningBtn({ deviceId, setText, dinId }) {
   const dispatch = useDispatch();
-  const devices = useSelector((state) => state.devicesNew.devices);
+  const devices = useSelector((state) => state.main.devices);
+  const main = useSelector((state) => state.main);
+  // const devices = useSelector((state) => state.devicesNew.devices);
   const device = devices[deviceId];
 
   return (
@@ -31,13 +34,7 @@ export default function DeviceWarningBtn({ deviceId, setText, dinId }) {
             dispatch(
               setHeight({
                 type: 'warningHeight',
-                height: getMaxInputHeight(
-                  devices,
-                  dinId,
-                  'warning',
-                  deviceId,
-                  13
-                ),
+                height: getMaxInputHeight(dinId, 'warning', 13, main, deviceId),
                 dinId,
               })
             );
